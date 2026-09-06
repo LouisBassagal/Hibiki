@@ -13,6 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AnimeCover: typeof import('./src/components/AnimeCover.vue')['default']
     AnimeCoverList: typeof import('./src/components/AnimeCoverList.vue')['default']
+    Hero: typeof import('./src/components/Hero.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

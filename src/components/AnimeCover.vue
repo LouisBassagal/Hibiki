@@ -12,7 +12,7 @@ defineProps<{
     class="w-fit h-fit shrink-0 text-white overflow-hidden rounded-lg drop-shadow-[0_20px_20px_var(--shadow-color)] aspect-a4"
   >
     <img
-      class="h-28 object-cover w-full text-amber-50 aspect-a4"
+      class="h-24 object-cover w-full text-amber-50 aspect-a4"
       :src="media?.coverImage?.medium ?? ''"
       :alt="media?.title?.english ?? ''"
     />

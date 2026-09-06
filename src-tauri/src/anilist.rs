@@ -28,7 +28,7 @@ pub struct AnimeMedia {
 }
 
 #[tauri::command]
-pub async fn fetch_popular_animes(page: u32) -> Result<Vec<AnimeMedia>, String> {
+pub async fn fetch_popular_animes(page: u32, count: u32) -> Result<Vec<AnimeMedia>, String> {
     let client = reqwest::Client::new();
 
     let query = r#"
@@ -56,7 +56,7 @@ pub async fn fetch_popular_animes(page: u32) -> Result<Vec<AnimeMedia>, String> 
         "query": query,
         "variables": {
             "page": page,
-            "perPage": 50
+            "perPage": count
         }
     });
 
