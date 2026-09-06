@@ -9,10 +9,10 @@ defineProps<{
 <template>
   <div
     :style="{ '--shadow-color': media.coverImage?.color ?? '#000000' }"
-    class="zoom-50 shrink-0 text-white overflow-hidden rounded-lg drop-shadow-[0_40px_40px_var(--shadow-color)]"
+    class="w-fit h-fit shrink-0 text-white overflow-hidden rounded-lg drop-shadow-[0_20px_20px_var(--shadow-color)] aspect-a4"
   >
     <img
-      class="object-fill w-full text-amber-50 h-full min-w-32 shrink-0"
+      class="h-28 object-cover w-full text-amber-50 aspect-a4"
       :src="media?.coverImage?.medium ?? ''"
       :alt="media?.title?.english ?? ''"
     />
