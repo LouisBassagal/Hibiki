@@ -1,13 +1,14 @@
 {
   "name": "animethemesmobile",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "android:dev": "tauri android dev"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
