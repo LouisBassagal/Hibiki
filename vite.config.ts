@@ -1,14 +1,20 @@
-import tailwindcss from '@tailwindcss/vite';
-import vue from '@vitejs/plugin-vue';
-import MotionResolver from 'motion-v/resolver';
-import Components from 'unplugin-vue-components/vite';
-import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite'
+import vue from '@vitejs/plugin-vue'
+import MotionResolver from 'motion-v/resolver'
+import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
+import path from 'path'
 
-// @ts-expect-error process is a nodejs global
-const host = process.env.TAURI_DEV_HOST;
+const host = process.env.TAURI_DEV_HOST
 
 // https://vite.dev/config/
 export default defineConfig(async () => ({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+
   plugins: [
     vue(),
     tailwindcss(),
@@ -41,4 +47,4 @@ export default defineConfig(async () => ({
       ignored: ['**/src-tauri/**'],
     },
   },
-}));
+}))
