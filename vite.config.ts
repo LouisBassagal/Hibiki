@@ -1,9 +1,10 @@
+import path from 'path'
+
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import MotionResolver from 'motion-v/resolver'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
-import path from 'path'
 
 const host = process.env.TAURI_DEV_HOST
 
@@ -12,6 +13,7 @@ export default defineConfig(async () => ({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '~': path.resolve(__dirname, './'),
     },
   },
 
@@ -20,9 +22,7 @@ export default defineConfig(async () => ({
     tailwindcss(),
     Components({
       dts: true,
-      resolvers: [
-        MotionResolver(),
-      ],
+      resolvers: [MotionResolver()],
     }),
   ],
 
@@ -37,10 +37,10 @@ export default defineConfig(async () => ({
     host: host || false,
     hmr: host
       ? {
-        protocol: 'ws',
-        host,
-        port: 1421,
-      }
+          protocol: 'ws',
+          host,
+          port: 1421,
+        }
       : undefined,
     watch: {
       // 3. tell Vite to ignore watching `src-tauri`

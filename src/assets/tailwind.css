@@ -2,7 +2,13 @@
 
 @theme {
   --aspect-a4: '1 / 1.4142';
-  --color-primary: "#0b1622";
-  --color-secondary: "#151f2e";
-  --color-terciary: "#152232";
+
+  /* Colors */
+  --color-background: #0F1420;
+  --color-surface: #191F2E;
+  --color-text: #F0F2F5;
+
+  --color-primary: #4C82F7;
+  --color-secondary: #22C598;
+  --color-terciary: #7FA8E8;
 }
