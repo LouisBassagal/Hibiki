@@ -24,7 +24,9 @@ pub fn run() {
         )
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
-            anilist::fetch_popular_animes
+            anilist::fetch_popular_animes,
+            anilist::fetch_current_season_animes,
+            anilist::fetch_best_rated_animes
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
