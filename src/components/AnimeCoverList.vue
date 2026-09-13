@@ -16,7 +16,7 @@ const isLoading = computed(() => props.medias.length !== 0)
     <Transition>
       <div class="flex flex-row gap-2.5 overflow-x-auto px-2 py-3">
         <template v-if="isLoading">
-          <AnimeCover v-for="i in 5" :key="i" :media="medias[i - 1]" />
+          <AnimeCover v-for="media in medias" :key="media.id" :media="media" />
         </template>
 
         <!-- For skeleton loading -->
