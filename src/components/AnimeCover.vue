@@ -18,9 +18,9 @@ defineProps<{
     />
 
     <span
-      class="absolute bottom-0 left-0 right-0 text-left rounded-md backdrop-blur-sm min-h-7.5 px-2.5 py-1.5 text-white font-bold font-text text-xs"
+      class="absolute bottom-0 leading-4 left-0 line-clamp-5 max-h-20 overflow-hidden right-0 text-left rounded-md backdrop-blur-sm min-h-7.5 px-2.5 py-1.5 text-white font-bold font-text text-xs"
     >
-      {{ media?.title?.romaji ?? 'BLEACH: Sennen Kessen-hen - Kashin-tan' }}
+      {{ media?.title?.romaji }}
     </span>
   </button>
 </template>
