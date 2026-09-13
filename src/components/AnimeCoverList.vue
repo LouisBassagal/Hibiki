@@ -4,10 +4,10 @@ import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
-  media: Media[]
+  medias: Media[]
 }>()
 
-const isLoading = computed(() => props.media.length !== 0)
+const isLoading = computed(() => props.medias.length !== 0)
 </script>
 
 <template>
@@ -16,11 +16,7 @@ const isLoading = computed(() => props.media.length !== 0)
     <Transition>
       <div class="flex flex-row gap-2.5 overflow-x-auto px-2 py-3">
         <template v-if="isLoading">
-          <AnimeCover
-            v-for="i in 5"
-            :key="i"
-            :media="{ coverImage: { color: '#000000' } }"
-          />
+          <AnimeCover v-for="i in 5" :key="i" :media="medias[i - 1]" />
         </template>
 
         <!-- For skeleton loading -->
