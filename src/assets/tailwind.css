@@ -11,4 +11,8 @@
   --color-primary: #4C82F7;
   --color-secondary: #22C598;
   --color-terciary: #7FA8E8;
+
+  /* Fonts */
+  --font-title: 'Sora Variable', sans-serif;
+  --font-text: 'Plus Jakarta Sans Variable', sans-serif;
 }
