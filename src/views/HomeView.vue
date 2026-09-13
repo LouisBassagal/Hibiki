@@ -4,9 +4,9 @@ import Search from '@primeicons/vue/search'
 import { invoke } from '@tauri-apps/api/core'
 import { ref, onMounted } from 'vue'
 
-const currentSeasonAnimes = ref<Media[]>([])
-const popularAnimes = ref<Media[]>([])
-const bestRatedAnimes = ref<Media[]>([])
+const currentSeasonAnimes = ref<Media[] | null>([])
+const popularAnimes = ref<Media[] | null>([])
+const bestRatedAnimes = ref<Media[] | null>([])
 
 const errorMessage = ref('')
 
@@ -15,7 +15,27 @@ const fetchAnimes = async () => {
     invoke<Media[]>('fetch_popular_animes', { page: 1, count: 10 }),
     invoke<Media[]>('fetch_current_season_animes', { page: 1, count: 10 }),
     invoke<Media[]>('fetch_best_rated_animes', { page: 1, count: 10 }),
-  ])
+  ]).then((results) => {
+    const [popular, currentSeason, bestRated] = results
+
+    if (popular.status === 'fulfilled') {
+      popularAnimes.value = popular.value
+    } else {
+      errorMessage.value = popular.reason
+    }
+
+    if (currentSeason.status === 'fulfilled') {
+      currentSeasonAnimes.value = currentSeason.value
+    } else {
+      errorMessage.value = currentSeason.reason
+    }
+
+    if (bestRated.status === 'fulfilled') {
+      bestRatedAnimes.value = bestRated.value
+    } else {
+      errorMessage.value = bestRated.reason
+    }
+  })
 }
 
 onMounted(async () => {
