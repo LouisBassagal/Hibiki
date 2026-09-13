@@ -96,7 +96,9 @@ pub async fn fetch_popular_animes(page: u32, count: u32) -> Result<Vec<AnimeMedi
         .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
 
     if !status.is_success() {
-        return Err(format!("AniList HTTP {status}: {response_text}"));
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
     }
 
     let response_json: serde_json::Value = serde_json::from_str(&response_text)
@@ -171,7 +173,9 @@ pub async fn fetch_current_season_animes(page: u32, count: u32) -> Result<Vec<An
         .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
 
     if !status.is_success() {
-        return Err(format!("AniList HTTP {status}: {response_text}"));
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
     }
 
     let response_json: serde_json::Value = serde_json::from_str(&response_text)
@@ -242,7 +246,9 @@ pub async fn fetch_best_rated_animes(page: u32, count: u32) -> Result<Vec<AnimeM
         .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
 
     if !status.is_success() {
-        return Err(format!("AniList HTTP {status}: {response_text}"));
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
     }
 
     let response_json: serde_json::Value = serde_json::from_str(&response_text)
