@@ -14,7 +14,7 @@ defineEmits<{
       {{ $t('home.randomAnime') }}
     </h2>
     <button
-      class="w-full h-50 rounded-md overflow-clip relative"
+      class="w-full h-50 rounded-md overflow-clip relative active:scale-95 active:opacity-75 transition-all"
       @click="$emit('click')"
     >
       <img

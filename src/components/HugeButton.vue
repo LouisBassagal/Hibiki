@@ -9,7 +9,7 @@ defineEmits<{
 <template>
   <button
     @click="$emit('click')"
-    class="w-full px-15 h-50 rounded-md overflow-clip relative max-h-20 bg-surface/50 backdrop-blur-xs text-text font-text font-bold text-lg"
+    class="w-full px-15 h-50 rounded-md overflow-clip relative max-h-20 bg-surface/50 backdrop-blur-xs text-text font-text font-bold text-lg active:scale-95 active:opacity-75 transition-all"
   >
     <span class="absolute -bottom-1 -left-1 text-primary/50">
       <slot name="icon" />
