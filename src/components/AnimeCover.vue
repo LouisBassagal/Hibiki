@@ -7,14 +7,20 @@ defineProps<{
 </script>
 
 <template>
-  <div
-    :style="{ '--shadow-color': media.coverImage?.color ?? '#000000' }"
-    class="w-fit h-fit shrink-0 text-white overflow-hidden rounded-lg drop-shadow-[0_20px_20px_var(--shadow-color)] aspect-a4"
-  >
+  <button class="w-30.5 aspect-a4 rounded-md shrink-0 overflow-clip relative">
     <img
-      class="h-24 object-cover w-full text-amber-50 aspect-a4"
-      :src="media?.coverImage?.medium ?? ''"
-      :alt="media?.title?.english ?? ''"
+      class="h-full w-full object-cover"
+      :src="
+        media?.coverImage?.medium ??
+        'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx185874-aU3e6tBT6wwA.jpg'
+      "
+      :alt="media?.title?.english ?? 'BLEACH: Sennen Kessen-hen - Kashin-tan'"
     />
-  </div>
+
+    <span
+      class="absolute bottom-0 left-0 right-0 text-left rounded-md backdrop-blur-sm min-h-7.5 px-2.5 py-1.5 text-white font-bold font-text text-xs"
+    >
+      {{ media?.title?.english ?? 'BLEACH: Sennen Kessen-hen - Kashin-tan' }}
+    </span>
+  </button>
 </template>
