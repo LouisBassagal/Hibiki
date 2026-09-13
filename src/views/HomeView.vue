@@ -13,10 +13,10 @@ const errorMessage = ref('')
 
 const fetchAnimes = async () => {
   const results = await Promise.allSettled([
-    invoke<Media[]>('fetch_popular_animes', { page: 1, count: 10 }),
-    invoke<Media[]>('fetch_current_season_animes', { page: 1, count: 10 }),
-    invoke<Media[]>('fetch_best_rated_animes', { page: 1, count: 10 }),
-    invoke<Media>('fetch_random_known_anime', { page: 1, count: 10 }),
+    invoke<Media[]>('fetch_popular_animes', { page: 1, count: 20 }),
+    invoke<Media[]>('fetch_current_season_animes', { page: 1, count: 20 }),
+    invoke<Media[]>('fetch_best_rated_animes', { page: 1, count: 20 }),
+    invoke<Media>('fetch_random_known_anime', { page: 1, count: 20 }),
   ]).then((results) => {
     const [popular, currentSeason, bestRated, random] = results
 
