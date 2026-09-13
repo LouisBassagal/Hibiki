@@ -5,6 +5,9 @@
     "buttons": {
       "Search": "Search",
       "MyList": "My List"
-    }
+    },
+    "popular": "Most popular",
+    "season": "Current season",
+    "best": "Bests"
   }
 }
