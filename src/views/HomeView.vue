@@ -26,5 +26,14 @@ import Search from '@primeicons/vue/search'
         </template>
       </HugeButton>
     </section>
+
+    <section id="lists" class="flex flex-col gap-5">
+      <AnimeCoverList
+        :title="$t('home.popular')"
+        :media="[{}, {}, {}, {}, {}]"
+      />
+      <AnimeCoverList :title="$t('home.season')" :media="[]" />
+      <AnimeCoverList :title="$t('home.best')" :media="[]" />
+    </section>
   </main>
 </template>
