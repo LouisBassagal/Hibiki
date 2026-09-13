@@ -1,6 +1,10 @@
 {
   "home": {
     "title": "Accueil",
-    "randomAnime": "Anime aléatoire"
+    "randomAnime": "Anime aléatoire",
+    "buttons": {
+      "Search": "Rechercher",
+      "MyList": "Ma liste"
+    }
   }
 }
