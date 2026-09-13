@@ -12,6 +12,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AnimeCover: typeof import('./src/components/AnimeCover.vue')['default']
+    HugeButton: typeof import('./src/components/HugeButton.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
