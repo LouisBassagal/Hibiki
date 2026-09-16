@@ -9,5 +9,14 @@
     "popular": "Most popular",
     "season": "Current season",
     "best": "Bests"
+  },
+  "menu": {
+    "home": "home",
+    "search": "search",
+    "account": "account",
+    "playlists": "playlists",
+    "list": "list",
+    "random": "random",
+    "settings": "settings"
   }
 }
