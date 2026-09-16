@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Media } from '@/types/anilist'
-import Search from '@primeicons/vue/search'
+import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { ref, onMounted } from 'vue'
 
@@ -12,7 +12,7 @@ const randomAnime = ref<Media | null>(null)
 const errorMessage = ref('')
 
 const fetchAnimes = async () => {
-  const results = await Promise.allSettled([
+  await Promise.allSettled([
     invoke<Media[]>('fetch_popular_animes', { page: 1, count: 20 }),
     invoke<Media[]>('fetch_current_season_animes', { page: 1, count: 20 }),
     invoke<Media[]>('fetch_best_rated_animes', { page: 1, count: 20 }),
@@ -52,14 +52,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main
+  <div
     class="flex flex-col min-h-screen bg-background px-4 py-6 gap-5 text-terciary"
   >
     <RandomAnimeHero :media="randomAnime" />
     <section id="buttons" class="flex flex-col gap-2.5">
       <HugeButton>
         <template #icon>
-          <Search :size="70" class="-scale-x-100" />
+          <PhMagnifyingGlass :size="70" class="-scale-x-100" />
         </template>
         <template #default>
           {{ $t('home.buttons.Search') }}
@@ -84,5 +84,5 @@ onMounted(async () => {
       />
       <AnimeCoverList :title="$t('home.best')" :medias="bestRatedAnimes" />
     </section>
-  </main>
+  </div>
 </template>

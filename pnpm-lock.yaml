@@ -14,9 +14,9 @@ importers:
       '@fontsource-variable/sora':
         specifier: ^5.3.0
         version: 5.3.0
-      '@primeicons/vue':
-        specifier: ^8.0.1
-        version: 8.0.1(vue@3.5.42(typescript@6.0.3))
+      '@phosphor-icons/vue':
+        specifier: ^2.2.1
+        version: 2.2.1(vue@3.5.42(typescript@6.0.3))
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@6.4.3(@types/node@26.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.9.0))
@@ -543,17 +543,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@primeicons/core@8.0.1':
-    resolution: {integrity: sha512-KJ5j8h4KVbl7lX0UosENk8d8N43GGj7H7ICyCUV8re+VdduE69bYlxfaCtM2KRdpoy45eu4JiZgT5P1Mh2JNpg==}
-
-  '@primeicons/vue@8.0.1':
-    resolution: {integrity: sha512-mNOajP2ni5gUkuFqHNxy2dmvXpYzvH3z/jeYOqD0W+iXu0g6M439PyHqayxhoOGjJ5R1h0L6xnYbm3nVHtPwvQ==}
+  '@phosphor-icons/vue@2.2.1':
+    resolution: {integrity: sha512-3RNg1utc2Z5RwPKWFkW3eXI/0BfQAwXgtFxPUPeSzi55jGYUq16b+UqcgbKLazWFlwg5R92OCLKjDiJjeiJcnA==}
+    engines: {node: '>=14'}
     peerDependencies:
-      vue: ^3
-
-  '@primeuix/utils@0.8.2':
-    resolution: {integrity: sha512-4Cz5HY1XHqJwhq1ieml6l5IDkWt41Amdw/t2rAQxNXv7WwAhgb8QrnjJM6scW9h1D0PjQgm9Z3RgNlWCU+WZng==}
-    engines: {node: '>=12.11.0'}
+      vue: '>=3.2.39'
 
   '@rollup/rollup-android-arm-eabi@4.63.2':
     resolution: {integrity: sha512-Xa6RDoWa+hNiX6PgsljlH6W75RaONx3y6PVlbLhkEWW+GaPQ3dP5gwbL/erAzQHWwkvW5UxdD5l87Qx2FAQ/4A==}
@@ -1695,17 +1689,9 @@ snapshots:
   '@oxlint/binding-win32-x64-msvc@1.82.0':
     optional: true
 
-  '@primeicons/core@8.0.1':
+  '@phosphor-icons/vue@2.2.1(vue@3.5.42(typescript@6.0.3))':
     dependencies:
-      '@primeuix/utils': 0.8.2
-
-  '@primeicons/vue@8.0.1(vue@3.5.42(typescript@6.0.3))':
-    dependencies:
-      '@primeicons/core': 8.0.1
-      '@primeuix/utils': 0.8.2
       vue: 3.5.42(typescript@6.0.3)
-
-  '@primeuix/utils@0.8.2': {}
 
   '@rollup/rollup-android-arm-eabi@4.63.2':
     optional: true

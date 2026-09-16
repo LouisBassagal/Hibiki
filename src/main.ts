@@ -1,3 +1,4 @@
+import PhosphorIcons from '@phosphor-icons/vue'
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 
@@ -19,6 +20,7 @@ const i18n = createI18n({
   },
 })
 
+app.use(PhosphorIcons)
 app.use(router)
 app.use(i18n)
 app.mount('#app')

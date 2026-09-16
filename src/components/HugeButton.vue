@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ArrowRight from '@primeicons/vue/arrow-right'
+import { PhCaretRight } from '@phosphor-icons/vue'
 
 defineEmits<{
   (e: 'click'): void
@@ -23,7 +23,7 @@ defineEmits<{
     </span>
 
     <span class="absolute top-1/2 -translate-y-1/2 right-4 text-primary">
-      <ArrowRight :size="35" />
+      <PhCaretRight :size="35" />
     </span>
   </button>
 </template>
