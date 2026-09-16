@@ -20,7 +20,6 @@ declare module 'vue' {
     HugeButton: typeof import('./src/components/HugeButton.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
-    RandomAnimeHeroSkeleton: typeof import('./src/components/loading/RandomAnimeHeroSkeleton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
