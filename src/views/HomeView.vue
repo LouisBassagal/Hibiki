@@ -3,6 +3,7 @@ import type { Media } from '@/types/anilist'
 import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const currentSeasonAnimes = ref<Media[] | null>([])
 const popularAnimes = ref<Media[] | null>([])
@@ -10,6 +11,7 @@ const bestRatedAnimes = ref<Media[] | null>([])
 const randomAnime = ref<Media | null>(null)
 
 const errorMessage = ref('')
+const router = useRouter()
 
 const fetchAnimes = async () => {
   await Promise.allSettled([
@@ -57,7 +59,7 @@ onMounted(async () => {
   >
     <RandomAnimeHero :media="randomAnime" />
     <section id="buttons" class="flex flex-col gap-2.5">
-      <HugeButton>
+      <HugeButton @click="router.push({ name: 'search' })">
         <template #icon>
           <PhMagnifyingGlass :size="70" class="-scale-x-100" />
         </template>
