@@ -10,6 +10,9 @@
     "season": "Saison actuelle",
     "best": "Meilleurs"
   },
+  "search": {
+    "placeholder": "Recherchez un anime..."
+  },
   "menu": {
     "home": "accueil",
     "search": "rechercher",
