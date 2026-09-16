@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import Layout from '@/components/Layout.vue'
+import '@fontsource-variable/sora'
+import '@fontsource-variable/plus-jakarta-sans'
+import '~/src/global.css'
 </script>
 
 <template>

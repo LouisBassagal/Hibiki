@@ -1,0 +1,22 @@
+{
+  "home": {
+    "title": "Accueil",
+    "randomAnime": "Anime aléatoire",
+    "buttons": {
+      "Search": "Rechercher",
+      "MyList": "Ma liste"
+    },
+    "popular": "Les plus populaires",
+    "season": "Saison actuelle",
+    "best": "Meilleurs"
+  },
+  "menu": {
+    "home": "accueil",
+    "search": "rechercher",
+    "account": "compte",
+    "playlists": "playlists",
+    "list": "liste",
+    "random": "aléatoire",
+    "settings": "paramètres"
+  }
+}

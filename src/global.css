@@ -1,0 +1,11 @@
+/* Reveal Transition */
+
+.reveal-enter-active,
+.reveal-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.reveal-enter-from,
+.reveal-leave-to {
+  opacity: 0;
+}
