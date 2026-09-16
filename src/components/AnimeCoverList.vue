@@ -4,10 +4,10 @@ import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
-  medias: Media[]
+  medias: Media[] | null
 }>()
 
-const hasMedia = computed(() => props.medias.length !== 0)
+const hasMedia = computed(() => props?.medias?.length !== 0)
 </script>
 
 <template>
