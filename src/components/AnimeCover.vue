@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useAnimeStore } from '@/stores/AnimeStore'
 import { Media } from '@/types/anilist.ts'
+import { useRouter } from 'vue-router'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     media: Media
     size?: 'sm' | 'md'
@@ -10,13 +12,25 @@ withDefaults(
     size: 'md',
   }
 )
+
+const emits = defineEmits(['click'])
+
+const { setAnime } = useAnimeStore()
+
+const router = useRouter()
+
+const onClick = () => {
+  emits('click')
+  setAnime(props.media)
+  router.push({ name: 'anime' })
+}
 </script>
 
 <template>
   <button
     type="button"
     class="aspect-a4 rounded-md shrink-0 overflow-clip relative touchable"
-    @click="$emit('click')"
+    @click="onClick"
     :class="size === 'md' ? 'w-30.5' : 'w-26'"
   >
     <img
