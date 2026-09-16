@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <button
     type="button"
-    class="w-30.5 aspect-a4 rounded-md shrink-0 overflow-clip relative active:scale-95 active:opacity-75 transition-all"
+    class="w-30.5 aspect-a4 rounded-md shrink-0 overflow-clip relative touchable"
     @click="$emit('click')"
   >
     <img

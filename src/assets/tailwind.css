@@ -16,3 +16,7 @@
   --font-title: 'Sora Variable', sans-serif;
   --font-text: 'Plus Jakarta Sans Variable', sans-serif;
 }
+
+@utility touchable {
+  @apply active:scale-95 active:opacity-75 transition-all;
+}

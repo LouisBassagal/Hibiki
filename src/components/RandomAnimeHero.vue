@@ -20,7 +20,7 @@ defineEmits<{
       <template v-if="props.media">
         <button
           type="button"
-          class="w-full h-50 rounded-md overflow-clip relative active:scale-95 active:opacity-75 transition-all"
+          class="w-full h-50 rounded-md overflow-clip relative touchable"
           @click="$emit('click')"
         >
           <img
