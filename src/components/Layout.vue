@@ -1,8 +1,8 @@
 <template>
   <main
-    class="min-h-screen relative w-full overflow-x-hidden flex flex-col bg-background"
+    class="relative w-full h-full grow overflow-x-hidden flex flex-col bg-background"
   >
-    <div class="h-10"></div>
+    <div class="h-10 shrink-0"></div>
     <slot />
     <FloatingMenu />
   </main>

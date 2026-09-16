@@ -1,3 +1,9 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+
 /* Reveal Transition */
 
 .reveal-enter-active,
