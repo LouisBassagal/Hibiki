@@ -435,3 +435,77 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
         }
     }
 }
+
+#[tauri::command]
+pub async fn fetch_anime_by_name(search: &str, page: u32, count: u32) -> Result<Vec<AnimeMedia>, String> {
+    let client = Client::builder()
+        .timeout(Duration::from_secs(10))
+        .build()
+        .map_err(|error| error.to_string())?;
+
+    let query = r#"
+        query ($search: String!, $page: Int, $perPage: Int) {
+            Page(page: $page, perPage: $perPage) {
+                media(
+                    search: $search
+                    type: ANIME
+                    sort: SCORE_DESC
+                    isAdult: false
+                ) {
+                    id
+                    title {
+                        romaji
+                        english
+                    }
+                    coverImage {
+                        extraLarge
+                        large
+                        medium
+                        color
+                    }
+                    bannerImage
+                }
+            }
+        }
+    "#;
+
+    let body = json!({
+        "query": query,
+        "variables": {
+            "search": search,
+            "page": page,
+            "perPage": count
+        }
+    });
+
+    let response = client
+        .post("https://graphql.anilist.co")
+        .header("Content-Type", "application/json")
+        .header("Accept", "application/json")
+        .json(&body)
+        .send()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    let status = response.status();
+    let response_text = response
+        .text()
+        .await
+        .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
+
+    if !status.is_success() {
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
+    }
+
+    let response_json: serde_json::Value = serde_json::from_str(&response_text)
+        .map_err(|error| format!("JSON invalide: {error}; réponse: {response_text}"))?;
+
+    if let Some(errors) = response_json.get("errors") {
+        return Err(errors.to_string());
+    }
+
+    serde_json::from_value(response_json["data"]["Page"]["media"].clone())
+        .map_err(|error| error.to_string())
+}

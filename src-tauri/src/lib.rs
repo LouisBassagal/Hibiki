@@ -27,7 +27,8 @@ pub fn run() {
             anilist::fetch_popular_animes,
             anilist::fetch_current_season_animes,
             anilist::fetch_best_rated_animes,
-            anilist::fetch_random_known_anime
+            anilist::fetch_random_known_anime,
+            anilist::fetch_anime_by_name
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
