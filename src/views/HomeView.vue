@@ -54,9 +54,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen bg-background px-4 py-6 gap-5 text-terciary"
-  >
+  <div class="flex flex-col bg-background px-4 py-6 gap-5">
     <RandomAnimeHero :media="randomAnime" />
     <section id="buttons" class="flex flex-col gap-2.5">
       <HugeButton @click="router.push({ name: 'search' })">
