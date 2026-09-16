@@ -19,6 +19,7 @@ defineEmits<{
     <Transition name="reveal" mode="out-in">
       <template v-if="props.media">
         <button
+          type="button"
           class="w-full h-50 rounded-md overflow-clip relative active:scale-95 active:opacity-75 transition-all"
           @click="$emit('click')"
         >
