@@ -36,6 +36,7 @@ pub struct AnimeMedia {
     pub cover_image: AnimeImage,
     #[serde(rename = "bannerImage")]
     pub banner_image: Option<String>,
+    pub description: Option<String>,
 }
 
 fn current_season() -> (&'static str, i32) {
@@ -77,6 +78,7 @@ pub async fn fetch_popular_animes(page: u32, count: u32) -> Result<Vec<AnimeMedi
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -152,6 +154,7 @@ pub async fn fetch_current_season_animes(page: u32, count: u32) -> Result<Vec<An
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -227,6 +230,7 @@ pub async fn fetch_best_rated_animes(page: u32, count: u32) -> Result<Vec<AnimeM
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -353,6 +357,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -376,6 +381,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -407,6 +413,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -427,6 +434,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -464,6 +472,7 @@ pub async fn fetch_anime_by_name(search: &str, page: u32, count: u32) -> Result<
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
