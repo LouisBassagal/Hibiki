@@ -21,7 +21,9 @@ const isLoading = computed(() => props.medias.length !== 0)
 
         <!-- For skeleton loading -->
         <template v-else>
-          <AnimeCoverSkeleton v-for="n in 3" :key="n" />
+          <template v-for="n in 3" :key="n">
+            <AnimeCoverSkeleton />
+          </template>
         </template>
       </div>
     </Transition>
