@@ -26,7 +26,9 @@ defineEmits<{
           <img
             class="w-full h-full object-cover"
             :src="
-              props.media?.bannerImage ?? props.media?.coverImage?.large ?? ''
+              props.media?.coverImage?.extraLarge ??
+              props.media?.coverImage?.large ??
+              ''
             "
             :alt="
               props.media?.title?.romaji ??
