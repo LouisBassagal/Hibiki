@@ -15,9 +15,12 @@ declare module 'vue' {
     AnimeCover: typeof import('./src/components/AnimeCover.vue')['default']
     AnimeCoverList: typeof import('./src/components/AnimeCoverList.vue')['default']
     AnimeCoverSkeleton: typeof import('./src/components/loading/AnimeCoverSkeleton.vue')['default']
+    FloatingMenu: typeof import('./src/components/FloatingMenu.vue')['default']
+    GenericSkeleton: typeof import('./src/components/loading/GenericSkeleton.vue')['default']
     HugeButton: typeof import('./src/components/HugeButton.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
+    RandomAnimeHeroSkeleton: typeof import('./src/components/loading/RandomAnimeHeroSkeleton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
