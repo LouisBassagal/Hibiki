@@ -13,8 +13,13 @@ defineProps<{
   >
     <img
       class="h-full w-full object-cover"
-      :src="media?.coverImage?.large"
-      :alt="media?.title?.romaji"
+      :src="media?.coverImage?.large ?? media?.coverImage?.medium ?? ''"
+      :alt="
+        media?.title?.romaji ??
+        media?.title?.english ??
+        media?.title?.native ??
+        ''
+      "
     />
 
     <span
