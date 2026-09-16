@@ -10,15 +10,19 @@ import {
   PhUser,
   PhX,
 } from '@phosphor-icons/vue'
-import { ref } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { onClickOutside } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
+import { RouterLink } from 'vue-router'
 
+const menuDiv = useTemplateRef('menu')
 const isOpen = ref(false)
-const route = useRoute()
+
+onClickOutside(menuDiv, () => (isOpen.value = false))
 </script>
 
 <template>
   <div
+    ref="menu"
     class="bg-surface/50 backdrop-blur-sm bottom-10 right-7.5 rounded-sm fixed transition-all duration-300 overflow-hidden"
     :class="isOpen ? 'size-60' : 'size-12'"
   >
