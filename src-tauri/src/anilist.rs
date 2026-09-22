@@ -36,6 +36,7 @@ pub struct AnimeMedia {
     pub cover_image: AnimeImage,
     #[serde(rename = "bannerImage")]
     pub banner_image: Option<String>,
+    pub description: Option<String>,
 }
 
 fn current_season() -> (&'static str, i32) {
@@ -77,6 +78,7 @@ pub async fn fetch_popular_animes(page: u32, count: u32) -> Result<Vec<AnimeMedi
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -152,6 +154,7 @@ pub async fn fetch_current_season_animes(page: u32, count: u32) -> Result<Vec<An
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -227,6 +230,7 @@ pub async fn fetch_best_rated_animes(page: u32, count: u32) -> Result<Vec<AnimeM
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -353,6 +357,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -376,6 +381,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -407,6 +413,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -427,6 +434,7 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
                             title { romaji english }
                             coverImage { extraLarge large medium color }
                             bannerImage
+                            description
                         }
                     }
                 }
@@ -464,6 +472,7 @@ pub async fn fetch_anime_by_name(search: &str, page: u32, count: u32) -> Result<
                         color
                     }
                     bannerImage
+                    description
                 }
             }
         }
@@ -507,5 +516,74 @@ pub async fn fetch_anime_by_name(search: &str, page: u32, count: u32) -> Result<
     }
 
     serde_json::from_value(response_json["data"]["Page"]["media"].clone())
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub async fn fetch_anime_by_id(id: i32) -> Result<AnimeMedia, String> {
+    let client = Client::builder()
+        .timeout(Duration::from_secs(10))
+        .build()
+        .map_err(|error| error.to_string())?;
+
+    let query = r#"
+        query ($id: Int!) {
+            Media(
+                id: $id
+                type: ANIME
+            ) {
+                id
+                title {
+                    romaji
+                    english
+                }
+                coverImage {
+                    extraLarge
+                    large
+                    medium
+                    color
+                }
+                bannerImage
+                description
+            }
+        }
+    "#;
+
+    let body = json!({
+        "query": query,
+        "variables": {
+            "id": id,
+        }
+    });
+
+    let response = client
+        .post("https://graphql.anilist.co")
+        .header("Content-Type", "application/json")
+        .header("Accept", "application/json")
+        .json(&body)
+        .send()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    let status = response.status();
+    let response_text = response
+        .text()
+        .await
+        .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
+
+    if !status.is_success() {
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
+    }
+
+    let response_json: serde_json::Value = serde_json::from_str(&response_text)
+        .map_err(|error| format!("JSON invalide: {error}; réponse: {response_text}"))?;
+
+    if let Some(errors) = response_json.get("errors") {
+        return Err(errors.to_string());
+    }
+
+    serde_json::from_value(response_json["data"]["Media"].clone())
         .map_err(|error| error.to_string())
 }

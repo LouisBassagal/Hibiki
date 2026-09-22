@@ -13,6 +13,11 @@
   "search": {
     "placeholder": "Search for an anime..."
   },
+  "anime": {
+    "overview": "Overview",
+    "themes": "Themes",
+    "description": "Description"
+  },
   "menu": {
     "home": "home",
     "search": "search",
@@ -21,5 +26,8 @@
     "list": "list",
     "random": "random",
     "settings": "settings"
+  },
+  "modal": {
+    "title": "Select a version"
   }
 }

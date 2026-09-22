@@ -15,6 +15,8 @@ declare module 'vue' {
     AnimeCover: typeof import('./src/components/AnimeCover.vue')['default']
     AnimeCoverList: typeof import('./src/components/AnimeCoverList.vue')['default']
     AnimeCoverSkeleton: typeof import('./src/components/loading/AnimeCoverSkeleton.vue')['default']
+    AnimeThemeButton: typeof import('./src/components/AnimeThemeButton.vue')['default']
+    EntryButton: typeof import('./src/components/EntryButton.vue')['default']
     FloatingMenu: typeof import('./src/components/FloatingMenu.vue')['default']
     GenericSkeleton: typeof import('./src/components/loading/GenericSkeleton.vue')['default']
     HugeButton: typeof import('./src/components/HugeButton.vue')['default']
@@ -22,5 +24,7 @@ declare module 'vue' {
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StandardChip: typeof import('./src/components/StandardChip.vue')['default']
+    ThemeEntriesModal: typeof import('./src/components/ThemeEntriesModal.vue')['default']
   }
 }
