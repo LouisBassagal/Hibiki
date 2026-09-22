@@ -26,5 +26,8 @@
     "list": "liste",
     "random": "aléatoire",
     "settings": "paramètres"
+  },
+  "modal": {
+    "title": "Sélectionnez une version"
   }
 }

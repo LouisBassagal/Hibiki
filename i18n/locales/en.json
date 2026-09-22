@@ -26,5 +26,8 @@
     "list": "list",
     "random": "random",
     "settings": "settings"
+  },
+  "modal": {
+    "title": "Select a version"
   }
 }
