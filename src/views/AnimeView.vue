@@ -14,6 +14,7 @@ const selectedTheme = ref<AnimeTheme | null>(null)
 const isModalOpen = ref<boolean>(false)
 const router = useRouter()
 const isAnimeLoading = ref<boolean>(true)
+const isThemesLoading = ref<boolean>(true)
 
 const isTabOpen = (name: 'overview' | 'themes') => {
   if (name !== currentTab.value) return ''
@@ -30,20 +31,30 @@ onMounted(async () => {
 
   if (!animeId || !Number.isInteger(animeId)) router.replace({ name: 'home' })
 
-  media.value = await invoke<Media>('fetch_anime_by_id', {
+  await invoke<Media>('fetch_anime_by_id', {
     id: animeId,
   })
+    .then((result) => {
+      media.value = result
+    })
+    .finally(() => {
+      isAnimeLoading.value = false
+    })
 
-  const result = await invoke<AnimeThemesAnime>('fetch_themes_by_anilist_id', {
-    anilistId: media?.value.id,
+  await invoke<AnimeThemesAnime>('fetch_themes_by_anilist_id', {
+    anilistId: media?.value?.id,
   })
-  themes.value = result.animethemes
-  isAnimeLoading.value = false
+    .then((results) => {
+      themes.value = results.animethemes
+    })
+    .finally(() => {
+      isThemesLoading.value = false
+    })
 })
 </script>
 
 <template>
-  <div v-if="!isAnimeLoading">
+  <div v-if="!isAnimeLoading" class="flex flex-col flex-1">
     <section id="cover" class="text-text">
       <div class="h-75 relative object-center">
         <img
@@ -113,11 +124,22 @@ onMounted(async () => {
       <section
         v-else
         id="themes"
-        class="px-5 mb-5 text-text flex flex-col gap-2.5"
+        class="px-5 mb-5 text-text flex flex-col grow"
       >
-        <div v-for="theme in themes">
-          <AnimeThemeButton @click="onSelectTheme(theme)" :theme="theme" />
-        </div>
+        <Transition name="reveal" mode="out-in">
+          <div v-if="!isThemesLoading" class="flex flex-col gap-2.5">
+            <div v-for="theme in themes">
+              <AnimeThemeButton @click="onSelectTheme(theme)" :theme="theme" />
+            </div>
+          </div>
+
+          <div
+            v-else
+            class="w-full h-full flex-1 grow flex flex-col justify-center items-center"
+          >
+            <PhCircleNotch :size="32" class="animate-spin text-text" />
+          </div>
+        </Transition>
       </section>
     </Transition>
 
