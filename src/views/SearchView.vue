@@ -20,10 +20,8 @@ const onUserSearch = async () => {
 </script>
 
 <template>
-  <div
-    class="flex flex-col relative grow bg-background px-4 py-6 gap-5 text-text"
-  >
-    <section id="search-bar" class="sticky left-0 top-10 z-10">
+  <div class="flex flex-col relative grow bg-background px-4 gap-5 text-text">
+    <section id="search-bar" class="sticky left-0 top-0 z-10">
       <form @submit.prevent="onUserSearch">
         <div
           class="flex flex-row justify-center items-center gap-2.5 backdrop-blur-sm rounded-sm bg-surface/50 w-full h-10 px-2.5 overflow-hidden text-text"

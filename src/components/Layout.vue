@@ -1,8 +1,7 @@
 <template>
   <main
-    class="relative w-full h-full grow overflow-x-hidden flex flex-col bg-background"
+    class="relative w-full h-full grow overflow-x-hidden flex flex-col bg-background pt-safe-t pb-safe-b"
   >
-    <div class="h-10 shrink-0"></div>
     <Transition name="reveal" mode="out-in">
       <slot />
     </Transition>
