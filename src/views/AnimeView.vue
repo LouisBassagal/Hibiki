@@ -1,16 +1,33 @@
 <script setup lang="ts">
 import { useAnimeStore } from '@/stores/AnimeStore'
 import type { Media } from '@/types/anilist'
+import type { AnimeThemesAnime, AnimeTheme } from '@/types/animethemes'
 import { Markdown } from '@comark/vue'
-import { ref } from 'vue'
+import { invoke } from '@tauri-apps/api/core'
+import { onMounted, ref, Teleport } from 'vue'
 
 const media: Media | null = useAnimeStore().anime
 const currentTab = ref<'overview' | 'themes'>('overview')
+const themes = ref<AnimeTheme[] | null>(null)
+const selectedTheme = ref<AnimeTheme | null>(null)
+const isModalOpen = ref<boolean>(false)
 
 const isTabOpen = (name: 'overview' | 'themes') => {
   if (name !== currentTab.value) return ''
-  return 'before:absolute before:h-0.5 before:mt-1 before:w-full before:bg-primary before:top-full before:rounded-full'
+  return 'before:opacity-100'
 }
+
+const onSelectTheme = (theme: AnimeTheme) => {
+  selectedTheme.value = theme
+  isModalOpen.value = true
+}
+
+onMounted(async () => {
+  const result = await invoke<AnimeThemesAnime>('fetch_themes_by_anilist_id', {
+    anilistId: media?.id,
+  })
+  themes.value = result.animethemes
+})
 </script>
 
 <template>
@@ -49,7 +66,7 @@ const isTabOpen = (name: 'overview' | 'themes') => {
       >
         <button
           type="button"
-          class="relative"
+          class="relative touchable before:absolute before:h-0.5 before:mt-1 before:transition-all before:duration-500 before:w-full before:bg-primary before:top-full before:rounded-full before:opacity-0"
           :class="isTabOpen('overview')"
           @click="currentTab = 'overview'"
         >
@@ -57,7 +74,7 @@ const isTabOpen = (name: 'overview' | 'themes') => {
         </button>
         <button
           type="button"
-          class="relative"
+          class="relative touchable before:absolute before:h-0.5 before:mt-1 before:transition-all before:duration-500 before:w-full before:bg-primary before:top-full before:rounded-full before:opacity-0"
           :class="isTabOpen('themes')"
           @click="currentTab = 'themes'"
         >
@@ -80,6 +97,21 @@ const isTabOpen = (name: 'overview' | 'themes') => {
           </div>
         </div>
       </section>
+
+      <section
+        v-else
+        id="themes"
+        class="px-5 mb-5 text-text flex flex-col gap-2.5"
+      >
+        <div v-for="theme in themes">
+          <AnimeThemeButton @click="onSelectTheme(theme)" :theme="theme" />
+        </div>
+      </section>
     </Transition>
+
+    <Teleport to="body">
+      <ThemeEntriesModal v-model:is-open="isModalOpen" :theme="selectedTheme">
+      </ThemeEntriesModal>
+    </Teleport>
   </div>
 </template>
