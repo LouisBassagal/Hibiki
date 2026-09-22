@@ -22,7 +22,7 @@ const router = useRouter()
 const onClick = () => {
   emits('click')
   setAnime(props.media)
-  router.push({ name: 'anime' })
+  router.push({ name: 'anime', params: { id: props.media.id } })
 }
 </script>
 

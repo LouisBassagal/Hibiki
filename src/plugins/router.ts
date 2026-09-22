@@ -6,7 +6,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 const routes = [
   { path: '/', component: HomeView, name: 'home' },
   { path: '/search', component: SearchView, name: 'search' },
-  { path: '/anime', component: AnimeView, name: 'anime' },
+  { path: '/anime/:id', component: AnimeView, name: 'anime' },
 ]
 
 export const router = createRouter({
