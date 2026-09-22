@@ -30,6 +30,7 @@ pub fn run() {
             anilist::fetch_best_rated_animes,
             anilist::fetch_random_known_anime,
             anilist::fetch_anime_by_name,
+            anilist::fetch_anime_by_id,
             animethemes::fetch_themes_by_anilist_id
         ])
         .run(tauri::generate_context!())
