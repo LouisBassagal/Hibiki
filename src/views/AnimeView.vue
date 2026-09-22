@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { useAnimeStore } from '@/stores/AnimeStore'
 import type { Media } from '@/types/anilist'
 import type { AnimeThemesAnime, AnimeTheme } from '@/types/animethemes'
 import { Markdown } from '@comark/vue'
+import { PhCircleNotch } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { onMounted, ref, Teleport } from 'vue'
+import { useRouter } from 'vue-router'
 
-const media: Media | null = useAnimeStore().anime
+const media = ref<Media | null>(null)
 const currentTab = ref<'overview' | 'themes'>('overview')
 const themes = ref<AnimeTheme[] | null>(null)
 const selectedTheme = ref<AnimeTheme | null>(null)
 const isModalOpen = ref<boolean>(false)
+const router = useRouter()
+const isAnimeLoading = ref<boolean>(true)
 
 const isTabOpen = (name: 'overview' | 'themes') => {
   if (name !== currentTab.value) return ''
@@ -23,15 +26,24 @@ const onSelectTheme = (theme: AnimeTheme) => {
 }
 
 onMounted(async () => {
+  const animeId = Number(router.currentRoute.value.params.id)
+
+  if (!animeId || !Number.isInteger(animeId)) router.replace({ name: 'home' })
+
+  media.value = await invoke<Media>('fetch_anime_by_id', {
+    id: animeId,
+  })
+
   const result = await invoke<AnimeThemesAnime>('fetch_themes_by_anilist_id', {
-    anilistId: media?.id,
+    anilistId: media?.value.id,
   })
   themes.value = result.animethemes
+  isAnimeLoading.value = false
 })
 </script>
 
 <template>
-  <div>
+  <div v-if="!isAnimeLoading">
     <section id="cover" class="text-text">
       <div class="h-75 relative object-center">
         <img
@@ -113,5 +125,11 @@ onMounted(async () => {
       <ThemeEntriesModal v-model:is-open="isModalOpen" :theme="selectedTheme">
       </ThemeEntriesModal>
     </Teleport>
+  </div>
+  <div
+    v-else
+    class="flex flex-col h-full w-full grow text-text justify-center items-center"
+  >
+    <PhCircleNotch :size="52" class="animate-spin" />
   </div>
 </template>
