@@ -33,7 +33,8 @@ pub fn run() {
             anilist::fetch_anime_by_name,
             anilist::fetch_anime_by_id,
             animethemes::fetch_themes_by_anilist_id,
-            utils::lock_orientation
+            utils::lock_orientation,
+            utils::set_fullscreen
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
