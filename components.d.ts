@@ -21,10 +21,13 @@ declare module 'vue' {
     GenericSkeleton: typeof import('./src/components/loading/GenericSkeleton.vue')['default']
     HugeButton: typeof import('./src/components/HugeButton.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
+    PlayerHost: typeof import('./src/components/PlayerHost.vue')['default']
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     StandardChip: typeof import('./src/components/StandardChip.vue')['default']
     ThemeEntriesModal: typeof import('./src/components/ThemeEntriesModal.vue')['default']
+    Video: typeof import('./src/components/Video.vue')['default']
+    VideoPlayer: typeof import('./src/components/VideoPlayer.vue')['default']
   }
 }
