@@ -1,6 +1,7 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 mod anilist;
 mod animethemes;
+mod utils;
 
 use tauri_plugin_sql::{Migration, MigrationKind};
 
@@ -31,7 +32,8 @@ pub fn run() {
             anilist::fetch_random_known_anime,
             anilist::fetch_anime_by_name,
             anilist::fetch_anime_by_id,
-            animethemes::fetch_themes_by_anilist_id
+            animethemes::fetch_themes_by_anilist_id,
+            utils::lock_orientation
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
