@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use reqwest::Client;
+use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::time::Duration;
 
@@ -82,6 +82,7 @@ pub struct Video {
     pub basename: String,
     pub filename: String,
     pub nc: bool,
+    pub link: String,
     pub tags: Option<String>,
     pub uncen: bool,
     pub source: Option<String>,
@@ -94,7 +95,9 @@ struct FindAnimeResponse {
     find_anime_by_external_site: Vec<AnimeThemesAnime>,
 }
 
-pub async fn fetch_themes_by_anilist_id_cmd(anilist_id: i32) -> Result<Vec<AnimeThemesAnime>, String> {
+pub async fn fetch_themes_by_anilist_id_cmd(
+    anilist_id: i32,
+) -> Result<Vec<AnimeThemesAnime>, String> {
     let client = Client::builder()
         .timeout(Duration::from_secs(10))
         .user_agent("AnimeThemesMobile/0.1.0")
@@ -137,6 +140,7 @@ pub async fn fetch_themes_by_anilist_id_cmd(anilist_id: i32) -> Result<Vec<Anime
                             basename
                             filename
                             nc
+                            link
                             tags
                             uncen
                             source
@@ -169,23 +173,21 @@ pub async fn fetch_themes_by_anilist_id_cmd(anilist_id: i32) -> Result<Vec<Anime
         return Err(format!("AnimeThemes HTTP {status}: {text}"));
     }
 
-    let json_value: serde_json::Value = serde_json::from_str(&text)
-        .map_err(|e| format!("JSON invalide: {e}; réponse: {text}"))?;
+    let json_value: serde_json::Value =
+        serde_json::from_str(&text).map_err(|e| format!("JSON invalide: {e}; réponse: {text}"))?;
 
     if let Some(errors) = json_value.get("errors") {
         return Err(errors.to_string());
     }
 
-    let parsed: FindAnimeResponse = serde_json::from_value(json_value["data"].clone())
-        .map_err(|e| e.to_string())?;
+    let parsed: FindAnimeResponse =
+        serde_json::from_value(json_value["data"].clone()).map_err(|e| e.to_string())?;
 
     Ok(parsed.find_anime_by_external_site)
 }
 
 #[tauri::command]
-pub async fn fetch_themes_by_anilist_id(
-    anilist_id: i32,
-) -> Result<AnimeThemesAnime, String> {
+pub async fn fetch_themes_by_anilist_id(anilist_id: i32) -> Result<AnimeThemesAnime, String> {
     fetch_themes_by_anilist_id_cmd(anilist_id)
         .await?
         .into_iter()
