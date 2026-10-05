@@ -47,18 +47,21 @@ const wakeControls = () => {
       @click="wakeControls()"
     />
 
+    <Transition name="controls">
+      <div
+        class="absolute bottom-0 left-0 right-0 m-1 rounded-sm h-10 backdrop-blur-sm"
+        aria-hidden="true"
+        v-if="showControls"
+      />
+    </Transition>
+
     <Transition name="reveal" mode="out-in">
       <div
-        class="controls absolute flex flex-row bottom-0 left-0 right-0 rounded-sm m-1 text-text"
+        class="controls absolute flex flex-row bottom-0 left-0 right-0 rounded-sm m-1 h-10 text-text"
         @pointerdown="stop()"
         @pointerup="start()"
         v-show="showControls"
       >
-        <div
-          class="absolute inset-0 rounded-sm backdrop-blur-sm bg-background/20"
-          aria-hidden="true"
-        />
-
         <div class="relative flex flex-row items-center w-full">
           <button type="button" class="touchable" @click="playing = !playing">
             <PhPlay :size="24" v-if="!playing" />
@@ -76,11 +79,19 @@ const wakeControls = () => {
               <PhSpeakerSimpleSlash :size="24" v-else />
             </button>
 
+            <Transition name="controls" mode="out-in">
+              <div
+                ref="volumePopup"
+                v-show="isVolumePopupVisible"
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex items-center justify-center h-22 w-4 rounded-sm backdrop-blur-sm bg-background/20"
+              />
+            </Transition>
+
             <Transition name="reveal" mode="out-in">
               <div
                 ref="volumePopup"
                 v-show="isVolumePopupVisible"
-                class="volume absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex items-center justify-center p-2 rounded-sm backdrop-blur-sm bg-background/20"
+                class="volume absolute bottom-full mb-2 left-1/2 -translate-x-1/2 flex items-center justify-center"
               >
                 <input
                   type="range"
@@ -88,7 +99,7 @@ const wakeControls = () => {
                   max="1"
                   step="0.01"
                   v-model="volume"
-                  class="w-full volume-slider volume-slider--vertical h-22 bg-surface/50 accent-primary"
+                  class="w-full volume-slider volume-slider--vertical h-22 p-1 bg-surface/50 accent-primary"
                   :style="{ '--fill': `${volume * 100}%` }"
                 />
               </div>
@@ -111,7 +122,7 @@ const wakeControls = () => {
             />
           </div>
 
-          <span class="text-text text-sm font-text self-center">
+          <span class="text-text text-sm font-text self-center font-bold">
             {{ secondsToTime(currentTime) }} /
             {{ secondsToTime(duration) }}
           </span>
@@ -183,7 +194,6 @@ const wakeControls = () => {
   appearance: none;
   background: transparent;
   direction: ltr;
-  height: 96px;
 }
 
 .volume-slider::-webkit-slider-runnable-track {
@@ -228,5 +238,15 @@ const wakeControls = () => {
   height: 0px;
   border-radius: 5px;
   background: var(--color-primary);
+}
+
+.controls-enter-active,
+.controls-leave-active {
+  transition: background-color 0.3s ease;
+}
+
+.controls-enter-from,
+.controls-leave-to {
+  background-color: transparent;
 }
 </style>
