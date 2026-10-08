@@ -18,7 +18,7 @@
     "@phosphor-icons/vue": "^2.2.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tauri-apps/api": "^2.11.1",
-    "@tauri-apps/plugin-http": "~2.5.9",
+    "@tauri-apps/plugin-http": "^2.6.0",
     "@tauri-apps/plugin-opener": "^2.5.5",
     "@tauri-apps/plugin-sql": "~2.4.1",
     "@types/node": "^26.5.1",
