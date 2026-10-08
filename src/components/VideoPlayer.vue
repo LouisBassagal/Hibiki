@@ -44,7 +44,7 @@ onClickOutside(volumePopup, () => {
 })
 
 const onFullscreenEnter = async () => {
-  await invoke('lock_orientation', { orientation: 'landscape' }).catch(
+  await invoke('lock_orientation', { orientation: 'sensor_landscape' }).catch(
     (err) => {
       console.error('Failed to lock orientation:', err)
     }
@@ -65,6 +65,10 @@ const onFullscreenExit = async () => {
   await exit()
 }
 
+const onPlay = () => {
+  playing.value = true
+}
+
 onUnmounted(async () => {
   onFullscreenExit()
 })
@@ -80,6 +84,7 @@ onUnmounted(async () => {
       playsinline
       preload="metadata"
       @click="showControls = true"
+      @canplay="onPlay"
     />
 
     <!-- Loader -->
