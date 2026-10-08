@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { VideoExtended } from '@/types/extended'
 import { secondsToTime } from '@/utils/math'
-import { PhPlay, PhPause, PhCornersIn, PhCornersOut } from '@phosphor-icons/vue'
+import {
+  PhPlay,
+  PhPause,
+  PhCornersIn,
+  PhCornersOut,
+  PhCircleNotch,
+} from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { useMediaControls, onClickOutside, useFullscreen } from '@vueuse/core'
 import { computed, onUnmounted, useTemplateRef } from 'vue'
@@ -12,12 +18,16 @@ const props = defineProps<{
   poster?: string
 }>()
 
+// CONST
+const BLACK_POSTER =
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="1" height="1" fill="black"/></svg>'
+
 // References
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 const player = useTemplateRef<HTMLDivElement>('player')
 
-const { playing, currentTime, duration } = useMediaControls(videoRef, {
+const { playing, currentTime, duration, waiting } = useMediaControls(videoRef, {
   src: props.video?.link,
 })
 const { isFullscreen, enter, exit } = useFullscreen(player)
@@ -65,11 +75,20 @@ onUnmounted(async () => {
     <video
       ref="video"
       class="media"
-      :src="video?.link"
-      :poster="poster"
+      :src="`${video?.link}#t=0.001`"
+      :poster="poster || BLACK_POSTER"
       playsinline
+      preload="metadata"
       @click="showControls = true"
     />
+
+    <!-- Loader -->
+    <div
+      v-if="waiting"
+      class="absolute flex justify-center items-center inset-0 pointer-events-none z-10"
+    >
+      <PhCircleNotch class="animate-spin" :size="72" />
+    </div>
 
     <Transition name="reveal" mode="out-in">
       <div
@@ -78,11 +97,12 @@ onUnmounted(async () => {
         @click="showControls = false"
       >
         <div
-          class="absolute top-3 font-title font-bold"
-          :class="{ 'mx-5': isFullscreen, 'mx-1': !isFullscreen }"
+          class="absolute flex top-3 font-title font-bold"
+          :class="{ 'mx-5': isFullscreen, 'mx-2.5': !isFullscreen }"
         >
           {{ video?.title?.romaji }}
         </div>
+
         <!-- Bottom part of player -->
         <div
           class="controls absolute flex flex-col bottom-0 left-0 right-0 my-5 text-text"
@@ -91,7 +111,7 @@ onUnmounted(async () => {
           <div class="flex flex-col w-full">
             <!-- Top part of the controls -->
             <div
-              class="relative flex flex-row items-center w-full justify-between"
+              class="relative flex flex-row items-center w-full justify-between px-2.5 mb-2"
             >
               <div class="flex flex-row">
                 <button
@@ -106,7 +126,7 @@ onUnmounted(async () => {
 
               <div class="flex flex-row">
                 <span
-                  class="text-text relative text-sm font-text self-center before:content-[00:00]"
+                  class="text-text relative text-sm font-text self-center mr-2.5 before:content-[00:00]"
                 >
                   {{ secondsToTime(currentTime) }} /
                   <span class="font-bold">
@@ -159,16 +179,6 @@ onUnmounted(async () => {
   overflow: hidden;
 }
 
-.player.is-fullscreen {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  aspect-ratio: auto;
-}
-
 .media {
   display: block;
   width: 100%;
@@ -179,23 +189,6 @@ onUnmounted(async () => {
 .controls.hidden {
   opacity: 0;
   pointer-events: none;
-}
-
-.controls button {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-.time {
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  min-width: 36px;
 }
 
 .volume {
