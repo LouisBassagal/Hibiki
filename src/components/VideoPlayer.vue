@@ -1,22 +1,9 @@
 <script setup lang="ts">
 import { secondsToTime } from '@/utils/math'
-import {
-  PhPlay,
-  PhPause,
-  PhCornersIn,
-  PhCornersOut,
-  PhSpeakerSimpleHigh,
-  PhSpeakerSimpleLow,
-  PhSpeakerSimpleSlash,
-} from '@phosphor-icons/vue'
+import { PhPlay, PhPause, PhCornersIn, PhCornersOut } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
-import {
-  useTimeoutFn,
-  useMediaControls,
-  onClickOutside,
-  useFullscreen,
-} from '@vueuse/core'
-import { onMounted, onUnmounted, useTemplateRef } from 'vue'
+import { useMediaControls, onClickOutside, useFullscreen } from '@vueuse/core'
+import { computed, onUnmounted, useTemplateRef } from 'vue'
 import { ref } from 'vue'
 
 const props = defineProps<{ src: string; poster?: string }>()
@@ -26,26 +13,21 @@ const video = useTemplateRef<HTMLVideoElement>('video')
 const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 const player = useTemplateRef<HTMLDivElement>('player')
 
-const { playing, volume, currentTime, duration } = useMediaControls(video, {
+const { playing, currentTime, duration } = useMediaControls(video, {
   src: props.src,
 })
-const { start, stop } = useTimeoutFn(() => {
-  showControls.value = false
-}, 3000)
 const { isFullscreen, enter, exit } = useFullscreen(player)
 
 // Values
 const isVolumePopupVisible = ref(false)
 const showControls = ref(true)
+const progress = computed(() => {
+  return duration.value ? (currentTime.value / duration.value) * 100 : 0
+})
 
 onClickOutside(volumePopup, () => {
   isVolumePopupVisible.value = false
 })
-
-const wakeControls = () => {
-  showControls.value = true
-  start()
-}
 
 const onFullscreenEnter = async () => {
   await invoke('lock_orientation', { orientation: 'landscape' }).catch(
@@ -82,97 +64,76 @@ onUnmounted(async () => {
       :src="src"
       :poster="poster"
       playsinline
-      @click="wakeControls()"
+      @click="showControls = true"
     />
-
-    <Transition name="controls-background" mode="out-in">
-      <div
-        class="absolute bottom-0 left-0 right-0 m-1 rounded-sm h-10 backdrop-blur-sm"
-        aria-hidden="true"
-        v-show="showControls"
-      />
-    </Transition>
 
     <Transition name="reveal" mode="out-in">
       <div
-        class="controls absolute flex flex-row bottom-0 left-0 right-0 rounded-sm m-1 h-10 text-text"
-        @pointerdown="stop()"
-        @pointerup="start()"
+        class="bg-background/50 absolute inset-0"
         v-show="showControls"
+        @click="showControls = false"
       >
-        <div class="relative flex flex-row items-center w-full">
-          <button type="button" class="touchable" @click="playing = !playing">
-            <PhPlay :size="24" v-if="!playing" />
-            <PhPause :size="24" v-else />
-          </button>
-
-          <div class="relative">
-            <button
-              type="button"
-              class="touchable"
-              @click="isVolumePopupVisible = !isVolumePopupVisible"
+        <!-- Bottom part of player -->
+        <div
+          class="controls absolute flex flex-col bottom-0 left-0 right-0 my-5 text-text"
+          :class="{ 'mx-5': isFullscreen, 'mx-1': !isFullscreen }"
+        >
+          <div class="flex flex-col w-full">
+            <!-- Top part of the controls -->
+            <div
+              class="relative flex flex-row items-center w-full justify-between"
             >
-              <PhSpeakerSimpleHigh :size="24" v-if="volume > 0.5" />
-              <PhSpeakerSimpleLow :size="24" v-else-if="volume > 0" />
-              <PhSpeakerSimpleSlash :size="24" v-else />
-            </button>
-
-            <Transition name="controls" mode="out-in">
-              <div
-                ref="volumePopup"
-                v-show="isVolumePopupVisible"
-                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex items-center justify-center h-22 w-4 rounded-sm backdrop-blur-sm bg-background/20"
-              />
-            </Transition>
-
-            <Transition name="reveal" mode="out-in">
-              <div
-                ref="volumePopup"
-                v-show="isVolumePopupVisible"
-                class="volume absolute bottom-full mb-2 left-1/2 -translate-x-1/2 flex items-center justify-center"
-              >
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  v-model="volume"
-                  class="w-full volume-slider volume-slider--vertical h-22 p-1 bg-surface/50 accent-primary"
-                  :style="{ '--fill': `${volume * 100}%` }"
-                />
+              <div class="flex flex-row">
+                <button
+                  type="button"
+                  class="touchable"
+                  @click.stop="playing = !playing"
+                >
+                  <PhPlay :size="24" v-if="!playing" />
+                  <PhPause :size="24" v-else />
+                </button>
               </div>
-            </Transition>
+
+              <div class="flex flex-row">
+                <span
+                  class="text-text relative text-sm font-text self-center before:content-[00:00]"
+                >
+                  {{ secondsToTime(currentTime) }} /
+                  <span class="font-bold">
+                    {{ secondsToTime(duration) }}
+                  </span>
+                </span>
+
+                <button
+                  type="button"
+                  class="touchable"
+                  @click="
+                    !isFullscreen ? onFullscreenEnter() : onFullscreenExit()
+                  "
+                >
+                  <PhCornersOut v-if="!isFullscreen" :size="24" />
+                  <PhCornersIn v-else :size="24" />
+                </button>
+              </div>
+            </div>
+
+            <!-- Bottom part of controls : Player track -->
+            <div
+              class="bottom-full justify-center w-full rounded-sm flex flex-row grow self-center mx-3"
+            >
+              <input
+                type="range"
+                min="0"
+                :max="duration"
+                step="0.01"
+                v-model="currentTime"
+                class="video-slider w-full mx-3"
+                :style="{
+                  '--fill': `${progress}%`,
+                }"
+              />
+            </div>
           </div>
-
-          <div
-            class="bottom-full justify-center rounded-sm bg-background/20 flex flex-row grow self-center mx-2.5"
-          >
-            <input
-              type="range"
-              min="0"
-              :max="duration"
-              step="0.01"
-              v-model="currentTime"
-              class="video-slider w-full h-1 bg-transparent accent-primary"
-              :style="{
-                '--fill': `${(currentTime / duration) * 100}%`,
-              }"
-            />
-          </div>
-
-          <span class="text-text text-sm font-text self-center font-bold">
-            {{ secondsToTime(currentTime) }} /
-            {{ secondsToTime(duration) }}
-          </span>
-
-          <button
-            type="button"
-            class="touchable"
-            @click="!isFullscreen ? onFullscreenEnter() : onFullscreenExit()"
-          >
-            <PhCornersOut v-if="!isFullscreen" :size="24" />
-            <PhCornersIn v-else :size="24" />
-          </button>
         </div>
       </div>
     </Transition>
@@ -265,9 +226,8 @@ onUnmounted(async () => {
 }
 
 .video-slider::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
+  height: 4px;
+  border-radius: 999px;
   background: linear-gradient(
     to right,
     var(--color-primary) var(--fill),
@@ -277,27 +237,11 @@ onUnmounted(async () => {
 
 .video-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   width: 0px;
   height: 0px;
-  border-radius: 5px;
+  border-radius: 50%;
   background: var(--color-primary);
-}
-
-.controls-background-enter-active,
-.controls-background-leave-active {
-  transition: backdrop-filter 0.3s ease;
-  -webkit-transition: -webkit-backdrop-filter 0.3s ease;
-}
-
-.controls-background-enter-from,
-.controls-background-leave-to {
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
-}
-
-.controls-background-enter-to,
-.controls-background-leave-from {
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  margin-top: -5px;
 }
 </style>
