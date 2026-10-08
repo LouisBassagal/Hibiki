@@ -2,7 +2,7 @@
 import { AnimeTheme } from '@/types/animethemes'
 import { PhCaretRight } from '@phosphor-icons/vue'
 
-const props = defineProps<{
+defineProps<{
   theme: AnimeTheme | null
 }>()
 

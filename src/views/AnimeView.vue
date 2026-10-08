@@ -4,7 +4,7 @@ import type { AnimeThemesAnime, AnimeTheme } from '@/types/animethemes'
 import { Markdown } from '@comark/vue'
 import { PhCircleNotch } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
-import { onMounted, ref, Teleport } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const media = ref<Media | null>(null)
