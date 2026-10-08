@@ -42,7 +42,7 @@ const onBackdropClick = (event: MouseEvent) => {
           v-for="video in entry.videos.nodes"
           :entry="entry"
           :video="video"
-          :title="theme?.song?.title?.romaji"
+          :title="theme?.song?.title ?? undefined"
         />
       </template>
     </div>

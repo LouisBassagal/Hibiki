@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { VideoExtended } from '@/types/extended'
 import { secondsToTime } from '@/utils/math'
 import { PhPlay, PhPause, PhCornersIn, PhCornersOut } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
@@ -6,15 +7,18 @@ import { useMediaControls, onClickOutside, useFullscreen } from '@vueuse/core'
 import { computed, onUnmounted, useTemplateRef } from 'vue'
 import { ref } from 'vue'
 
-const props = defineProps<{ src: string; poster?: string }>()
+const props = defineProps<{
+  video: VideoExtended | undefined
+  poster?: string
+}>()
 
 // References
-const video = useTemplateRef<HTMLVideoElement>('video')
+const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 const player = useTemplateRef<HTMLDivElement>('player')
 
-const { playing, currentTime, duration } = useMediaControls(video, {
-  src: props.src,
+const { playing, currentTime, duration } = useMediaControls(videoRef, {
+  src: props.video?.link,
 })
 const { isFullscreen, enter, exit } = useFullscreen(player)
 
@@ -61,7 +65,7 @@ onUnmounted(async () => {
     <video
       ref="video"
       class="media"
-      :src="src"
+      :src="video?.link"
       :poster="poster"
       playsinline
       @click="showControls = true"
@@ -73,6 +77,12 @@ onUnmounted(async () => {
         v-show="showControls"
         @click="showControls = false"
       >
+        <div
+          class="absolute top-3 font-title font-bold"
+          :class="{ 'mx-5': isFullscreen, 'mx-1': !isFullscreen }"
+        >
+          {{ video?.title?.romaji }}
+        </div>
         <!-- Bottom part of player -->
         <div
           class="controls absolute flex flex-col bottom-0 left-0 right-0 my-5 text-text"

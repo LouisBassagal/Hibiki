@@ -31,6 +31,6 @@ onUnmounted(async () => {
   <section
     class="mt-3 overflow-hidden rounded-sm bg-black shadow-xl shadow-black/30"
   >
-    <VideoPlayer :src="currentEntry?.link || ''" />
+    <VideoPlayer :video="currentEntry || undefined" />
   </section>
 </template>
