@@ -60,6 +60,7 @@ export interface Video {
   basename: string
   filename: string
   nc: boolean
+  link: string
   tags: string | null
   uncen: boolean
   source: string | null

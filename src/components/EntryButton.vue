@@ -1,21 +1,36 @@
 <script setup lang="ts">
-import { ThemeEntry, Video } from '@/types/animethemes'
+import { usePlayerStore } from '@/stores/usePlayerState'
+import { SongTitle, ThemeEntry, Video } from '@/types/animethemes'
 import { PhHeart, PhPlus } from '@phosphor-icons/vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
-  title: string | undefined | null
+  title: SongTitle | undefined
   entry: ThemeEntry | undefined
   video: Video | undefined
 }>()
+
+const router = useRouter()
+const playerStore = usePlayerStore()
+
+const onSelectTheme = () => {
+  if (!props.video) return
+  playerStore.play({ ...props.video, title: props?.title })
+  router.push({ name: 'player' })
+}
 </script>
 
 <template>
   <div
     class="relative bg-surface w-full flex flex-row text-left p-2.5 gap-2.5 rounded-sm text-text font-semibold font-text"
   >
-    <button type="button" class="touchable w-full rounded-sm">
+    <button
+      type="button"
+      class="touchable w-full rounded-sm"
+      @click="onSelectTheme"
+    >
       <span class="flex flex-row gap-2.5 text-lg mb-2">
-        {{ title }}
+        {{ title?.romaji }}
         <span class="text-text/75">v{{ entry?.version }}</span>
       </span>
       <span class="flex flex-row gap-1">

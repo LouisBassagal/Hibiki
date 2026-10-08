@@ -1,10 +1,10 @@
 use chrono::{Datelike, Utc};
+use rand::seq::{IndexedRandom, IteratorRandom};
+use rand::Rng;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::time::Duration;
-use rand::seq::{IndexedRandom, IteratorRandom};
-use rand::Rng;
 
 #[derive(Debug, Clone, Copy)]
 enum RandomStrategy {
@@ -290,10 +290,7 @@ pub async fn fetch_random_known_anime() -> Result<AnimeMedia, String> {
         RandomStrategy::CurrentTrending,
     ];
 
-    let strategy = strategies
-        .choose(&mut rand::rng())
-        .copied()
-        .unwrap();
+    let strategy = strategies.choose(&mut rand::rng()).copied().unwrap();
 
     let (query, variables) = build_query_for_strategy(strategy);
 
@@ -321,8 +318,8 @@ pub async fn fetch_random_known_anime() -> Result<AnimeMedia, String> {
         return Err(format!("AniList HTTP {status}: {response_text}"));
     }
 
-    let response_json: serde_json::Value = serde_json::from_str(&response_text)
-        .map_err(|error| format!("JSON invalide: {error}"))?;
+    let response_json: serde_json::Value =
+        serde_json::from_str(&response_text).map_err(|error| format!("JSON invalide: {error}"))?;
 
     if let Some(errors) = response_json.get("errors") {
         return Err(errors.to_string());
@@ -391,12 +388,15 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
             let season = seasons.choose(&mut rng).unwrap();
             let year = rng.random_range(2000..=2025);
 
-            (query, json!({
-                "page": 1,
-                "perPage": 20,
-                "season": season,
-                "year": year
-            }))
+            (
+                query,
+                json!({
+                    "page": 1,
+                    "perPage": 20,
+                    "season": season,
+                    "year": year
+                }),
+            )
         }
 
         RandomStrategy::TopRatedAllTime => {
@@ -445,7 +445,11 @@ fn build_query_for_strategy(strategy: RandomStrategy) -> (&'static str, serde_js
 }
 
 #[tauri::command]
-pub async fn fetch_anime_by_name(search: &str, page: u32, count: u32) -> Result<Vec<AnimeMedia>, String> {
+pub async fn fetch_anime_by_name(
+    search: &str,
+    page: u32,
+    count: u32,
+) -> Result<Vec<AnimeMedia>, String> {
     let client = Client::builder()
         .timeout(Duration::from_secs(10))
         .build()
