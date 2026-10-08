@@ -23,11 +23,17 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      # Doit passer avant setup-node pour que le cache pnpm fonctionne
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10 # inutile si "packageManager" est défini dans package.json
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm # remplace par pnpm / yarn si besoin
+          cache: pnpm
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -40,28 +46,28 @@ jobs:
           workspaces: './src-tauri -> target'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       # Seulement si gen/android n'est pas commité dans le repo
       - name: Init Android project
         run: |
           if [ ! -d "src-tauri/gen/android" ]; then
-            npm run tauri android init
+            pnpm tauri android init
           fi
 
       - name: Setup signing keystore
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > $RUNNER_TEMP/release.keystore
-          cat > src-tauri/gen/android/keystore.properties <<EOF
+          cat > src-tauri/gen/android/keystore.properties <<EOT
           password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
           storeFile=$RUNNER_TEMP/release.keystore
-          EOF
+          EOT
 
       - name: Build APK
         env:
           NDK_HOME: ${{ env.ANDROID_NDK_LATEST_HOME }}
-        run: npm run tauri android build -- --apk
+        run: pnpm tauri android build --apk
 
       - name: Locate APK
         id: apk
