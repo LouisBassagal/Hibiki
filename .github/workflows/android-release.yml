@@ -1,0 +1,85 @@
+name: Build Android APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write # nécessaire pour créer la release
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm # remplace par pnpm / yarn si besoin
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Seulement si gen/android n'est pas commité dans le repo
+      - name: Init Android project
+        run: |
+          if [ ! -d "src-tauri/gen/android" ]; then
+            npm run tauri android init
+          fi
+
+      - name: Setup signing keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > $RUNNER_TEMP/release.keystore
+          cat > src-tauri/gen/android/keystore.properties <<EOF
+          password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          storeFile=$RUNNER_TEMP/release.keystore
+          EOF
+
+      - name: Build APK
+        env:
+          NDK_HOME: ${{ env.ANDROID_NDK_LATEST_HOME }}
+        run: npm run tauri android build -- --apk
+
+      - name: Locate APK
+        id: apk
+        run: |
+          APK=$(find src-tauri/gen/android/app/build/outputs/apk -name "*.apk" | head -n 1)
+          echo "path=$APK" >> $GITHUB_OUTPUT
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: ${{ steps.apk.outputs.path }}
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.apk.outputs.path }}
