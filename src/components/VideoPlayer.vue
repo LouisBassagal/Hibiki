@@ -3,27 +3,39 @@ import { secondsToTime } from '@/utils/math'
 import {
   PhPlay,
   PhPause,
-  PhArrowsOut,
+  PhCornersIn,
+  PhCornersOut,
   PhSpeakerSimpleHigh,
   PhSpeakerSimpleLow,
   PhSpeakerSimpleSlash,
 } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
-import { useTimeoutFn, useMediaControls, onClickOutside } from '@vueuse/core'
-import { onMounted, useTemplateRef } from 'vue'
+import {
+  useTimeoutFn,
+  useMediaControls,
+  onClickOutside,
+  useFullscreen,
+} from '@vueuse/core'
+import { onMounted, onUnmounted, useTemplateRef } from 'vue'
 import { ref } from 'vue'
 
 const props = defineProps<{ src: string; poster?: string }>()
 
+// References
 const video = useTemplateRef<HTMLVideoElement>('video')
+const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
+const player = useTemplateRef<HTMLDivElement>('player')
+
 const { playing, volume, currentTime, duration } = useMediaControls(video, {
   src: props.src,
 })
 const { start, stop } = useTimeoutFn(() => {
   showControls.value = false
 }, 3000)
+const { isFullscreen, enter, exit } = useFullscreen(player)
+
+// Values
 const isVolumePopupVisible = ref(false)
-const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 const showControls = ref(true)
 
 onClickOutside(volumePopup, () => {
@@ -34,10 +46,36 @@ const wakeControls = () => {
   showControls.value = true
   start()
 }
+
+const onFullscreenEnter = async () => {
+  await invoke('lock_orientation', { orientation: 'landscape' }).catch(
+    (err) => {
+      console.error('Failed to lock orientation:', err)
+    }
+  )
+  await invoke('set_fullscreen', { hide: true }).catch((err) => {
+    console.error('Failed to hide android layout:', err)
+  })
+  await enter()
+}
+
+const onFullscreenExit = async () => {
+  await invoke('lock_orientation', { orientation: 'portrait' }).catch((err) => {
+    console.error('Failed to lock orientation:', err)
+  })
+  await invoke('set_fullscreen', { hide: false }).catch((err) => {
+    console.error('Failed to hide android layout:', err)
+  })
+  await exit()
+}
+
+onUnmounted(async () => {
+  onFullscreenExit()
+})
 </script>
 
 <template>
-  <div id="player" class="player text-text">
+  <div id="player" ref="player" class="player text-text">
     <video
       ref="video"
       class="media"
@@ -47,11 +85,11 @@ const wakeControls = () => {
       @click="wakeControls()"
     />
 
-    <Transition name="controls">
+    <Transition name="controls-background" mode="out-in">
       <div
         class="absolute bottom-0 left-0 right-0 m-1 rounded-sm h-10 backdrop-blur-sm"
         aria-hidden="true"
-        v-if="showControls"
+        v-show="showControls"
       />
     </Transition>
 
@@ -127,8 +165,13 @@ const wakeControls = () => {
             {{ secondsToTime(duration) }}
           </span>
 
-          <button type="button" class="touchable">
-            <PhArrowsOut :size="24" />
+          <button
+            type="button"
+            class="touchable"
+            @click="!isFullscreen ? onFullscreenEnter() : onFullscreenExit()"
+          >
+            <PhCornersOut v-if="!isFullscreen" :size="24" />
+            <PhCornersIn v-else :size="24" />
           </button>
         </div>
       </div>
@@ -240,13 +283,21 @@ const wakeControls = () => {
   background: var(--color-primary);
 }
 
-.controls-enter-active,
-.controls-leave-active {
-  transition: background-color 0.3s ease;
+.controls-background-enter-active,
+.controls-background-leave-active {
+  transition: backdrop-filter 0.3s ease;
+  -webkit-transition: -webkit-backdrop-filter 0.3s ease;
 }
 
-.controls-enter-from,
-.controls-leave-to {
-  background-color: transparent;
+.controls-background-enter-from,
+.controls-background-leave-to {
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+}
+
+.controls-background-enter-to,
+.controls-background-leave-from {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 </style>
