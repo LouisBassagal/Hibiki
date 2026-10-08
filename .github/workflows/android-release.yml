@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm # remplace par pnpm / yarn si besoin
+          cache: npm # remplace par pnpm / yarn si besoin
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
