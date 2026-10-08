@@ -65,9 +65,12 @@ jobs:
           EOT
 
       - name: Build APK
-        env:
-          NDK_HOME: ${{ env.ANDROID_NDK_LATEST_HOME }}
-        run: pnpm tauri android build --apk
+        run: |
+          export NDK_HOME="$ANDROID_NDK_LATEST_HOME"
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "NDK_HOME=$NDK_HOME"
+          ls "$NDK_HOME"
+          pnpm tauri android build --apk
 
       - name: Locate APK
         id: apk
