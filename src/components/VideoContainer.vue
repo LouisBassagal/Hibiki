@@ -16,16 +16,14 @@ const { style } = useDraggable(containerRef, {
 
 <template>
   <div
+    v-if="mode !== 'hidden'"
     ref="container"
     class="video-container fixed top-0 bg-white w-60 overflow-hidden touch-none select-none z-50"
     :class="{
-      'w-60 rounded-sm': mode === 'full',
+      'w-60 rounded-sm': mode === 'mini',
     }"
     :style="style"
   >
-    <VideoPlayer
-      :class="{ 'pointer-events-none': mode === 'mini' }"
-      :video="currentEntry || undefined"
-    />
+    <VideoPlayer :video="currentEntry || undefined" />
   </div>
 </template>

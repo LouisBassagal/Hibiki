@@ -10,14 +10,13 @@ export const usePlayerStore = defineStore('player', {
 
   actions: {
     play(entry: VideoExtended) {
-      console.log('JE PASSE DANS LE PLAYER STATE')
       this.currentEntry = entry
-      this.mode = 'mini'
+      this.mode = 'full'
     },
     minimize() {
       this.mode = 'mini'
     },
-    expand() {
+    maximize() {
       this.mode = 'full'
     },
     close() {
