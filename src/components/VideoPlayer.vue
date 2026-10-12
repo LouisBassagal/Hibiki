@@ -9,7 +9,7 @@ import {
   PhCircleNotch,
 } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
-import { useMediaControls, onClickOutside, useFullscreen } from '@vueuse/core'
+import { useMediaControls, onClickOutside } from '@vueuse/core'
 import { computed, onUnmounted, useTemplateRef } from 'vue'
 import { ref } from 'vue'
 
@@ -25,16 +25,15 @@ const BLACK_POSTER =
 // References
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
-const player = useTemplateRef<HTMLDivElement>('player')
 
 const { playing, currentTime, duration, waiting } = useMediaControls(videoRef, {
   src: props.video?.link,
 })
-const { isFullscreen, enter, exit } = useFullscreen(player)
 
 // Values
 const isVolumePopupVisible = ref(false)
 const showControls = ref(true)
+const isFullscreen = ref(false)
 const progress = computed(() => {
   return duration.value ? (currentTime.value / duration.value) * 100 : 0
 })
@@ -44,6 +43,7 @@ onClickOutside(volumePopup, () => {
 })
 
 const onFullscreenEnter = async () => {
+  isFullscreen.value = true
   await invoke('lock_orientation', { orientation: 'sensor_landscape' }).catch(
     (err) => {
       console.error('Failed to lock orientation:', err)
@@ -52,17 +52,16 @@ const onFullscreenEnter = async () => {
   await invoke('set_fullscreen', { hide: true }).catch((err) => {
     console.error('Failed to hide android layout:', err)
   })
-  await enter()
 }
 
 const onFullscreenExit = async () => {
+  isFullscreen.value = false
   await invoke('lock_orientation', { orientation: 'portrait' }).catch((err) => {
     console.error('Failed to lock orientation:', err)
   })
   await invoke('set_fullscreen', { hide: false }).catch((err) => {
     console.error('Failed to hide android layout:', err)
   })
-  await exit()
 }
 
 const onPlay = () => {
@@ -75,7 +74,12 @@ onUnmounted(async () => {
 </script>
 
 <template>
-  <div id="player" ref="player" class="player text-text">
+  <div
+    id="player"
+    ref="player"
+    class="player text-text"
+    :class="{ 'player--fullscreen': isFullscreen }"
+  >
     <video
       ref="video"
       class="media"
@@ -182,6 +186,15 @@ onUnmounted(async () => {
   aspect-ratio: 16 / 9;
   background: #000;
   overflow: hidden;
+}
+
+.player--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100dvh;
+  aspect-ratio: auto;
 }
 
 .media {

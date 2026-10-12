@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {
-  PhGearSix,
+  // PhGearSix,
   PhHouseLine,
   PhList,
-  PhListDashes,
+  // PhListDashes,
   PhMagnifyingGlass,
-  PhMusicNote,
-  PhShuffle,
-  PhUser,
+  // PhMusicNote,
+  // PhShuffle,
+  // PhUser,
   PhX,
 } from '@phosphor-icons/vue'
 import { onClickOutside } from '@vueuse/core'
@@ -62,7 +62,9 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           </span>
         </RouterLink>
 
-        <RouterLink
+        <div />
+
+        <!-- <RouterLink
           to="/account"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
@@ -71,9 +73,11 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.account') }}
           </span>
-        </RouterLink>
+        </RouterLink> -->
 
-        <RouterLink
+        <div />
+
+        <!-- <RouterLink
           to="/search"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
@@ -82,9 +86,11 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.playlists') }}
           </span>
-        </RouterLink>
+        </RouterLink> -->
 
-        <RouterLink
+        <div />
+
+        <!-- <RouterLink
           to="/search"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
@@ -93,9 +99,11 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.list') }}
           </span>
-        </RouterLink>
+        </RouterLink> -->
 
-        <RouterLink
+        <div />
+
+        <!-- <RouterLink
           to="/search"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
@@ -104,9 +112,10 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.random') }}
           </span>
-        </RouterLink>
+        </RouterLink> -->
 
-        <RouterLink
+        <div />
+        <!-- <RouterLink
           to="/search"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
@@ -115,7 +124,7 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.settings') }}
           </span>
-        </RouterLink>
+        </RouterLink> -->
 
         <div />
 

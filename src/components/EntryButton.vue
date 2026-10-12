@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/usePlayerState'
 import { SongTitle, ThemeEntry, Video } from '@/types/animethemes'
-import { PhHeart, PhPlus } from '@phosphor-icons/vue'
+// import { PhHeart, PhPlus } from '@phosphor-icons/vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
@@ -41,7 +41,7 @@ const onSelectTheme = () => {
       </span>
     </button>
 
-    <div
+    <!-- <div
       class="flex flex-row gap-2.5 text-text/75 right-2.5 justify-center items-center"
     >
       <button type="button" @click.stop class="touchable h-fit rounded-sm">
@@ -54,6 +54,6 @@ const onSelectTheme = () => {
       >
         <PhHeart :size="28" />
       </button>
-    </div>
+    </div> -->
   </div>
 </template>

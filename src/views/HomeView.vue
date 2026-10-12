@@ -69,14 +69,14 @@ onMounted(async () => {
         </template>
       </HugeButton>
 
-      <HugeButton>
+      <!-- <HugeButton>
         <template #icon>
           <AnilistIcon class="size-17.5" />
         </template>
         <template #default>
           {{ $t('home.buttons.MyList') }}
         </template>
-      </HugeButton>
+      </HugeButton> -->
     </section>
 
     <section id="lists" class="flex flex-col gap-5">
