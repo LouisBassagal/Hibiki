@@ -1,6 +1,5 @@
 import AnimeView from '@/views/AnimeView.vue'
 import HomeView from '@/views/HomeView.vue'
-import PlayerView from '@/views/PlayerView.vue'
 import SearchView from '@/views/SearchView.vue'
 import { createWebHistory, createRouter } from 'vue-router'
 
@@ -20,7 +19,6 @@ const routes = [
     component: AnimeView,
     name: 'anime',
   },
-  { path: '/player', component: PlayerView, name: 'player' },
 ]
 
 export const router = createRouter({

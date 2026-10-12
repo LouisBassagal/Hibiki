@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { usePlayerStore } from '@/stores/usePlayerState'
 import { VideoExtended } from '@/types/extended'
 import { secondsToTime } from '@/utils/math'
 import {
@@ -7,16 +8,21 @@ import {
   PhCornersIn,
   PhCornersOut,
   PhCircleNotch,
+  PhX,
 } from '@phosphor-icons/vue'
+// import { onBackButtonPress } from '@tauri-apps/api/app'
 import { invoke } from '@tauri-apps/api/core'
 import { useMediaControls, onClickOutside } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { computed, onUnmounted, useTemplateRef } from 'vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps<{
   video: VideoExtended | undefined
   poster?: string
 }>()
+
+const { mode } = storeToRefs(usePlayerStore())
 
 // CONST
 const BLACK_POSTER =
@@ -26,8 +32,10 @@ const BLACK_POSTER =
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 
+const source = computed(() => props.video?.link ?? '')
+
 const { playing, currentTime, duration, waiting } = useMediaControls(videoRef, {
-  src: props.video?.link,
+  src: source,
 })
 
 // Values
@@ -65,12 +73,22 @@ const onFullscreenExit = async () => {
 }
 
 const onPlay = () => {
+  console.log(source)
   playing.value = true
 }
 
 onUnmounted(async () => {
   onFullscreenExit()
 })
+
+watch(
+  mode,
+  (newValue) => {
+    if (newValue === 'full') onFullscreenEnter()
+    if (newValue === 'mini') onFullscreenExit()
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -83,7 +101,6 @@ onUnmounted(async () => {
     <video
       ref="video"
       class="media"
-      :src="`${video?.link}#t=0.001`"
       :poster="poster || BLACK_POSTER"
       playsinline
       preload="auto"
@@ -106,10 +123,17 @@ onUnmounted(async () => {
         @click="showControls = false"
       >
         <div
-          class="absolute flex top-3 font-title font-bold"
-          :class="{ 'mx-5': isFullscreen, 'mx-2.5': !isFullscreen }"
+          class="absolute w-full flex flex-row justify-between top-3 font-title font-bold"
+          :class="{ 'px-5': isFullscreen, 'px-2.5': !isFullscreen }"
         >
           {{ video?.title?.romaji }}
+          <button
+            class="touchable"
+            type="button"
+            @click="usePlayerStore().close()"
+          >
+            <PhX :size="24" />
+          </button>
         </div>
 
         <!-- Bottom part of player -->
@@ -146,8 +170,10 @@ onUnmounted(async () => {
                 <button
                   type="button"
                   class="touchable"
-                  @click="
-                    !isFullscreen ? onFullscreenEnter() : onFullscreenExit()
+                  @click.stop="
+                    !isFullscreen
+                      ? usePlayerStore().maximize()
+                      : usePlayerStore().minimize()
                   "
                 >
                   <PhCornersOut v-if="!isFullscreen" :size="24" />
