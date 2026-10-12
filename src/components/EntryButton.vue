@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/usePlayerState'
 import { SongTitle, ThemeEntry, Video } from '@/types/animethemes'
+import { VideoExtended } from '@/types/extended.ts'
+
 // import { PhHeart, PhPlus } from '@phosphor-icons/vue'
-import { useRouter } from 'vue-router'
+import StandardChip from './StandardChip.vue'
 
 const props = defineProps<{
   title: SongTitle | undefined
@@ -10,13 +12,16 @@ const props = defineProps<{
   video: Video | undefined
 }>()
 
-const router = useRouter()
+const emits = defineEmits(['click'])
+
+// const router = useRouter()
 const playerStore = usePlayerStore()
 
 const onSelectTheme = () => {
   if (!props.video) return
-  playerStore.play({ ...props.video, title: props?.title })
-  router.push({ name: 'player' })
+  const extended: VideoExtended = { ...props.video, title: props?.title }
+  playerStore.play(extended)
+  emits('click')
 }
 </script>
 

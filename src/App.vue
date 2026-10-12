@@ -16,4 +16,5 @@ onMounted(async () => {
   <Layout>
     <RouterView />
   </Layout>
+  <VideoContainer />
 </template>

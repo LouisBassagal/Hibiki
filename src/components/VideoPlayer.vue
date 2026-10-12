@@ -8,6 +8,7 @@ import {
   PhCornersOut,
   PhCircleNotch,
 } from '@phosphor-icons/vue'
+// import { onBackButtonPress } from '@tauri-apps/api/app'
 import { invoke } from '@tauri-apps/api/core'
 import { useMediaControls, onClickOutside } from '@vueuse/core'
 import { computed, onUnmounted, useTemplateRef } from 'vue'
@@ -26,8 +27,10 @@ const BLACK_POSTER =
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
 const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 
+const source = computed(() => props.video?.link ?? '')
+
 const { playing, currentTime, duration, waiting } = useMediaControls(videoRef, {
-  src: props.video?.link,
+  src: source,
 })
 
 // Values
@@ -65,6 +68,7 @@ const onFullscreenExit = async () => {
 }
 
 const onPlay = () => {
+  console.log(source)
   playing.value = true
 }
 
@@ -83,7 +87,6 @@ onUnmounted(async () => {
     <video
       ref="video"
       class="media"
-      :src="`${video?.link}#t=0.001`"
       :poster="poster || BLACK_POSTER"
       playsinline
       preload="auto"

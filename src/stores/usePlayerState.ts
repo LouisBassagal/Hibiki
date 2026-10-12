@@ -4,14 +4,15 @@ import { defineStore } from 'pinia'
 export const usePlayerStore = defineStore('player', {
   state: () => ({
     currentEntry: null as VideoExtended | null,
-    // queue: [] as ThemeEntry[],
+    // queue: Array<VideoExtended>,
     mode: 'hidden' as 'hidden' | 'mini' | 'full',
-    isPlaying: false,
   }),
+
   actions: {
     play(entry: VideoExtended) {
+      console.log('JE PASSE DANS LE PLAYER STATE')
       this.currentEntry = entry
-      this.mode = 'full'
+      this.mode = 'mini'
     },
     minimize() {
       this.mode = 'mini'

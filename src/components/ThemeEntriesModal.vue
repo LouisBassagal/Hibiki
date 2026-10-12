@@ -43,6 +43,7 @@ const onBackdropClick = (event: MouseEvent) => {
           :entry="entry"
           :video="video"
           :title="theme?.song?.title ?? undefined"
+          @click="onClose"
         />
       </template>
     </div>

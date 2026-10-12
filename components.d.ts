@@ -26,6 +26,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     StandardChip: typeof import('./src/components/StandardChip.vue')['default']
     ThemeEntriesModal: typeof import('./src/components/ThemeEntriesModal.vue')['default']
+    VideoContainer: typeof import('./src/components/VideoContainer.vue')['default']
     VideoPlayer: typeof import('./src/components/VideoPlayer.vue')['default']
   }
 }
