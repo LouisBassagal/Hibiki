@@ -82,7 +82,7 @@ onUnmounted(async () => {
       :src="`${video?.link}#t=0.001`"
       :poster="poster || BLACK_POSTER"
       playsinline
-      preload="metadata"
+      preload="auto"
       @click="showControls = true"
       @canplay="onPlay"
     />
