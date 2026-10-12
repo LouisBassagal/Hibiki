@@ -1,6 +1,6 @@
-# AnimeThemes Mobile
+<h1><img src="public/hibiki.png" alt="Logo Hibiki" width="48" align="center" /> Hibiki</h1>
 
-AnimeThemes Mobile est une application Android dédiée aux openings et endings d'anime. Elle permet de découvrir des séries, de consulter leur fiche AniList et de retrouver leurs thèmes musicaux au même endroit.
+Hibiki est une application Android dédiée aux openings et endings d'anime. Elle permet de découvrir des séries, de consulter leur fiche AniList et de retrouver leurs thèmes musicaux au même endroit.
 
 Le projet combine une interface Vue.js avec un backend Rust/Tauri afin de proposer une expérience mobile native sur Android.
 
@@ -77,7 +77,15 @@ Les données AniList servent de pivot pour relier la fiche d'un anime à ses th�
 
 ## État du projet
 
-Le projet est actuellement en développement. L'écran d'accueil et la récupération des catalogues AniList sont en place ; le lecteur de thèmes, la recherche complète et les fonctions personnelles continuent d'être intégrés.
+Le projet est actuellement en développement. L'écran d'accueil et la récupération des catalogues AniList sont en place.
+
+## Roadmap
+
+| Fonctionnalité                                | État     |
+| --------------------------------------------- | -------- |
+| Lecture des thèmes d'anime (openings/endings) | Terminée |
+| Création et gestion de playlists              | À faire  |
+| Liaison avec un compte AniList                | À faire  |
 
 ## Licence
 
