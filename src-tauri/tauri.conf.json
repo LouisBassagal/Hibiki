@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "animethemesmobile",
+  "productName": "Hibiki",
   "version": "0.1.0",
   "identifier": "com.kane.animethemesmobile",
   "build": {
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "animethemesmobile",
+        "title": "Hibiki",
         "width": 800,
         "height": 600
       }
