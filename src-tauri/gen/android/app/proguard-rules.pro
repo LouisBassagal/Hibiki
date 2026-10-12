@@ -18,4 +18,9 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+
+-keep class androidx.core.view.WindowCompat { *; }
+-keep class androidx.core.view.WindowInsetsControllerCompat { *; }
+-keep class androidx.core.view.WindowInsetsControllerCompat$* { *; }
+
+-renamesourcefileattribute SourceFile
