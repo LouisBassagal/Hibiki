@@ -72,11 +72,20 @@ jobs:
           ls "$NDK_HOME"
           pnpm tauri android build --apk
 
-      - name: Locate APK
+      - name: Locate and rename APK
         id: apk
         run: |
           APK=$(find src-tauri/gen/android/app/build/outputs/apk -name "*.apk" | head -n 1)
-          echo "path=$APK" >> $GITHUB_OUTPUT
+
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            VERSION="$GITHUB_REF_NAME"
+          else
+            VERSION="dev-${GITHUB_SHA::7}"
+          fi
+
+          NEW="$(dirname "$APK")/Hibiki-${VERSION}.apk"
+          mv "$APK" "$NEW"
+          echo "path=$NEW" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
