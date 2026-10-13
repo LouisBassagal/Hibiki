@@ -92,7 +92,7 @@ watch(
 )
 
 watch(currentTime, (newValue) => {
-  if (newValue < duration.value) return
+  if (newValue < duration.value || hasNext) return
   usePlayerStore().next()
 })
 </script>
