@@ -8,7 +8,7 @@ export const usePlayerStore = defineStore('player', () => {
   const mode = ref<'hidden' | 'full' | 'mini'>('hidden')
 
   const current = computed(() => queue.value[index.value] ?? undefined)
-  const hasNext = computed(() => index.value <= queue.value.length)
+  const hasNext = computed(() => index.value < queue.value.length - 1)
   const hasPrevious = computed(() => index.value > 0)
 
   const start = (entry: VideoExtended) => {
@@ -47,6 +47,8 @@ export const usePlayerStore = defineStore('player', () => {
 
   return {
     current,
+    queue,
+    index,
     mode,
     hasNext,
     hasPrevious,
