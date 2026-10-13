@@ -7,7 +7,7 @@ import { useTemplateRef } from 'vue'
 const containerRef = useTemplateRef('container')
 
 const playerStore = usePlayerStore()
-const { currentEntry, mode } = storeToRefs(playerStore)
+const { current, mode } = storeToRefs(playerStore)
 
 const { style } = useDraggable(containerRef, {
   initialValue: { x: 0, y: 50 },
@@ -24,6 +24,6 @@ const { style } = useDraggable(containerRef, {
     }"
     :style="style"
   >
-    <VideoPlayer :video="currentEntry || undefined" />
+    <VideoPlayer :video="current || undefined" />
   </div>
 </template>

@@ -29,5 +29,11 @@
   },
   "modal": {
     "title": "Sélectionnez une version"
+  },
+  "toast": {
+    "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente."
+  },
+  "tooltip": {
+    "addToQueue": "Ajouter a la file d'attente"
   }
 }

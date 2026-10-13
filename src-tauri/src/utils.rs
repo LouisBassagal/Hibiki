@@ -1,5 +1,3 @@
-
-
 #[tauri::command]
 pub async fn lock_orientation(
     window: tauri::WebviewWindow,
@@ -99,7 +97,7 @@ fn apply_immersive(
 }
 
 #[tauri::command]
-pub  fn set_fullscreen(window: tauri::WebviewWindow, hide: bool) -> Result<(), String> {
+pub fn set_fullscreen(window: tauri::WebviewWindow, hide: bool) -> Result<(), String> {
     #[cfg(target_os = "android")]
     {
         window
@@ -121,4 +119,9 @@ pub  fn set_fullscreen(window: tauri::WebviewWindow, hide: bool) -> Result<(), S
         let _ = (window, hide);
         Err("Android uniquement".into())
     }
+}
+
+#[tauri::command]
+pub fn quit(app: tauri::AppHandle) {
+    app.exit(0);
 }

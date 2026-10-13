@@ -9,8 +9,9 @@ import {
   PhCornersOut,
   PhCircleNotch,
   PhX,
+  PhSkipForward,
+  PhSkipBack,
 } from '@phosphor-icons/vue'
-// import { onBackButtonPress } from '@tauri-apps/api/app'
 import { invoke } from '@tauri-apps/api/core'
 import { useMediaControls, onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -22,7 +23,7 @@ const props = defineProps<{
   poster?: string
 }>()
 
-const { mode } = storeToRefs(usePlayerStore())
+const { mode, hasNext, hasPrevious } = storeToRefs(usePlayerStore())
 
 // CONST
 const BLACK_POSTER =
@@ -89,6 +90,11 @@ watch(
   },
   { immediate: true }
 )
+
+watch(currentTime, (newValue) => {
+  if (newValue < duration.value || hasNext) return
+  usePlayerStore().next()
+})
 </script>
 
 <template>
@@ -113,7 +119,7 @@ watch(
       v-if="waiting"
       class="absolute flex justify-center items-center inset-0 pointer-events-none z-10"
     >
-      <PhCircleNotch class="animate-spin" :size="72" />
+      <PhCircleNotch class="animate-spin" :size="isFullscreen ? 72 : 42" />
     </div>
 
     <Transition name="reveal" mode="out-in">
@@ -122,11 +128,38 @@ watch(
         v-show="showControls"
         @click="showControls = false"
       >
+        <!-- Previous and Next buttons -->
+        <div
+          class="absolute flex flex-row w-full justify-center top-1/2 -translate-y-1/2"
+          :class="{ 'gap-30': isFullscreen, 'gap-10': !isFullscreen }"
+        >
+          <button
+            type="button"
+            @click.stop="usePlayerStore().previous()"
+            :disabled="!hasPrevious"
+            class="touchable disabled:opacity-20"
+          >
+            <PhSkipBack :size="24" />
+          </button>
+          <button
+            type="button"
+            @click.stop="usePlayerStore().next()"
+            :disabled="!hasNext"
+            class="touchable disabled:opacity-20"
+          >
+            <PhSkipForward :size="24" />
+          </button>
+        </div>
+
         <div
           class="absolute w-full flex flex-row justify-between top-3 font-title font-bold"
           :class="{ 'px-5': isFullscreen, 'px-2.5': !isFullscreen }"
         >
-          {{ video?.title?.romaji }}
+          <span v-if="isFullscreen">
+            {{ video?.title?.romaji }}
+          </span>
+          <div v-else />
+
           <button
             class="touchable"
             type="button"
@@ -138,8 +171,8 @@ watch(
 
         <!-- Bottom part of player -->
         <div
-          class="controls absolute flex flex-col bottom-0 left-0 right-0 my-5 text-text"
-          :class="{ 'mx-5': isFullscreen, 'mx-1': !isFullscreen }"
+          class="controls absolute flex flex-col bottom-0 left-0 right-0 text-text"
+          :class="{ 'mx-5 py-5': isFullscreen, 'mx-1 py-2': !isFullscreen }"
         >
           <div class="flex flex-col w-full">
             <!-- Top part of the controls -->
