@@ -12,7 +12,6 @@ import {
   PhSkipForward,
   PhSkipBack,
 } from '@phosphor-icons/vue'
-// import { onBackButtonPress } from '@tauri-apps/api/app'
 import { invoke } from '@tauri-apps/api/core'
 import { useMediaControls, onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -120,7 +119,7 @@ watch(currentTime, (newValue) => {
       v-if="waiting"
       class="absolute flex justify-center items-center inset-0 pointer-events-none z-10"
     >
-      <PhCircleNotch class="animate-spin" :size="72" />
+      <PhCircleNotch class="animate-spin" :size="isFullscreen ? 72 : 42" />
     </div>
 
     <Transition name="reveal" mode="out-in">

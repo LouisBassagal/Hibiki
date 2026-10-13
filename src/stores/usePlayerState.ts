@@ -12,6 +12,7 @@ export const usePlayerStore = defineStore('player', () => {
   const hasPrevious = computed(() => index.value > 0)
 
   const start = (entry: VideoExtended) => {
+    queue.value = []
     queue.value.push(entry)
     index.value = 0
     mode.value = 'full'
