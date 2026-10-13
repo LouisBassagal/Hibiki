@@ -89,6 +89,11 @@ watch(
   },
   { immediate: true }
 )
+
+watch(currentTime, (newValue) => {
+  if (newValue < duration.value) return
+  usePlayerStore().next()
+})
 </script>
 
 <template>

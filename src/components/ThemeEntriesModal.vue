@@ -36,7 +36,9 @@ const onBackdropClick = (event: MouseEvent) => {
     @click="onBackdropClick"
   >
     <h1 class="font-title text-2xl mb-5">{{ $t('modal.title') }}</h1>
-    <div class="flex flex-col gap-2.5 max-h-full overflow-scroll py-2.5 grow-0">
+    <div
+      class="flex flex-col gap-2.5 max-h-full overflow-y-scroll py-2.5 grow-0"
+    >
       <template v-for="entry in theme?.animethemeentries">
         <EntryButton
           v-for="video in entry.videos.nodes"
