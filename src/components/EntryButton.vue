@@ -2,10 +2,12 @@
 import { usePlayerStore } from '@/stores/usePlayerState'
 import { SongTitle, ThemeEntry, Video } from '@/types/animethemes'
 import { VideoExtended } from '@/types/extended.ts'
+import { notify } from '@/utils/notify'
 import { useFloating, offset, flip, shift, autoUpdate } from '@floating-ui/vue'
 import { PhDotsThreeVertical } from '@phosphor-icons/vue'
 import { onClickOutside } from '@vueuse/core'
 import { onUnmounted, ref, useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   title: SongTitle | undefined
@@ -20,6 +22,8 @@ const isThemeMenuOpen = ref(false)
 
 const menuButtonRef = useTemplateRef('menuButton')
 const themeMenuRef = useTemplateRef('themeMenu')
+
+const { t } = useI18n()
 
 const { floatingStyles } = useFloating(menuButtonRef, themeMenuRef, {
   open: isThemeMenuOpen,
@@ -41,6 +45,7 @@ const onAddToQueue = () => {
   const extended: VideoExtended = { ...props.video, title: props?.title }
   playerStore.enqueue(extended)
   isThemeMenuOpen.value = false
+  notify.success(t('toast.addToQueue'))
 }
 
 onClickOutside(themeMenuRef, () => (isThemeMenuOpen.value = false))
@@ -92,7 +97,7 @@ onUnmounted(() => {
         class="text-text text-bold bg-background backdrop-blur-md shadow-black rounded-sm p-3.5"
       >
         <button type="button" class="touchable" @click="onAddToQueue">
-          <span> Add to queue </span>
+          <span> {{ $t('tooltip.addToQueue') }} </span>
         </button>
       </div>
     </Transition>
