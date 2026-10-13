@@ -29,5 +29,11 @@
   },
   "modal": {
     "title": "Select a version"
+  },
+  "toast": {
+    "addToQueue": "The theme has been successfully added to the queue."
+  },
+  "tooltip": {
+    "addToQueue": "Add to queue"
   }
 }
