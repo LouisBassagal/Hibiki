@@ -20,7 +20,9 @@ const props = defineProps<{
       <span class="text-text font-bold">{{ video.title?.romaji }}</span>
       <span class="text-text/75 text-sm">{{ video.media?.title?.romaji }}</span>
     </span>
+
     <PhMusicNotes
+      v-if="isCurrent"
       :size="24"
       class="self-center shrink-0"
       :class="{ 'text-primary': isCurrent, 'text-text/50': !isCurrent }"
