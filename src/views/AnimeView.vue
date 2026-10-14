@@ -62,18 +62,10 @@ onMounted(async () => {
           class="h-full w-full object-cover object-center -z-10"
         />
         <div
-          class="absolute inset-0 w-full backdrop-blur-sm -z-10"
-          style="
-            mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-            -webkit-mask-image: linear-gradient(
-              to bottom,
-              transparent 0%,
-              black 100%
-            );
-          "
+          class="absolute inset-0 bg-linear-to-b from-transparent to-background"
         />
         <div
-          class="absolute inset-0 bg-linear-to-b from-transparent to-background"
+          class="absolute inset-0 bg-linear-to-t from-transparent to-background"
         />
         <div
           class="absolute bottom-0 font-title px-5 font-bold text-2xl -mt-10 z-50"
