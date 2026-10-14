@@ -7,7 +7,7 @@ import { invoke } from '@tauri-apps/api/core'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const media = ref<Media | null>(null)
+const media = ref<Media | undefined>(undefined)
 const currentTab = ref<'overview' | 'themes'>('overview')
 const themes = ref<AnimeTheme[] | null>(null)
 const selectedTheme = ref<AnimeTheme | null>(null)
@@ -62,18 +62,10 @@ onMounted(async () => {
           class="h-full w-full object-cover object-center -z-10"
         />
         <div
-          class="absolute inset-0 w-full backdrop-blur-sm -z-10"
-          style="
-            mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-            -webkit-mask-image: linear-gradient(
-              to bottom,
-              transparent 0%,
-              black 100%
-            );
-          "
+          class="absolute inset-0 bg-linear-to-b from-transparent to-background"
         />
         <div
-          class="absolute inset-0 bg-linear-to-b from-transparent to-background"
+          class="absolute inset-0 bg-linear-to-t from-transparent to-background"
         />
         <div
           class="absolute bottom-0 font-title px-5 font-bold text-2xl -mt-10 z-50"
@@ -144,7 +136,11 @@ onMounted(async () => {
     </Transition>
 
     <Teleport to="body">
-      <ThemeEntriesModal v-model:is-open="isModalOpen" :theme="selectedTheme">
+      <ThemeEntriesModal
+        v-model:is-open="isModalOpen"
+        :theme="selectedTheme"
+        :media="media"
+      >
       </ThemeEntriesModal>
     </Teleport>
   </div>

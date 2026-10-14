@@ -35,5 +35,10 @@
   },
   "tooltip": {
     "addToQueue": "Add to queue"
+  },
+  
+  "queue": {
+    "panelTitle": "Queue",
+    "panelSubtitle": "{count} theme | {count} themes"
   }
 }

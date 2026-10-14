@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePlayerStore } from '@/stores/usePlayerState'
+import { Media } from '@/types/anilist'
 import { SongTitle, ThemeEntry, Video } from '@/types/animethemes'
 import { VideoExtended } from '@/types/extended.ts'
 import { notify } from '@/utils/notify'
@@ -13,6 +14,7 @@ const props = defineProps<{
   title: SongTitle | undefined
   entry: ThemeEntry | undefined
   video: Video | undefined
+  media: Media | undefined
 }>()
 
 const emits = defineEmits(['click'])
@@ -35,14 +37,22 @@ const { floatingStyles } = useFloating(menuButtonRef, themeMenuRef, {
 
 const onSelectTheme = () => {
   if (!props.video) return
-  const extended: VideoExtended = { ...props.video, title: props?.title }
+  const extended: VideoExtended = {
+    ...props.video,
+    title: props?.title,
+    media: props?.media,
+  }
   playerStore.start(extended)
   emits('click')
 }
 
 const onAddToQueue = () => {
   if (!props.video) return
-  const extended: VideoExtended = { ...props.video, title: props?.title }
+  const extended: VideoExtended = {
+    ...props.video,
+    title: props?.title,
+    media: props?.media,
+  }
   playerStore.enqueue(extended)
   isThemeMenuOpen.value = false
   notify.success(t('toast.addToQueue'))

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useDialog } from '@/composables/useDialog'
+import { Media } from '@/types/anilist'
 import { AnimeTheme } from '@/types/animethemes'
 import { PhX } from '@phosphor-icons/vue'
 import { toRef } from 'vue'
 
 const props = defineProps<{
+  media: Media | undefined
   theme: AnimeTheme | undefined | null
   isOpen: boolean
 }>()
@@ -45,6 +47,7 @@ const onBackdropClick = (event: MouseEvent) => {
           :entry="entry"
           :video="video"
           :title="theme?.song?.title ?? undefined"
+          :media="props?.media"
           @click="onClose"
         />
       </template>

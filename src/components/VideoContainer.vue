@@ -2,15 +2,22 @@
 import { usePlayerStore } from '@/stores/usePlayerState'
 import { useDraggable } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { useTemplateRef } from 'vue'
+import { useTemplateRef, watch, ref } from 'vue'
 
 const containerRef = useTemplateRef('container')
 
 const playerStore = usePlayerStore()
+const isDragDisabled = ref(false)
 const { current, mode } = storeToRefs(playerStore)
 
 const { style } = useDraggable(containerRef, {
   initialValue: { x: 0, y: 50 },
+  disabled: isDragDisabled,
+})
+
+watch(mode, (newMode) => {
+  if (newMode === 'full') isDragDisabled.value = true
+  if (newMode === 'mini') isDragDisabled.value = false
 })
 </script>
 
@@ -22,7 +29,7 @@ const { style } = useDraggable(containerRef, {
     :class="{
       'w-60 rounded-sm': mode === 'mini',
     }"
-    :style="style"
+    :style="mode === 'mini' ? style : ''"
   >
     <VideoPlayer :video="current || undefined" />
   </div>
