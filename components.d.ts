@@ -21,6 +21,8 @@ declare module 'vue' {
     GenericSkeleton: typeof import('./src/components/loading/GenericSkeleton.vue')['default']
     HugeButton: typeof import('./src/components/HugeButton.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
+    QueueItem: typeof import('./src/components/QueueItem.vue')['default']
+    QueuePanel: typeof import('./src/components/QueuePanel.vue')['default']
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
