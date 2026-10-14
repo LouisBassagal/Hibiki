@@ -9,11 +9,12 @@ import {
   PhCornersOut,
   PhCircleNotch,
   PhX,
+  PhPlaylist,
   PhSkipForward,
   PhSkipBack,
 } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
-import { useMediaControls, onClickOutside } from '@vueuse/core'
+import { useMediaControls } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, onUnmounted, useTemplateRef } from 'vue'
 import { ref, watch } from 'vue'
@@ -31,7 +32,6 @@ const BLACK_POSTER =
 
 // References
 const videoRef = useTemplateRef<HTMLVideoElement>('video')
-const volumePopup = useTemplateRef<HTMLDivElement>('volumePopup')
 
 const source = computed(() => props.video?.link ?? '')
 
@@ -40,15 +40,11 @@ const { playing, currentTime, duration, waiting } = useMediaControls(videoRef, {
 })
 
 // Values
-const isVolumePopupVisible = ref(false)
 const showControls = ref(true)
 const isFullscreen = ref(false)
+const isQueueOpen = ref(false)
 const progress = computed(() => {
   return duration.value ? (currentTime.value / duration.value) * 100 : 0
-})
-
-onClickOutside(volumePopup, () => {
-  isVolumePopupVisible.value = false
 })
 
 const onFullscreenEnter = async () => {
@@ -71,6 +67,11 @@ const onFullscreenExit = async () => {
   await invoke('set_fullscreen', { hide: false }).catch((err) => {
     console.error('Failed to hide android layout:', err)
   })
+}
+
+const closeControls = () => {
+  if (isQueueOpen) isQueueOpen.value = false
+  showControls.value = false
 }
 
 const onPlay = () => {
@@ -126,7 +127,7 @@ watch(currentTime, (newValue) => {
       <div
         class="bg-background/50 absolute inset-0"
         v-show="showControls"
-        @click="showControls = false"
+        @click="closeControls"
       >
         <!-- Previous and Next buttons -->
         <div
@@ -161,6 +162,14 @@ watch(currentTime, (newValue) => {
           <div v-else />
 
           <button
+            v-if="isFullscreen"
+            @click.stop="isQueueOpen = true"
+            class="touchable"
+          >
+            <PhPlaylist :size="24" />
+          </button>
+          <button
+            v-else
             class="touchable"
             type="button"
             @click="usePlayerStore().close()"
@@ -234,6 +243,9 @@ watch(currentTime, (newValue) => {
           </div>
         </div>
       </div>
+    </Transition>
+    <Transition name="slide">
+      <QueuePanel v-show="isQueueOpen" v-model:is-open="isQueueOpen" />
     </Transition>
   </div>
 </template>
@@ -323,5 +335,18 @@ watch(currentTime, (newValue) => {
   border-radius: 50%;
   background: var(--color-primary);
   margin-top: -5px;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  translate: 100% 0;
 }
 </style>

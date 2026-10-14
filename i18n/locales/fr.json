@@ -35,5 +35,9 @@
   },
   "tooltip": {
     "addToQueue": "Ajouter a la file d'attente"
+  },
+  "queue": {
+    "panelTitle": "File d'attente",
+    "panelSubtitle": "{count} thème | {count} thèmes"
   }
 }
