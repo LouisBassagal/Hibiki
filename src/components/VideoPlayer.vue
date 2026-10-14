@@ -200,7 +200,7 @@ watch(currentTime, (newValue) => {
 
               <div class="flex flex-row">
                 <span
-                  class="text-text relative text-sm font-text self-center mr-2.5 before:content-[00:00]"
+                  class="text-text relative text-sm font-text self-center mr-2.5 tabular-nums"
                 >
                   {{ secondsToTime(currentTime) }} /
                   <span class="font-bold">
