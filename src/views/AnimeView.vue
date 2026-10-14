@@ -7,7 +7,7 @@ import { invoke } from '@tauri-apps/api/core'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const media = ref<Media | null>(null)
+const media = ref<Media | undefined>(undefined)
 const currentTab = ref<'overview' | 'themes'>('overview')
 const themes = ref<AnimeTheme[] | null>(null)
 const selectedTheme = ref<AnimeTheme | null>(null)
@@ -144,7 +144,11 @@ onMounted(async () => {
     </Transition>
 
     <Teleport to="body">
-      <ThemeEntriesModal v-model:is-open="isModalOpen" :theme="selectedTheme">
+      <ThemeEntriesModal
+        v-model:is-open="isModalOpen"
+        :theme="selectedTheme"
+        :media="media"
+      >
       </ThemeEntriesModal>
     </Teleport>
   </div>
