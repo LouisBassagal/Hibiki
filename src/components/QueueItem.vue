@@ -3,7 +3,7 @@ import { VideoExtended } from '@/types/extended'
 import { PhMusicNotes } from '@phosphor-icons/vue'
 
 const emits = defineEmits(['click'])
-const props = defineProps<{
+defineProps<{
   video: VideoExtended
   isCurrent: boolean
 }>()
