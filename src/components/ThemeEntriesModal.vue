@@ -6,7 +6,7 @@ import { AnimeTheme, Video } from '@/types/animethemes'
 import { VideoExtended } from '@/types/extended'
 import { notify } from '@/utils/notify'
 import { PhX } from '@phosphor-icons/vue'
-import { toRef, ref, computed } from 'vue'
+import { toRef, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
