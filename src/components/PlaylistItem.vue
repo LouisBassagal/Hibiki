@@ -13,8 +13,8 @@ const emits = defineEmits<{
 const buttonRef = useTemplateRef('button')
 
 const onMouseUpCallback = (
-  duration: number,
-  distance: number,
+  _duration: number,
+  _distance: number,
   isLongPress: boolean
 ) => {
   if (!isLongPress) emits('click')

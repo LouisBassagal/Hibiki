@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { PhX } from '@phosphor-icons/vue'
-import { onClickOutside } from '@vueuse/core'
 import { useTemplateRef, watch } from 'vue'
 
 const emits = defineEmits(['close'])
