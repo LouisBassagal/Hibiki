@@ -77,7 +77,7 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
 
         <div />
 
-        <!-- <RouterLink
+        <RouterLink
           to="/search"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
@@ -86,7 +86,7 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.playlists') }}
           </span>
-        </RouterLink> -->
+        </RouterLink>
 
         <div />
 
