@@ -56,10 +56,13 @@
     "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente.",
     "newPlaylist": "La playlist a bien été créée.",
     "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer.",
-    "deletePlaylist": "La playlist a bien été supprimée."
+    "deletePlaylist": "La playlist à bien été supprimée."
   },
-  "tooltip": {
-    "addToQueue": "Ajouter a la file d'attente"
+  "theme": {
+    "menu": {
+      "addToQueue": "Ajouter à la file d'attente",
+      "addToPlaylist": "Ajouter à une playlist"
+    }
   },
   "queue": {
     "panelTitle": "File d'attente",

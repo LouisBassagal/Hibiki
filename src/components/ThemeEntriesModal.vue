@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { useDialog } from '@/composables/useDialog'
+import { usePlayerStore } from '@/stores/usePlayerState'
 import { Media } from '@/types/anilist'
-import { AnimeTheme } from '@/types/animethemes'
+import { AnimeTheme, Video } from '@/types/animethemes'
+import { VideoExtended } from '@/types/extended'
+import { notify } from '@/utils/notify'
 import { PhX } from '@phosphor-icons/vue'
-import { toRef } from 'vue'
+import { toRef, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   media: Media | undefined
@@ -15,9 +19,20 @@ const emits = defineEmits<{
   'update:isOpen': [value: boolean]
 }>()
 
+const { t } = useI18n()
 const { dialog, onClose } = useDialog(toRef(props, 'isOpen'), (value) =>
   emits('update:isOpen', value)
 )
+
+const selectedVideo = ref<Video | undefined>(undefined)
+const selectedVideoElement = ref<HTMLElement | undefined>(undefined)
+const isContextMenuOpen = ref(false)
+
+const onContextMenuOpen = (reference: HTMLElement, video: Video) => {
+  isContextMenuOpen.value = true
+  selectedVideo.value = video
+  selectedVideoElement.value = reference
+}
 
 const onBackdropClick = (event: MouseEvent) => {
   const rect = dialog.value!.getBoundingClientRect()
@@ -27,6 +42,31 @@ const onBackdropClick = (event: MouseEvent) => {
     event.clientX >= rect.left &&
     event.clientX <= rect.right
   if (!clickedInside) dialog.value!.close()
+}
+
+const onAddToQueue = () => {
+  if (!selectedVideo.value) return
+
+  const extended: VideoExtended = {
+    ...selectedVideo.value,
+    title: props.theme?.song?.title ?? undefined,
+    media: props.media,
+  }
+  usePlayerStore().enqueue(extended)
+  notify.success(t('toast.addToQueue'))
+  isContextMenuOpen.value = false
+}
+
+const onSelectTheme = (video: Video) => {
+  if (!video) return
+  const extended: VideoExtended = {
+    ...video,
+    title: props.theme?.song?.title ?? undefined,
+    media: props.media,
+  }
+  usePlayerStore().start(extended)
+  isContextMenuOpen.value = false
+  onClose()
 }
 </script>
 
@@ -47,8 +87,8 @@ const onBackdropClick = (event: MouseEvent) => {
           :entry="entry"
           :video="video"
           :title="theme?.song?.title ?? undefined"
-          :media="props?.media"
-          @click="onClose"
+          @click="onSelectTheme(video)"
+          @menu="onContextMenuOpen($event, video)"
         />
       </template>
     </div>
@@ -60,6 +100,25 @@ const onBackdropClick = (event: MouseEvent) => {
     >
       <PhX :size="30" />
     </button>
+
+    <ContextMenuContainer
+      v-model:is-open="isContextMenuOpen"
+      :reference="selectedVideoElement"
+      :teleport="false"
+    >
+      <div class="flex flex-col gap-2.5 text-left">
+        <button
+          type="button"
+          class="touchable w-full text-left"
+          @click="onAddToQueue"
+        >
+          <span>{{ t('theme.menu.addToQueue') }}</span>
+        </button>
+        <button type="button" class="touchable w-full text-left">
+          <span>{{ t('theme.menu.addToPlaylist') }}</span>
+        </button>
+      </div>
+    </ContextMenuContainer>
   </dialog>
 </template>
 

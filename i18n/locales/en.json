@@ -58,10 +58,12 @@
     "newPlaylistError": "An error occurred while creating the playlist. Please try again.",
     "deletePlaylist": "The playlist has been successfully deleted."
   },
-  "tooltip": {
-    "addToQueue": "Add to queue"
+  "theme": {
+    "menu": {
+      "addToQueue": "Add to queue",
+      "addToPlaylist": "Add to a playlist"
+    }
   },
-
   "queue": {
     "panelTitle": "Queue",
     "panelSubtitle": "{count} theme | {count} themes"
