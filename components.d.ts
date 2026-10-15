@@ -21,6 +21,7 @@ declare module 'vue' {
     GenericSkeleton: typeof import('./src/components/loading/GenericSkeleton.vue')['default']
     HugeButton: typeof import('./src/components/HugeButton.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
+    ModalContainer: typeof import('./src/components/ModalContainer.vue')['default']
     PlaylistItem: typeof import('./src/components/PlaylistItem.vue')['default']
     QueueItem: typeof import('./src/components/QueueItem.vue')['default']
     QueuePanel: typeof import('./src/components/QueuePanel.vue')['default']
