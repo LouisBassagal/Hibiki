@@ -78,7 +78,7 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
         <div />
 
         <RouterLink
-          to="/search"
+          to="/playlists"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
         >
