@@ -16,6 +16,8 @@ const isNewPlaylistModalOpen = ref(false)
 const isPlaylistContextMenuOpen = ref(false)
 const selectedPlaylist = ref<Playlist | null>(null)
 const selectedPlaylistReference = ref<HTMLElement | undefined>(undefined)
+const isConfirmModalOpen = ref(false)
+
 const { startPlaylist } = usePlayerStore()
 
 const { t } = useI18n()
@@ -60,7 +62,8 @@ const onDeletePlaylist = async () => {
     await db.playlists.delete(selectedPlaylist.value?.id)
     selectedPlaylist.value = null
     selectedPlaylistReference.value = undefined
-    isPlaylistContextMenuOpen.value = false
+    isConfirmModalOpen.value = false
+    notify.success(t('toast.deletePlaylist'))
   }
 }
 
@@ -183,7 +186,12 @@ const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
         <button
           type="button"
           class="flex flex-row gap-2.5 items-center touchable"
-          @click="onDeletePlaylist"
+          @click="
+            () => {
+              isPlaylistContextMenuOpen = false
+              isConfirmModalOpen = true
+            }
+          "
         >
           <PhTrash :size="24" />
           <span class="font-text font-semibold"
@@ -192,5 +200,13 @@ const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
         </button>
       </div>
     </ContextMenuContainer>
+
+    <!-- Confirm Modal -->
+    <ConfirmModal
+      v-model:is-open="isConfirmModalOpen"
+      @accept="onDeletePlaylist"
+      @cancel="isConfirmModalOpen = false"
+      @close="isConfirmModalOpen = false"
+    />
   </div>
 </template>

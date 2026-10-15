@@ -1,4 +1,8 @@
 {
+  "general": {
+    "yes": "Oui",
+    "no": "Non"
+  },
   "home": {
     "title": "Accueil",
     "randomAnime": "Anime aléatoire",
@@ -42,12 +46,17 @@
     }
   },
   "modal": {
-    "title": "Sélectionnez une version"
+    "title": "Sélectionnez une version",
+    "confirm": {
+      "title": "Suppression de contenu",
+      "subtitle": "Êtes-vous sûr de vouloir faire cela ? Tout retour en arrière est impossible."
+    }
   },
   "toast": {
     "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente.",
     "newPlaylist": "La playlist a bien été créée.",
-    "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer."
+    "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer.",
+    "deletePlaylist": "La playlist a bien été supprimée."
   },
   "tooltip": {
     "addToQueue": "Ajouter a la file d'attente"

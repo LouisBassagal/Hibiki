@@ -1,4 +1,8 @@
 {
+  "general": {
+    "yes": "Yes",
+    "no": "No"
+  },
   "home": {
     "title": "Home",
     "randomAnime": "Random Anime",
@@ -42,12 +46,17 @@
     }
   },
   "modal": {
-    "title": "Select a version"
+    "title": "Select a version",
+    "confirm": {
+      "title": "Content removal",
+      "subtitle": "Are you sure you want to do this? You cannot undo this action."
+    }
   },
   "toast": {
     "addToQueue": "The theme has been successfully added to the queue.",
     "newPlaylist": "The playlist has been succesfully created.",
-    "newPlaylistError": "An error occurred while creating the playlist. Please try again."
+    "newPlaylistError": "An error occurred while creating the playlist. Please try again.",
+    "deletePlaylist": "The playlist has been successfully deleted."
   },
   "tooltip": {
     "addToQueue": "Add to queue"
