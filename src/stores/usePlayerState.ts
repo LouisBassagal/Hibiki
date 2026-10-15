@@ -22,6 +22,12 @@ export const usePlayerStore = defineStore('player', () => {
     queue.value.push(entry)
   }
 
+  const startPlaylist = (entries: Array<VideoExtended>) => {
+    queue.value = entries
+    index.value = 0
+    mode.value = 'full'
+  }
+
   const minimize = () => {
     mode.value = 'mini'
   }
@@ -54,6 +60,7 @@ export const usePlayerStore = defineStore('player', () => {
     hasNext,
     hasPrevious,
     start,
+    startPlaylist,
     enqueue,
     minimize,
     maximize,

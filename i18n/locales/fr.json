@@ -35,6 +35,10 @@
       "label": "Nom de la playlist",
       "create": "Créer",
       "cancel": "Annuler"
+    },
+    "menu": {
+      "delete": "Supprimer",
+      "play": "Jouer"
     }
   },
   "modal": {

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import db from '@/plugins/db'
+import { usePlayerStore } from '@/stores/usePlayerState'
+import { Playlist } from '@/types/playlist'
 import { notify } from '@/utils/notify'
-import { PhPlus } from '@phosphor-icons/vue'
+import { PhPlay, PhPlus, PhTrash } from '@phosphor-icons/vue'
 import { from, useObservable } from '@vueuse/rxjs'
 import { liveQuery } from 'dexie'
 import { computed, ref } from 'vue'
@@ -10,6 +12,11 @@ import { useI18n } from 'vue-i18n'
 const userInput = ref('')
 const playlistName = ref('')
 const isNewPlaylistModalOpen = ref(false)
+
+const isPlaylistContextMenuOpen = ref(false)
+const selectedPlaylist = ref<Playlist | null>(null)
+const selectedPlaylistReference = ref<HTMLElement | undefined>(undefined)
+const { startPlaylist } = usePlayerStore()
 
 const { t } = useI18n()
 
@@ -47,6 +54,30 @@ const onCancelPlaylist = () => {
   playlistName.value = ''
   isNewPlaylistModalOpen.value = false
 }
+
+const onDeletePlaylist = async () => {
+  if (selectedPlaylist.value) {
+    await db.playlists.delete(selectedPlaylist.value?.id)
+    selectedPlaylist.value = null
+    selectedPlaylistReference.value = undefined
+    isPlaylistContextMenuOpen.value = false
+  }
+}
+
+const onPlayPlaylist = () => {
+  if (selectedPlaylist.value) {
+    startPlaylist(selectedPlaylist.value?.items)
+    selectedPlaylist.value = null
+    selectedPlaylistReference.value = undefined
+    isPlaylistContextMenuOpen.value = false
+  }
+}
+
+const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
+  selectedPlaylist.value = playlist
+  selectedPlaylistReference.value = reference
+  isPlaylistContextMenuOpen.value = true
+}
 </script>
 
 <template>
@@ -83,10 +114,13 @@ const onCancelPlaylist = () => {
           v-for="playlist in searchedPlaylists"
           :name="playlist.name"
           :key="playlist.id"
+          @long-press="onPlaylistLongPress($event, playlist)"
+          @click=""
         />
       </TransitionGroup>
     </section>
 
+    <!-- Modal to get the name of the new playlist -->
     <ModalContainer
       class="text-text font-text"
       v-model:is-open="isNewPlaylistModalOpen"
@@ -129,5 +163,34 @@ const onCancelPlaylist = () => {
         </button>
       </div>
     </ModalContainer>
+
+    <ContextMenuContainer
+      :reference="selectedPlaylistReference"
+      v-model:is-open="isPlaylistContextMenuOpen"
+    >
+      <div class="flex flex-col h-full w-full gap-2.5">
+        <button
+          type="button"
+          class="flex flex-row gap-2.5 items-center touchable"
+          @click="onPlayPlaylist"
+        >
+          <PhPlay :size="24" />
+          <span class="font-text font-semibold"
+            >{{ $t('playlists.menu.play') }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="flex flex-row gap-2.5 items-center touchable"
+          @click="onDeletePlaylist"
+        >
+          <PhTrash :size="24" />
+          <span class="font-text font-semibold"
+            >{{ $t('playlists.menu.delete') }}
+          </span>
+        </button>
+      </div>
+    </ContextMenuContainer>
   </div>
 </template>

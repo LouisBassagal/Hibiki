@@ -35,6 +35,10 @@
       "label": "Playlist's name",
       "create": "Create",
       "cancel": "Cancel"
+    },
+    "menu": {
+      "delete": "Delete",
+      "play": "Play"
     }
   },
   "modal": {
