@@ -1,7 +1,8 @@
 {
   "general": {
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "themes": "{n} thème | {n} thèmes"
   },
   "home": {
     "title": "Accueil",
@@ -50,6 +51,10 @@
     "confirm": {
       "title": "Suppression de contenu",
       "subtitle": "Êtes-vous sûr de vouloir faire cela ? Tout retour en arrière est impossible."
+    },
+    "playlist": {
+      "title": "Ajout à une playlist",
+      "subtitle": "Où voulez-vous ajouter {name} ?"
     }
   },
   "toast": {

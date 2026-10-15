@@ -6,7 +6,7 @@ import { AnimeTheme, Video } from '@/types/animethemes'
 import { VideoExtended } from '@/types/extended'
 import { notify } from '@/utils/notify'
 import { PhX } from '@phosphor-icons/vue'
-import { toRef, ref } from 'vue'
+import { toRef, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
@@ -27,6 +27,7 @@ const { dialog, onClose } = useDialog(toRef(props, 'isOpen'), (value) =>
 const selectedVideo = ref<Video | undefined>(undefined)
 const selectedVideoElement = ref<HTMLElement | undefined>(undefined)
 const isContextMenuOpen = ref(false)
+const isPlaylistModalOpen = ref(false)
 
 const onContextMenuOpen = (reference: HTMLElement, video: Video) => {
   isContextMenuOpen.value = true
@@ -47,12 +48,11 @@ const onBackdropClick = (event: MouseEvent) => {
 const onAddToQueue = () => {
   if (!selectedVideo.value) return
 
-  const extended: VideoExtended = {
+  usePlayerStore().enqueue({
     ...selectedVideo.value,
     title: props.theme?.song?.title ?? undefined,
     media: props.media,
-  }
-  usePlayerStore().enqueue(extended)
+  })
   notify.success(t('toast.addToQueue'))
   isContextMenuOpen.value = false
 }
@@ -114,11 +114,35 @@ const onSelectTheme = (video: Video) => {
         >
           <span>{{ t('theme.menu.addToQueue') }}</span>
         </button>
-        <button type="button" class="touchable w-full text-left">
+        <button
+          type="button"
+          class="touchable w-full text-left"
+          @click="
+            () => {
+              isPlaylistModalOpen = true
+              isContextMenuOpen = false
+            }
+          "
+        >
           <span>{{ t('theme.menu.addToPlaylist') }}</span>
         </button>
       </div>
     </ContextMenuContainer>
+
+    <PlaylistModal
+      v-model:is-open="isPlaylistModalOpen"
+      :video="
+        selectedVideo
+          ? {
+              ...selectedVideo,
+              title: props.theme?.song?.title ?? undefined,
+              media: props.media,
+            }
+          : undefined
+      "
+      @close="isPlaylistModalOpen = false"
+      @click.stop
+    />
   </dialog>
 </template>
 
