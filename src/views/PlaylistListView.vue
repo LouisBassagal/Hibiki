@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import db from '@/plugins/db'
+import { notify } from '@/utils/notify'
 import { PhPlus } from '@phosphor-icons/vue'
 import { from, useObservable } from '@vueuse/rxjs'
 import { liveQuery } from 'dexie'
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const userInput = ref('')
+const playlistName = ref('')
+const isNewPlaylistModalOpen = ref(false)
+
+const { t } = useI18n()
+
 const playlists = useObservable(
   from(liveQuery(() => db.playlists.orderBy('name').toArray()))
 )
@@ -17,9 +24,28 @@ const searchedPlaylists = computed(() => {
   )
 })
 
+const onOpenPlaylistModal = async () => {
+  isNewPlaylistModalOpen.value = true
+}
+
 const onCreateNewPlaylist = async () => {
-  await db.playlists.add({ name: 'test', items: [] })
-  console.log()
+  isNewPlaylistModalOpen.value = false
+  await db.playlists
+    .add({ name: playlistName.value, items: [] })
+    .then(() => {
+      notify.success(t('toast.newPlaylist'))
+    })
+    .catch(() => {
+      notify.error(t('toast.newPlaylistError'))
+    })
+    .finally(() => {
+      playlistName.value = ''
+    })
+}
+
+const onCancelPlaylist = () => {
+  playlistName.value = ''
+  isNewPlaylistModalOpen.value = false
 }
 </script>
 
@@ -41,7 +67,7 @@ const onCreateNewPlaylist = async () => {
         <button
           type="button"
           class="shrink-0 touchable"
-          @click="onCreateNewPlaylist"
+          @click="onOpenPlaylistModal"
         >
           <PhPlus :size="24" />
         </button>
@@ -51,13 +77,57 @@ const onCreateNewPlaylist = async () => {
     <section
       class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] place-items-center gap-y-5"
     >
-      <TransitionGroup mode="in-out" name="reveal">
+      <TransitionGroup name="reveal">
         <PlaylistItem
           class="self-center"
           v-for="playlist in searchedPlaylists"
           :name="playlist.name"
+          :key="playlist.id"
         />
       </TransitionGroup>
     </section>
+
+    <ModalContainer
+      class="text-text font-text"
+      v-model:is-open="isNewPlaylistModalOpen"
+      @close="onCancelPlaylist"
+    >
+      <div class="mb-2.5">
+        <h2 class="text-text font-bold text-lg">
+          {{ $t('playlists.modal.title') }}
+        </h2>
+        <span class="text-text/75 text-sm">{{
+          $t('playlists.modal.subtitle')
+        }}</span>
+      </div>
+
+      <div class="w-full flex flex-col gap-2 mb-5">
+        <label for="playlist-name" class="font-semibold">{{
+          $t('playlists.modal.label')
+        }}</label>
+        <input
+          v-model="playlistName"
+          id="playlist-name"
+          autofocus
+          class="ring-2 ring-primary rounded-sm w-full bg-surface h-10 px-2.5"
+        />
+      </div>
+
+      <div class="flex flex-row justify-end gap-2.5">
+        <button
+          class="px-5 py-2.5 rounded-sm font-semibold touchable"
+          @click="onCancelPlaylist"
+        >
+          {{ $t('playlists.modal.cancel') }}
+        </button>
+
+        <button
+          class="px-5 py-2.5 bg-primary rounded-sm font-semibold touchable"
+          @click="onCreateNewPlaylist"
+        >
+          {{ $t('playlists.modal.create') }}
+        </button>
+      </div>
+    </ModalContainer>
   </div>
 </template>

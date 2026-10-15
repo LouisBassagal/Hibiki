@@ -28,13 +28,22 @@
     "settings": "paramètres"
   },
   "playlists": {
-    "placeholder": "Recherchez une playlist..."
+    "placeholder": "Recherchez une playlist...",
+    "modal": {
+      "title": "Nouvelle playlist",
+      "subtitle": "Donnez-lui un nom pour pouvoir y ajouter des thèmes plus tard!",
+      "label": "Nom de la playlist",
+      "create": "Créer",
+      "cancel": "Annuler"
+    }
   },
   "modal": {
     "title": "Sélectionnez une version"
   },
   "toast": {
-    "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente."
+    "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente.",
+    "newPlaylist": "La playlist a bien été créée.",
+    "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer."
   },
   "tooltip": {
     "addToQueue": "Ajouter a la file d'attente"

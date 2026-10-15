@@ -7,7 +7,6 @@ const dialogRef = useTemplateRef('dialog')
 const isOpen = defineModel('isOpen')
 
 watch(isOpen, (newValue) => {
-  console.log(newValue)
   if (newValue) dialogRef.value?.showModal()
   else dialogRef.value?.close()
 })
@@ -21,7 +20,7 @@ watch(isOpen, (newValue) => {
     <button
       type="button"
       class="absolute top-5 right-5 touchable"
-      @click="isOpen = false"
+      @click="emits('close')"
     >
       <PhX :size="24" class="text-text" />
     </button>

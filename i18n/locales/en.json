@@ -28,13 +28,22 @@
     "settings": "settings"
   },
   "playlists": {
-    "placeholder": "Search for a playlist..."
+    "placeholder": "Search for a playlist...",
+    "modal": {
+      "title": "New playlist",
+      "subtitle": "Give it a name to add themes!",
+      "label": "Playlist's name",
+      "create": "Create",
+      "cancel": "Cancel"
+    }
   },
   "modal": {
     "title": "Select a version"
   },
   "toast": {
-    "addToQueue": "The theme has been successfully added to the queue."
+    "addToQueue": "The theme has been successfully added to the queue.",
+    "newPlaylist": "The playlist has been succesfully created.",
+    "newPlaylistError": "An error occurred while creating the playlist. Please try again."
   },
   "tooltip": {
     "addToQueue": "Add to queue"
