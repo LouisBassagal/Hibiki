@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { PhX } from '@phosphor-icons/vue'
+import { onClickOutside } from '@vueuse/core'
 import { useTemplateRef, watch } from 'vue'
 
 const emits = defineEmits(['close'])
@@ -15,7 +16,7 @@ watch(isOpen, (newValue) => {
 <template>
   <dialog
     ref="dialog"
-    class="relative m-auto w-[min(342px,calc(100vw-2rem))] rounded-2xl bg-background p-5 backdrop:backdrop-blur-sm backdrop:bg-background/25 md:w-110 md:p-7"
+    class="relative m-auto w-[min(342px,calc(100vw-2rem))] rounded-2xl bg-surface p-5 backdrop:backdrop-blur-sm backdrop:bg-background/25 md:w-110 md:p-7"
   >
     <button
       type="button"
