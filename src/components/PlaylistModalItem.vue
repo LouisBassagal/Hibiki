@@ -4,7 +4,7 @@ import { PhPlusCircle } from '@phosphor-icons/vue'
 
 const emits = defineEmits(['click'])
 
-const props = defineProps<{
+defineProps<{
   playlist: Playlist
 }>()
 </script>

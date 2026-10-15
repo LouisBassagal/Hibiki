@@ -3,7 +3,7 @@ import { SongTitle, ThemeEntry, Video } from '@/types/animethemes'
 import { PhDotsThreeVertical } from '@phosphor-icons/vue'
 import { onUnmounted, ref, useTemplateRef } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   title: SongTitle | undefined
   entry: ThemeEntry | undefined
   video: Video | undefined
