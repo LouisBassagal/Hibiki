@@ -27,6 +27,9 @@
     "random": "random",
     "settings": "settings"
   },
+  "playlists": {
+    "placeholder": "Search for a playlist..."
+  },
   "modal": {
     "title": "Select a version"
   },
@@ -36,7 +39,7 @@
   "tooltip": {
     "addToQueue": "Add to queue"
   },
-  
+
   "queue": {
     "panelTitle": "Queue",
     "panelSubtitle": "{count} theme | {count} themes"

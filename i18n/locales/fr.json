@@ -27,6 +27,9 @@
     "random": "aléatoire",
     "settings": "paramètres"
   },
+  "playlists": {
+    "placeholder": "Recherchez une playlist..."
+  },
   "modal": {
     "title": "Sélectionnez une version"
   },
