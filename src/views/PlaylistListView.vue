@@ -68,12 +68,15 @@ const onDeletePlaylist = async () => {
 }
 
 const onPlayPlaylist = () => {
-  if (selectedPlaylist.value) {
-    startPlaylist(selectedPlaylist.value?.items)
-    selectedPlaylist.value = null
-    selectedPlaylistReference.value = undefined
-    isPlaylistContextMenuOpen.value = false
-  }
+  if (!selectedPlaylist.value) return
+
+  if (selectedPlaylist.value.items.length == 0)
+    notify.error(t('toast.emptyPlaylist'))
+  else startPlaylist(selectedPlaylist.value?.items)
+
+  selectedPlaylist.value = null
+  selectedPlaylistReference.value = undefined
+  isPlaylistContextMenuOpen.value = false
 }
 
 const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
@@ -115,7 +118,7 @@ const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
         <PlaylistItem
           class="self-center"
           v-for="playlist in searchedPlaylists"
-          :name="playlist.name"
+          :playlist="playlist"
           :key="playlist.id"
           @long-press="onPlaylistLongPress($event, playlist)"
           @click=""

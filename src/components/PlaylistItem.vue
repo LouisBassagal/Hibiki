@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { Playlist } from '@/types/playlist'
+import { PhPlaylist } from '@phosphor-icons/vue'
 import { onLongPress } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
+
 defineProps<{
-  name: string
+  playlist: Playlist
 }>()
 
 const emits = defineEmits<{
@@ -34,7 +37,11 @@ onLongPress(
 
 <template>
   <button ref="button" class="shrink-0 touchable flex flex-col text-left">
-    <span class="size-37.5 bg-surface rounded-sm animate-pulse"></span>
-    <span class="text-text font-bold">{{ name }}</span>
+    <span
+      class="size-37.5 bg-primary/50 rounded-sm flex justify-center items-center"
+    >
+      <PhPlaylist :size="64" />
+    </span>
+    <span class="text-text font-bold">{{ playlist.name }}</span>
   </button>
 </template>

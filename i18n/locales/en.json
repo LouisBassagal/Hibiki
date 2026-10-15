@@ -61,7 +61,8 @@
     "addToQueue": "The theme has been successfully added to the queue.",
     "newPlaylist": "The playlist has been succesfully created.",
     "newPlaylistError": "An error occurred while creating the playlist. Please try again.",
-    "deletePlaylist": "The playlist has been successfully deleted."
+    "deletePlaylist": "The playlist has been successfully deleted.",
+    "emptyPlaylist": "The playlist is empty and cannot be played."
   },
   "theme": {
     "menu": {

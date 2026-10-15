@@ -61,7 +61,8 @@
     "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente.",
     "newPlaylist": "La playlist a bien été créée.",
     "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer.",
-    "deletePlaylist": "La playlist à bien été supprimée."
+    "deletePlaylist": "La playlist à bien été supprimée.",
+    "emptyPlaylist": "La playlist est vide et ne peut pas être jouer."
   },
   "theme": {
     "menu": {
