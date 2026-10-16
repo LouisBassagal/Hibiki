@@ -46,6 +46,10 @@
       "play": "Play"
     }
   },
+  "playlist": {
+    "emptyTitle": "This playlist is empty",
+    "emptySubtitle": "Maybe you should add a few songs to it?"
+  },
   "modal": {
     "title": "Select a version",
     "confirm": {
@@ -65,7 +69,8 @@
     "deletePlaylist": "The playlist has been successfully deleted.",
     "emptyPlaylist": "The playlist is empty and cannot be played.",
     "changePlaylistName": "The playlist name has been updated.",
-    "changePlaylistImage": "The playlist image has been successfully updated."
+    "changePlaylistImage": "The playlist image has been successfully updated.",
+    "removeThemeFromPlaylist": "The theme has been successfully removed from the playlist."
   },
   "theme": {
     "menu": {

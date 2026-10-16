@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import db from '@/plugins/db'
-import { Playlist } from '@/types/playlist'
+import { usePlayerStore } from '@/stores/usePlayerState'
 import { notify } from '@/utils/notify'
 import {
   PhEmpty,
@@ -75,6 +75,27 @@ const onNameChange = async () => {
     })
 }
 
+const onPlaylistThemeSelected = (index: number) => {
+  if (!playlist.value?.items) return
+  usePlayerStore().startPlaylist(playlist?.value.items, index)
+}
+
+const onRemoveThemeFromPlaylist = async (index: number) => {
+  if (!playlist.value?.id) return
+  await db.playlists
+    .where('id')
+    .equals(playlist.value?.id)
+    .modify((p) => {
+      p.items.splice(index, 1)
+    })
+    .then(() => {
+      notify.success(t('toast.removeThemeFromPlaylist'))
+    })
+    .catch(() => {
+      notify.error(t('toast.genericError'))
+    })
+}
+
 watch(isEditMode, (newValue) => {
   if (newValue) playlistName.value = playlist.value?.name
 })
@@ -122,7 +143,7 @@ onUnmounted(() => {
     </section>
 
     <section class="flex flex-col px-5 grow">
-      <div class="flex flex-row justify-between">
+      <div class="flex flex-row justify-between mb-2.5">
         <span
           v-if="!isEditMode"
           class="text-text font-bold font-title text-2xl"
@@ -151,12 +172,20 @@ onUnmounted(() => {
           v-if="playlist?.items.length === 0"
         >
           <PhEmpty class="self-center" :size="48" />
-          <span class="font-semibold"> Cette playlist est vide </span>
+          <span class="font-semibold"> {{ $t('playlist.emptyTitle') }} </span>
           <span class="text-text/50 text-sm">
-            Peut-etre faudrait-il la remplir ?
+            {{ $t('playlist.emptySubtitle') }}
           </span>
         </div>
-        <PlaylistThemeItem v-for="video in playlist?.items" :video="video" />
+        <div class="py-5 w-full flex flex-col gap-2.5">
+          <PlaylistThemeItem
+            v-for="(video, index) in playlist?.items"
+            :video="video"
+            :is-edit-mode="isEditMode"
+            @click="onPlaylistThemeSelected(index)"
+            @delete="onRemoveThemeFromPlaylist(index)"
+          />
+        </div>
       </div>
     </section>
   </div>

@@ -46,6 +46,10 @@
       "play": "Jouer"
     }
   },
+  "playlist": {
+    "emptyTitle": "Cette playlist est vide",
+    "emptySubtitle": "Peut-être qu'il faudrait la remplir un peu ?"
+  },
   "modal": {
     "title": "Sélectionnez une version",
     "confirm": {
@@ -65,7 +69,8 @@
     "deletePlaylist": "La playlist à bien été supprimée.",
     "emptyPlaylist": "La playlist est vide et ne peut pas être jouer.",
     "changePlaylistName": "Le nom de la playlist a été mis à jour.",
-    "changePlaylistImage": "L'image de la playlist a bien été mise à jour"
+    "changePlaylistImage": "L'image de la playlist a bien été mise à jour",
+    "removeThemeFromPlaylist": "Le theme a bien été retiré de la playlist."
   },
   "theme": {
     "menu": {
