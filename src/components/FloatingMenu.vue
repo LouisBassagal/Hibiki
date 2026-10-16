@@ -62,6 +62,17 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           </span>
         </RouterLink>
 
+        <RouterLink
+          to="/playlists"
+          class="flex flex-col justify-center items-center touchable"
+          active-class="text-primary"
+        >
+          <PhMusicNote :size="32" />
+          <span>
+            {{ $t('menu.playlists') }}
+          </span>
+        </RouterLink>
+
         <div />
 
         <!-- <RouterLink
@@ -76,17 +87,6 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
         </RouterLink> -->
 
         <div />
-
-        <!-- <RouterLink
-          to="/search"
-          class="flex flex-col justify-center items-center touchable"
-          active-class="text-primary"
-        >
-          <PhMusicNote :size="32" />
-          <span>
-            {{ $t('menu.playlists') }}
-          </span>
-        </RouterLink> -->
 
         <div />
 
@@ -126,6 +126,9 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           </span>
         </RouterLink> -->
 
+        <div />
+
+        <div />
         <div />
 
         <button

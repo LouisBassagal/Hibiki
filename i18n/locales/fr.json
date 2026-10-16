@@ -1,4 +1,9 @@
 {
+  "general": {
+    "yes": "Oui",
+    "no": "Non",
+    "themes": "{n} thème | {n} thèmes"
+  },
   "home": {
     "title": "Accueil",
     "randomAnime": "Anime aléatoire",
@@ -27,14 +32,51 @@
     "random": "aléatoire",
     "settings": "paramètres"
   },
+  "playlists": {
+    "placeholder": "Recherchez une playlist...",
+    "modal": {
+      "title": "Nouvelle playlist",
+      "subtitle": "Donnez-lui un nom pour pouvoir y ajouter des thèmes plus tard!",
+      "label": "Nom de la playlist",
+      "create": "Créer",
+      "cancel": "Annuler"
+    },
+    "menu": {
+      "delete": "Supprimer",
+      "play": "Jouer"
+    }
+  },
+  "playlist": {
+    "emptyTitle": "Cette playlist est vide",
+    "emptySubtitle": "Peut-être qu'il faudrait la remplir un peu ?"
+  },
   "modal": {
-    "title": "Sélectionnez une version"
+    "title": "Sélectionnez une version",
+    "confirm": {
+      "title": "Suppression de contenu",
+      "subtitle": "Êtes-vous sûr de vouloir faire cela ? Tout retour en arrière est impossible."
+    },
+    "playlist": {
+      "title": "Ajout à une playlist",
+      "subtitle": "Où voulez-vous ajouter {name} ?"
+    }
   },
   "toast": {
-    "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente."
+    "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente.",
+    "genericError": "Une erreur est survenue, Veuillez réessayer.",
+    "newPlaylist": "La playlist a bien été créée.",
+    "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer.",
+    "deletePlaylist": "La playlist à bien été supprimée.",
+    "emptyPlaylist": "La playlist est vide et ne peut pas être jouer.",
+    "changePlaylistName": "Le nom de la playlist a été mis à jour.",
+    "changePlaylistImage": "L'image de la playlist a bien été mise à jour",
+    "removeThemeFromPlaylist": "Le theme a bien été retiré de la playlist."
   },
-  "tooltip": {
-    "addToQueue": "Ajouter a la file d'attente"
+  "theme": {
+    "menu": {
+      "addToQueue": "Ajouter à la file d'attente",
+      "addToPlaylist": "Ajouter à une playlist"
+    }
   },
   "queue": {
     "panelTitle": "File d'attente",
