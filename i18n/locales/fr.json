@@ -59,10 +59,13 @@
   },
   "toast": {
     "addToQueue": "Le thème a été ajouté avec succès à la liste d'attente.",
+    "genericError": "Une erreur est survenue, Veuillez réessayer.",
     "newPlaylist": "La playlist a bien été créée.",
     "newPlaylistError": "Une erreur est survenue lors de la création de la playlist. Veuillez réessayer.",
     "deletePlaylist": "La playlist à bien été supprimée.",
-    "emptyPlaylist": "La playlist est vide et ne peut pas être jouer."
+    "emptyPlaylist": "La playlist est vide et ne peut pas être jouer.",
+    "changePlaylistName": "Le nom de la playlist a été mis à jour.",
+    "changePlaylistImage": "L'image de la playlist a bien été mise à jour"
   },
   "theme": {
     "menu": {

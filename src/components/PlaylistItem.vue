@@ -2,7 +2,7 @@
 import { Playlist } from '@/types/playlist'
 import { PhPlaylist } from '@phosphor-icons/vue'
 import { onLongPress } from '@vueuse/core'
-import { computed, useTemplateRef } from 'vue'
+import { computed, onUnmounted, useTemplateRef } from 'vue'
 
 const props = defineProps<{
   playlist: Playlist
@@ -38,6 +38,10 @@ onLongPress(
     onMouseUp: onMouseUpCallback,
   }
 )
+
+onUnmounted(() => {
+  URL.revokeObjectURL(cover.value)
+})
 </script>
 
 <template>

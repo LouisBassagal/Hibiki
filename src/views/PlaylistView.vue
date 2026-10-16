@@ -1,37 +1,32 @@
 <script setup lang="ts">
 import db from '@/plugins/db'
 import { Playlist } from '@/types/playlist'
-import { PhEmpty, PhPencil, PhUploadSimple, PhX } from '@phosphor-icons/vue'
+import { notify } from '@/utils/notify'
+import {
+  PhEmpty,
+  PhPencil,
+  PhPlaylist,
+  PhUploadSimple,
+  PhX,
+} from '@phosphor-icons/vue'
 import { from, useObservable } from '@vueuse/rxjs'
 import { liveQuery } from 'dexie'
-import { computed, onMounted, ref, useTemplateRef } from 'vue'
+import { computed, onUnmounted, ref, useTemplateRef, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const isEditMode = ref(false)
+const playlistName = ref()
 
+const { t } = useI18n()
 const router = useRouter()
 const imageInputRef = useTemplateRef('imageInput')
 
 const cover = computed(() => {
+  URL.revokeObjectURL(cover.value)
   if (playlist.value?.cover) return URL.createObjectURL(playlist.value?.cover)
   return ''
 })
-
-const onImageModified = async (e: Event) => {
-  const input = e.target as HTMLInputElement
-  const file = input.files?.[0]
-  if (!file) return
-  if (!playlist?.value && !playlist.value?.id) return
-
-  await db.playlists
-    .where('id')
-    .equals(playlist.value?.id)
-    .modify((p) => {
-      p.cover = file
-    })
-  input.value = ''
-  console.log(playlist)
-}
 
 const playlist = useObservable(
   from(
@@ -43,13 +38,64 @@ const playlist = useObservable(
     )
   )
 )
+
+const onImageChange = async (e: Event) => {
+  const input = e.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (!file) return
+  if (!playlist?.value && !playlist.value?.id) return
+
+  await db.playlists
+    .where('id')
+    .equals(playlist.value?.id)
+    .modify((p) => {
+      p.cover = file
+    })
+    .then(() => {
+      notify.success(t('toast.changePlaylistImage'))
+    })
+    .catch(() => {
+      notify.error(t('toast.genericError'))
+    })
+  input.value = ''
+  console.log(playlist)
+}
+
+const onNameChange = async () => {
+  if (!playlist.value?.id) return
+  await db.playlists
+    .where('id')
+    .equals(playlist.value?.id)
+    .modify((p) => (p.name = playlistName.value))
+    .then(() => {
+      notify.success(t('toast.changePlaylistName'))
+    })
+    .catch(() => {
+      notify.error(t('toast.genericError'))
+    })
+}
+
+watch(isEditMode, (newValue) => {
+  if (newValue) playlistName.value = playlist.value?.name
+})
+
+onUnmounted(() => {
+  URL.revokeObjectURL(cover.value)
+})
 </script>
 
 <template>
   <div class="flex flex-col overflow-y-auto grow">
     <section class="flex flex-col mb-2.5">
-      <div class="relative w-full bg-gray-600/50 aspect-square overflow-hidden">
-        <img v-if="playlist?.cover" class="absolute size-full" :src="cover" />
+      <div
+        class="relative w-full bg-primary flex justify-center items-center aspect-square overflow-hidden"
+      >
+        <img
+          v-if="playlist?.cover"
+          class="absolute size-full object-cover"
+          :src="cover"
+        />
+        <PhPlaylist :size="128" class="text-text" />
         <Transition name="reveal">
           <div
             v-if="isEditMode"
@@ -68,7 +114,7 @@ const playlist = useObservable(
               accept="image/*"
               multiple="false"
               class="sr-only"
-              @change="onImageModified"
+              @change="onImageChange"
             />
           </div>
         </Transition>
@@ -77,9 +123,20 @@ const playlist = useObservable(
 
     <section class="flex flex-col px-5 grow">
       <div class="flex flex-row justify-between">
-        <span class="text-text font-bold font-title text-2xl p">
+        <span
+          v-if="!isEditMode"
+          class="text-text font-bold font-title text-2xl"
+        >
           {{ playlist?.name }}
         </span>
+
+        <form v-else @submit.prevent="onNameChange">
+          <input
+            class="text-text font-bold font-title text-2xl ring-2 ring-terciary/50 rounded-sm"
+            type="text"
+            v-model="playlistName"
+          />
+        </form>
 
         <button type="button" @click="isEditMode = !isEditMode">
           <PhX v-if="isEditMode" :size="24" class="text-text touchable" />

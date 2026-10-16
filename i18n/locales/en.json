@@ -59,10 +59,13 @@
   },
   "toast": {
     "addToQueue": "The theme has been successfully added to the queue.",
+    "genericError": "An error occurred. Please try again.",
     "newPlaylist": "The playlist has been succesfully created.",
     "newPlaylistError": "An error occurred while creating the playlist. Please try again.",
     "deletePlaylist": "The playlist has been successfully deleted.",
-    "emptyPlaylist": "The playlist is empty and cannot be played."
+    "emptyPlaylist": "The playlist is empty and cannot be played.",
+    "changePlaylistName": "The playlist name has been updated.",
+    "changePlaylistImage": "The playlist image has been successfully updated."
   },
   "theme": {
     "menu": {
