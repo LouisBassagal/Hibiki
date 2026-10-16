@@ -22,9 +22,9 @@ export const usePlayerStore = defineStore('player', () => {
     queue.value.push(entry)
   }
 
-  const startPlaylist = (entries: Array<VideoExtended>) => {
+  const startPlaylist = (entries: Array<VideoExtended>, idx: number = 0) => {
     queue.value = entries
-    index.value = 0
+    index.value = idx
     mode.value = 'full'
   }
 
