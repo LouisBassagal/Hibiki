@@ -4,7 +4,7 @@ import { PhTrashSimple } from '@phosphor-icons/vue'
 
 const emits = defineEmits(['click', 'delete'])
 
-const props = defineProps<{
+defineProps<{
   video: VideoExtended
   isEditMode: boolean
 }>()
