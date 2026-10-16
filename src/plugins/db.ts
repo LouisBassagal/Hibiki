@@ -6,7 +6,7 @@ const db = new Dexie('hibiki') as Dexie & {
 }
 
 db.version(1).stores({
-  playlists: '++id, name, items',
+  playlists: '++id, name, items, cover',
 })
 
 export default db

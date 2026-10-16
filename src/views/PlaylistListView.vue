@@ -8,6 +8,7 @@ import { from, useObservable } from '@vueuse/rxjs'
 import { liveQuery } from 'dexie'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const userInput = ref('')
 const playlistName = ref('')
@@ -18,8 +19,8 @@ const selectedPlaylist = ref<Playlist | null>(null)
 const selectedPlaylistReference = ref<HTMLElement | undefined>(undefined)
 const isConfirmModalOpen = ref(false)
 
+const router = useRouter()
 const { startPlaylist } = usePlayerStore()
-
 const { t } = useI18n()
 
 const playlists = useObservable(
@@ -40,7 +41,7 @@ const onOpenPlaylistModal = async () => {
 const onCreateNewPlaylist = async () => {
   isNewPlaylistModalOpen.value = false
   await db.playlists
-    .add({ name: playlistName.value, items: [] })
+    .add({ name: playlistName.value, items: [], cover: null })
     .then(() => {
       notify.success(t('toast.newPlaylist'))
     })
@@ -84,6 +85,10 @@ const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
   selectedPlaylistReference.value = reference
   isPlaylistContextMenuOpen.value = true
 }
+
+const onPlaylistClick = (playlist: Playlist) => {
+  router.push({ name: 'playlist', params: { id: playlist.id } })
+}
 </script>
 
 <template>
@@ -121,7 +126,7 @@ const onPlaylistLongPress = (reference: HTMLElement, playlist: Playlist) => {
           :playlist="playlist"
           :key="playlist.id"
           @long-press="onPlaylistLongPress($event, playlist)"
-          @click=""
+          @click="onPlaylistClick(playlist)"
         />
       </TransitionGroup>
     </section>

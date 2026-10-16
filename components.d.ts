@@ -27,6 +27,7 @@ declare module 'vue' {
     PlaylistItem: typeof import('./src/components/PlaylistItem.vue')['default']
     PlaylistModal: typeof import('./src/components/modals/PlaylistModal.vue')['default']
     PlaylistModalItem: typeof import('./src/components/PlaylistModalItem.vue')['default']
+    PlaylistThemeItem: typeof import('./src/components/PlaylistThemeItem.vue')['default']
     PPlaylistModalItem: typeof import('./src/components/PPlaylistModalItem.vue')['default']
     QueueItem: typeof import('./src/components/QueueItem.vue')['default']
     QueuePanel: typeof import('./src/components/QueuePanel.vue')['default']
