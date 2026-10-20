@@ -13,15 +13,20 @@
     },
     "popular": "Most popular",
     "season": "Current season",
-    "best": "Bests"
+    "best": "Bests",
+    "random": "Random"
   },
   "search": {
-    "placeholder": "Search for an anime..."
+    "placeholder": "Search for an anime...",
+    "noResultTitle": "Unfortunately, no anime was found",
+    "noResultSubtitle": "Maybe you made a mistake?"
   },
   "anime": {
     "overview": "Overview",
     "themes": "Themes",
-    "description": "Description"
+    "description": "Description",
+    "noThemeTitle": "No themes were found.",
+    "noThemeSubtitle": "Maybe you should try searching for a different anime."
   },
   "menu": {
     "home": "home",

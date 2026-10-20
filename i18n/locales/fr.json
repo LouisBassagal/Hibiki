@@ -13,15 +13,20 @@
     },
     "popular": "Les plus populaires",
     "season": "Saison actuelle",
-    "best": "Meilleurs"
+    "best": "Meilleurs",
+    "random": "Au hasard"
   },
   "search": {
-    "placeholder": "Recherchez un anime..."
+    "placeholder": "Recherchez un anime...",
+    "noResultTitle": "Malheureusement, aucun anime n'a été trouvé",
+    "noResultSubtitle": "Peux-être que vous avez fait une erreur ?"
   },
   "anime": {
     "overview": "Aperçu",
     "themes": "Themes",
-    "description": "Description"
+    "description": "Description",
+    "noThemeTitle": "Aucun thème n'a été trouvé.",
+    "noThemeSubtitle": "Peux-être vaudrait-il mieux chercher un autre anime."
   },
   "menu": {
     "home": "accueil",
