@@ -61,7 +61,7 @@ const onFullscreenEnter = async () => {
 
 const onFullscreenExit = async () => {
   isFullscreen.value = false
-  await invoke('lock_orientation', { orientation: 'portrait' }).catch((err) => {
+  await invoke('lock_orientation', { orientation: 'unlock' }).catch((err) => {
     console.error('Failed to lock orientation:', err)
   })
   await invoke('set_fullscreen', { hide: false }).catch((err) => {
