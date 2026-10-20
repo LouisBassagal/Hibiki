@@ -2,14 +2,14 @@
 import type { Media } from '@/types/anilist'
 import type { AnimeThemesAnime, AnimeTheme } from '@/types/animethemes'
 import { Markdown } from '@comark/vue'
-import { PhCircleNotch } from '@phosphor-icons/vue'
+import { PhCircleNotch, PhEmpty } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const media = ref<Media | undefined>(undefined)
 const currentTab = ref<'overview' | 'themes'>('overview')
-const themes = ref<AnimeTheme[] | null>(null)
+const themes = ref<AnimeTheme[]>([])
 const selectedTheme = ref<AnimeTheme | null>(null)
 const isModalOpen = ref<boolean>(false)
 const router = useRouter()
@@ -119,17 +119,31 @@ onMounted(async () => {
         class="px-5 mb-5 text-text flex flex-col grow"
       >
         <Transition name="reveal" mode="out-in">
-          <div v-if="!isThemesLoading" class="flex flex-col gap-2.5">
+          <div
+            v-if="!isThemesLoading && themes?.length > 0"
+            class="flex flex-col gap-2.5"
+          >
             <div v-for="theme in themes">
               <AnimeThemeButton @click="onSelectTheme(theme)" :theme="theme" />
             </div>
           </div>
 
           <div
-            v-else
+            v-else-if="isThemesLoading"
             class="w-full h-full flex-1 grow flex flex-col justify-center items-center"
           >
             <PhCircleNotch :size="32" class="animate-spin text-text" />
+          </div>
+
+          <div
+            v-else-if="!isThemesLoading && themes?.length === 0"
+            class="w-full h-full grow flex flex-col justify-center items-center text-text"
+          >
+            <PhEmpty :size="64" />
+            <span class="text-text"> {{ $t('anime.noThemeTitle') }} </span>
+            <span class="text-text/75 text-sm">
+              {{ $t('anime.noThemeSubtitle') }}
+            </span>
           </div>
         </Transition>
       </section>

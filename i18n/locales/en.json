@@ -24,7 +24,9 @@
   "anime": {
     "overview": "Overview",
     "themes": "Themes",
-    "description": "Description"
+    "description": "Description",
+    "noThemeTitle": "No themes were found.",
+    "noThemeSubtitle": "Maybe you should try searching for a different anime."
   },
   "menu": {
     "home": "home",
