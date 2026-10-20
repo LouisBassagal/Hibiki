@@ -106,10 +106,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col overflow-y-auto grow">
-    <section class="flex flex-col mb-2.5">
+  <div
+    class="flex flex-col overflow-y-auto md:overflow-y-hidden grow md:flex md:flex-row"
+  >
+    <section
+      class="flex flex-col mb-2.5 md:flex-col md:justify-center md:items-center md:px-10 md:w-1/3"
+    >
       <div
-        class="relative w-full bg-primary flex justify-center items-center aspect-square overflow-hidden"
+        class="relative w-full bg-primary flex justify-center items-center aspect-square overflow-hidden md:rounded-sm"
       >
         <img
           v-if="playlist?.cover"
@@ -142,7 +146,7 @@ onUnmounted(() => {
       </div>
     </section>
 
-    <section class="flex flex-col px-5 grow">
+    <section class="flex flex-col px-5 grow md:py-2.5">
       <div class="flex flex-row justify-between mb-2.5">
         <span
           v-if="!isEditMode"
@@ -165,7 +169,7 @@ onUnmounted(() => {
         </button>
       </div>
       <div
-        class="flex flex-col gap-2.5 grow text-text/75 justify-center items-center"
+        class="flex flex-col gap-2.5 grow text-text/75 justify-center items-center md:overflow-y-auto"
       >
         <div
           class="flex flex-col items-center"
@@ -177,7 +181,7 @@ onUnmounted(() => {
             {{ $t('playlist.emptySubtitle') }}
           </span>
         </div>
-        <div class="py-5 w-full flex flex-col gap-2.5">
+        <div class="py-5 w-full flex justify-start h-full flex-col gap-2.5">
           <PlaylistThemeItem
             v-for="(video, index) in playlist?.items"
             :video="video"
