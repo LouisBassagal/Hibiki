@@ -3,15 +3,9 @@ import { useAnimeStore } from '@/stores/AnimeStore'
 import { Media } from '@/types/anilist.ts'
 import { useRouter } from 'vue-router'
 
-const props = withDefaults(
-  defineProps<{
-    media: Media
-    size?: 'sm' | 'md'
-  }>(),
-  {
-    size: 'md',
-  }
-)
+const props = defineProps<{
+  media: Media
+}>()
 
 const emits = defineEmits(['click'])
 
@@ -29,7 +23,7 @@ const onClick = () => {
 <template>
   <button
     type="button"
-    class="aspect-a4 rounded-md shrink-0 overflow-clip relative touchable"
+    class="aspect-a4 rounded-md shrink-0 overflow-clip relative touchable w-36"
     @click="onClick"
   >
     <img

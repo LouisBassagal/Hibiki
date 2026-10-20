@@ -21,7 +21,7 @@ const hasMedia = computed(() => props?.medias?.length !== 0)
 
         <!-- Skeleton loading -->
         <div v-else key="skeleton" class="flex flex-row gap-2.5">
-          <AnimeCoverSkeleton v-for="n in 3" :key="n" />
+          <AnimeCoverSkeleton v-for="n in 10" :key="n" />
         </div>
       </Transition>
     </div>
