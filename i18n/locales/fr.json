@@ -13,7 +13,8 @@
     },
     "popular": "Les plus populaires",
     "season": "Saison actuelle",
-    "best": "Meilleurs"
+    "best": "Meilleurs",
+    "random": "Au hasard"
   },
   "search": {
     "placeholder": "Recherchez un anime...",

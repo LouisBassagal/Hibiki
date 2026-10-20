@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Media } from '@/types/anilist'
+import { PhArrowRight, PhShuffle } from '@phosphor-icons/vue'
 
 const props = defineProps<{
   media: Media | null
@@ -20,15 +21,14 @@ defineEmits<{
       <template v-if="props.media">
         <button
           type="button"
-          class="w-full h-50 rounded-md overflow-clip relative touchable"
+          class="w-full h-50 md:h-62.5 rounded-md overflow-clip relative touchable"
           @click="$emit('click')"
         >
           <img
+            v-if="props.media?.bannerImage || props.media.coverImage?.large"
             class="w-full h-full object-cover"
             :src="
-              props.media?.coverImage?.extraLarge ??
-              props.media?.coverImage?.large ??
-              ''
+              props.media?.bannerImage ?? props.media?.coverImage?.large ?? ''
             "
             :alt="
               props.media?.title?.romaji ??
@@ -37,15 +37,31 @@ defineEmits<{
               ''
             "
           />
+
+          <span v-else class="w-full h-full bg-surface" />
+
           <span
-            class="flex flex-col absolute line-clamp-3 py-2.5 text-left bottom-0 left-0 w-full justify-center align-middle rounded-md px-10 bg-surface/50 backdrop-blur-xs text-text font-title font-bold text-lg"
+            class="flex flex-col absolute inset-0 bg-surface/50 backdrop-blur-xs text-text font-bold font-title justify-end items-center text-2xl py-2.5"
           >
-            {{
-              props.media?.title?.romaji ??
-              props.media?.title?.english ??
-              props.media?.title?.native ??
-              ''
-            }}
+            <span
+              class="flex flex-row absolute text-text text-sm font-text top-2.5 left-2.5 bg-primary px-2.5 py-1 rounded-sm gap-2.5 justify-center items-center"
+            >
+              <PhShuffle :size="24" />
+              {{ $t('home.random') }}
+            </span>
+
+            <span class="absolute right-2.5 bottom-2.5">
+              <PhArrowRight :size="48" class="text-text" />
+            </span>
+
+            <span>
+              {{
+                props.media?.title?.romaji ??
+                props.media?.title?.english ??
+                props.media?.title?.native ??
+                ''
+              }}
+            </span>
           </span>
         </button>
       </template>

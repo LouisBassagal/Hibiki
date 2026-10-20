@@ -13,7 +13,8 @@
     },
     "popular": "Most popular",
     "season": "Current season",
-    "best": "Bests"
+    "best": "Bests",
+    "random": "Random"
   },
   "search": {
     "placeholder": "Search for an anime...",
