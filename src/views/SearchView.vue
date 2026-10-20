@@ -2,21 +2,41 @@
 import type { Media } from '@/types/anilist'
 import { PhCircleNotch, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const medias = ref<Media[] | null>([])
 const userInput = ref<string>('')
 const isLoading = ref<boolean>(false)
+const router = useRouter()
+const route = useRoute()
 
 const onUserSearch = async () => {
+  router.replace({ name: 'search', query: { search: userInput.value } })
+  onSearch(userInput.value)
+}
+
+const onRecentSearch = async () => {
+  const search = route.query['search']
+  if (!search) return
+
+  userInput.value = search as string
+  onSearch(userInput.value)
+}
+
+const onSearch = async (name: string) => {
   isLoading.value = true
   medias.value = await invoke<Media[]>('fetch_anime_by_name', {
-    search: userInput.value,
+    search: name,
     page: 1,
     count: 50,
   })
   isLoading.value = false
 }
+
+onMounted(() => {
+  onRecentSearch()
+})
 </script>
 
 <template>
