@@ -46,7 +46,11 @@ const onUserSearch = async () => {
             <PhCircleNotch :size="50" class="animate-spin" />
           </div>
 
-          <div v-else key="anime-list" class="grid grid-cols-3 gap-4">
+          <div
+            v-else
+            key="anime-list"
+            class="grid grid-cols-[repeat(auto-fill,minmax(105px,1fr))] gap-4 place-items-center"
+          >
             <AnimeCover
               size="sm"
               v-for="media in medias"

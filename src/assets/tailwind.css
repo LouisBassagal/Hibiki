@@ -17,10 +17,10 @@
   --font-text: 'Plus Jakarta Sans Variable', sans-serif;
 
   /* Safe paddings */
-  --spacing-safe-t: calc(1rem + env(safe-area-inset-top, 0px));
-  --spacing-safe-b: calc(1rem + env(safe-area-inset-bottom, 0px));
-  --spacing-safe-l: calc(1rem + env(safe-area-inset-left, 0px));
-  --spacing-safe-r: calc(1rem + env(safe-area-inset-right, 0px));
+  --spacing-safe-t: calc(env(safe-area-inset-top, 0px));
+  --spacing-safe-b: calc(env(safe-area-inset-bottom, 0px));
+  --spacing-safe-l: calc(env(safe-area-inset-left, 0px));
+  --spacing-safe-r: calc(env(safe-area-inset-right, 0px));
 }
 
 @utility touchable {

@@ -23,10 +23,6 @@ onMounted(async () => {
     else invoke('quit')
   })
 
-  await invoke('lock_orientation', { orientation: 'portrait' }).catch((err) => {
-    console.error('Failed to lock orientation:', err)
-  })
-
   toastLayerRef.value?.showPopover()
 })
 
