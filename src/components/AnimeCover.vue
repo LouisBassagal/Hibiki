@@ -31,7 +31,6 @@ const onClick = () => {
     type="button"
     class="aspect-a4 rounded-md shrink-0 overflow-clip relative touchable"
     @click="onClick"
-    :class="size === 'md' ? 'w-30.5' : 'w-26'"
   >
     <img
       class="h-full w-full object-cover"

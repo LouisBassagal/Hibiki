@@ -72,7 +72,6 @@ onMounted(() => {
             class="grid grid-cols-[repeat(auto-fill,minmax(105px,1fr))] gap-4 place-items-center"
           >
             <AnimeCover
-              size="sm"
               v-for="media in medias"
               :key="media.id"
               :media="media"
