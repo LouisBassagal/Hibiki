@@ -44,14 +44,18 @@ const onClick = () => {
     />
 
     <span
-      class="absolute bottom-0 bg-surface/50 leading-4 left-0 line-clamp-5 max-h-20 overflow-hidden right-0 text-left rounded-md backdrop-blur-sm min-h-7.5 px-2.5 py-1.5 text-white font-bold font-text text-xs"
+      class="absolute bottom-0 left-0 bg-surface/50 w-full backdrop-blur-sm px-1.5 py-1.5"
     >
-      {{
-        media?.title?.romaji ??
-        media?.title?.english ??
-        media?.title?.native ??
-        ''
-      }}
+      <span
+        class="line-clamp-5 overflow-hidden right-0 text-left rounded-md text-white font-bold font-text text-xs"
+      >
+        {{
+          media?.title?.romaji ??
+          media?.title?.english ??
+          media?.title?.native ??
+          ''
+        }}
+      </span>
     </span>
   </button>
 </template>
