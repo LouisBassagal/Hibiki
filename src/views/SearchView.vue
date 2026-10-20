@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { Media } from '@/types/anilist'
-import { PhCircleNotch, PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhCircleNotch, PhEmpty, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const medias = ref<Media[] | null>([])
+const medias = ref<Media[]>([])
 const userInput = ref<string>('')
 const isLoading = ref<boolean>(false)
+const isSearchDone = ref<boolean>(false)
 const router = useRouter()
 const route = useRoute()
 
@@ -30,8 +31,10 @@ const onSearch = async (name: string) => {
     search: name,
     page: 1,
     count: 50,
+  }).finally(() => {
+    isSearchDone.value = true
+    isLoading.value = false
   })
-  isLoading.value = false
 }
 
 onMounted(() => {
@@ -67,15 +70,28 @@ onMounted(() => {
           </div>
 
           <div
-            v-else
+            v-else-if="medias?.length > 0 && isSearchDone"
             key="anime-list"
-            class="grid grid-cols-[repeat(auto-fill,minmax(105px,1fr))] gap-4 place-items-center"
+            class="grid grid-cols-[repeat(auto-fill,minmax(145px,1fr))] gap-4 place-items-center"
           >
             <AnimeCover
               v-for="media in medias"
               :key="media.id"
               :media="media"
             />
+          </div>
+
+          <div
+            v-else-if="medias?.length === 0 && isSearchDone"
+            class="flex flex-col h-full w-full justify-center items-center"
+          >
+            <PhEmpty :size="68" />
+            <span class="font-semibold text-text">{{
+              $t('search.noResultTitle')
+            }}</span>
+            <span class="text-text/75 text-sm">{{
+              $t('search.noResultSubtitle')
+            }}</span>
           </div>
         </Transition>
       </Transition>

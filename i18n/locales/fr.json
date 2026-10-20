@@ -16,7 +16,9 @@
     "best": "Meilleurs"
   },
   "search": {
-    "placeholder": "Recherchez un anime..."
+    "placeholder": "Recherchez un anime...",
+    "noResultTitle": "Malheureusement, aucun anime n'a été trouvé",
+    "noResultSubtitle": "Peux-être que vous avez fait une erreur ?"
   },
   "anime": {
     "overview": "Aperçu",
