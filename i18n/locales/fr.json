@@ -70,8 +70,10 @@
   "modal": {
     "title": "Sélectionnez une version",
     "confirm": {
-      "title": "Suppression de contenu",
-      "subtitle": "Êtes-vous sûr de vouloir faire cela ? Tout retour en arrière est impossible."
+      "deleteTitle": "Voulez vous supprimer cela ?",
+      "deleteSubtitle": "Tout retour en arrière est impossible.",
+      "logoutTitle": "Êtes-vous sûr de vouloir vous déconnecter ?",
+      "logoutSubtitle": "Vous pourrez toujours vous reconnecter plus tard"
     },
     "playlist": {
       "title": "Ajout à une playlist",

@@ -9,6 +9,7 @@ import {
   PhUser,
 } from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
+import { openUrl } from '@tauri-apps/plugin-opener'
 import { storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
 
@@ -16,10 +17,17 @@ const { logout, login } = useAnilistUser()
 const { token, isLoggedIn } = storeToRefs(useAnilistUser())
 const profile = ref<Viewer | null>()
 const isProfileLoading = ref(true)
+const isModalOpen = ref(false)
 
 const onLogout = () => {
   profile.value = null
   logout()
+  isModalOpen.value = false
+}
+
+const onRedirectProfile = () => {
+  if (!profile.value?.siteUrl) return
+  openUrl(profile.value?.siteUrl)
 }
 
 watch(
@@ -104,13 +112,13 @@ watch(
             v-if="isLoggedIn"
             class="flex flex-col w-full md:flex-row gap-2.5"
           >
-            <SimpleButton class="bg-surface" @click="onLogout">
+            <SimpleButton class="bg-surface" @click="isModalOpen = true">
               <div class="flex flex-row items-center justify-center gap-2.5">
                 <PhSignOut :size="24" />
                 {{ $t('profile.logout') }}
               </div>
             </SimpleButton>
-            <SimpleButton class="bg-surface">
+            <SimpleButton class="bg-surface" @click="onRedirectProfile">
               <div class="flex flex-row items-center justify-center gap-2.5">
                 <PhGlobe :size="24" />
                 {{ $t('profile.seeAnilist') }}
@@ -136,5 +144,13 @@ watch(
         <PhCircleNotch :size="64" class="animate-spin" />
       </div>
     </Transition>
+
+    <ConfirmModal
+      :title="$t('modal.confirm.logoutTitle')"
+      :subtitle="$t('modal.confirm.logoutSubtitle')"
+      v-model:is-open="isModalOpen"
+      @cancel="isModalOpen = false"
+      @accept="onLogout"
+    />
   </div>
 </template>

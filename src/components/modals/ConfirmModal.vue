@@ -1,4 +1,8 @@
 <script setup lang="ts">
+defineProps<{
+  title: string
+  subtitle: string
+}>()
 const emits = defineEmits(['accept', 'cancel', 'close'])
 
 const isOpen = defineModel('isOpen')
@@ -7,12 +11,10 @@ const isOpen = defineModel('isOpen')
 <template>
   <ModalContainer v-model:is-open="isOpen" @close="emits('close')">
     <div class="mb-2.5 text-text">
-      <h2 class="text-text font-bold text-lg">
-        {{ $t('modal.confirm.title') }}
+      <h2 class="text-text font-bold text-lg pr-12">
+        {{ title }}
       </h2>
-      <span class="text-text/75 text-sm">{{
-        $t('modal.confirm.subtitle')
-      }}</span>
+      <span class="text-text/75 text-sm">{{ subtitle }}</span>
     </div>
 
     <div class="flex flex-row justify-end gap-2.5 text-text font-semibold">
