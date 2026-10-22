@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "Français"
+  },
   "general": {
     "yes": "Oui",
     "no": "Non",

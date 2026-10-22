@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "name": "English"
+  },
   "general": {
     "yes": "Yes",
     "no": "No",
