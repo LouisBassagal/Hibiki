@@ -172,12 +172,21 @@ export interface ViewerStatistics {
   anime?: ViewerAnimeStatistics | null
 }
 
+export interface ViewerAnimeFavorites {
+  nodes?: Media[] | null
+}
+
+export interface ViewerFavorites {
+  anime?: ViewerAnimeFavorites | null
+}
+
 export interface Viewer {
   id: number
   name: string
   avatar?: ViewerAvatar | null
   bannerImage?: string | null
   statistics?: ViewerStatistics | null
+  favourites?: ViewerFavorites | null
 }
 
 // ==========================================

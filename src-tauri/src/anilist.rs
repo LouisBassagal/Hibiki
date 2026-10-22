@@ -63,12 +63,25 @@ pub struct ViewerStatistics {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct ViewerAnimeFavorites {
+    pub nodes: Option<Vec<AnimeMedia>>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ViewerFavorites {
+    pub anime: Option<ViewerAnimeFavorites>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Viewer {
     pub id: i32,
     pub name: String,
     pub avatar: Option<ViewerAvatar>,
     pub banner_image: Option<String>,
     pub statistics: Option<ViewerStatistics>,
+    pub favourites: Option<ViewerFavorites>,
 }
 
 #[tauri::command]
@@ -94,6 +107,25 @@ pub async fn fetch_viewer(token: &str) -> Result<Viewer, String> {
                         episodesWatched
                         minutesWatched
                         meanScore
+                    }
+                }
+                favourites {
+                    anime {
+                        nodes {
+                            id
+                            title {
+                                romaji
+                                english
+                            }
+                            coverImage {
+                                extraLarge
+                                large
+                                medium
+                                color
+                            }
+                            bannerImage
+                            description
+                        }
                     }
                 }
             }
