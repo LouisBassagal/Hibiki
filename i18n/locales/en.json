@@ -37,7 +37,8 @@
     "viewedAnime": "Anime Watched",
     "viewedEpisode": "Episodes Watched",
     "averageScore": "Average Score",
-    "viewedMinutes": "Minutes Watched"
+    "viewedMinutes": "Minutes Watched",
+    "favoriteAnime": "Your favorite anime"
   },
   "menu": {
     "home": "home",

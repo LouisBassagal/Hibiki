@@ -81,8 +81,14 @@ watch(
         <section
           class="flex flex-col mx-10 grow text-text font-text font-semibold gap-2.5"
         >
-          <div v-if="isLoggedIn">
+          <div v-if="isLoggedIn" class="flex flex-col gap-2.5">
             <AnimeStatistics :statistics="profile?.statistics?.anime" />
+
+            <AnimeCoverList
+              :title="$t('profile.favoriteAnime')"
+              v-if="profile?.favourites?.anime?.nodes != null"
+              :medias="profile?.favourites?.anime?.nodes"
+            />
           </div>
 
           <div v-else class="mb-5">

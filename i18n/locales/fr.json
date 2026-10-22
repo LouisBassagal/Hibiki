@@ -30,14 +30,15 @@
   },
   "profile": {
     "notLoggedTitle": "Pas encore connecté",
-    "notLoggedSubtitle": "Connecte ton compte AniList pour retrouver ton profil et tes statistiques ici.",
+    "notLoggedSubtitle": "Connectez votre compte AniList pour retrouver votre profil et vos statistiques.",
     "login": "Se connecter",
     "logout": "Se déconnecter",
     "seeAnilist": "Voir le profil sur Anilist",
     "viewedAnime": "Animes visionnés",
     "viewedEpisode": "Episodes visionnés",
     "averageScore": "Score moyen",
-    "viewedMinutes": "Minutes visionnées"
+    "viewedMinutes": "Minutes visionnées",
+    "favoriteAnime": "Vos animes préférés"
   },
   "menu": {
     "home": "accueil",
