@@ -80,6 +80,7 @@ pub struct Viewer {
     pub name: String,
     pub avatar: Option<ViewerAvatar>,
     pub banner_image: Option<String>,
+    pub site_url: Option<String>,
     pub statistics: Option<ViewerStatistics>,
     pub favourites: Option<ViewerFavorites>,
 }
@@ -101,6 +102,7 @@ pub async fn fetch_viewer(token: &str) -> Result<Viewer, String> {
                     medium
                 }
                 bannerImage
+                siteUrl
                 statistics {
                     anime {
                         count

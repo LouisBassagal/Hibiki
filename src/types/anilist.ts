@@ -185,6 +185,7 @@ export interface Viewer {
   name: string
   avatar?: ViewerAvatar | null
   bannerImage?: string | null
+  siteUrl?: string | null
   statistics?: ViewerStatistics | null
   favourites?: ViewerFavorites | null
 }
