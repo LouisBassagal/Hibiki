@@ -181,7 +181,10 @@ onUnmounted(() => {
             {{ $t('playlist.emptySubtitle') }}
           </span>
         </div>
-        <div class="py-5 w-full flex justify-start h-full flex-col gap-2.5">
+        <div
+          v-else
+          class="py-5 w-full flex justify-start h-full flex-col gap-2.5"
+        >
           <PlaylistThemeItem
             v-for="(video, index) in playlist?.items"
             :video="video"
