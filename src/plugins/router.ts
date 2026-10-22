@@ -2,6 +2,7 @@ import AnimeView from '@/views/AnimeView.vue'
 import HomeView from '@/views/HomeView.vue'
 import PlaylistListView from '@/views/PlaylistListView.vue'
 import PlaylistView from '@/views/PlaylistView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 import SearchView from '@/views/SearchView.vue'
 import { createWebHistory, createRouter } from 'vue-router'
 
@@ -30,6 +31,11 @@ const routes = [
     path: '/playlists/:id',
     component: PlaylistView,
     name: 'playlist',
+  },
+  {
+    path: '/profile',
+    component: ProfileView,
+    name: 'profile',
   },
 ]
 
