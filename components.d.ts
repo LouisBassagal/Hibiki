@@ -19,6 +19,7 @@ declare module 'vue' {
     AnimeThemeButton: typeof import('./src/components/AnimeThemeButton.vue')['default']
     ConfirmModal: typeof import('./src/components/modals/ConfirmModal.vue')['default']
     ContextMenuContainer: typeof import('./src/components/ContextMenuContainer.vue')['default']
+    CustomSelect: typeof import('./src/components/CustomSelect.vue')['default']
     EntryButton: typeof import('./src/components/EntryButton.vue')['default']
     FloatingMenu: typeof import('./src/components/FloatingMenu.vue')['default']
     GenericSkeleton: typeof import('./src/components/loading/GenericSkeleton.vue')['default']
