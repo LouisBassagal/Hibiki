@@ -16,9 +16,11 @@ const languages = computed(() => {
 })
 
 const currentLanguage = computed(() => {
-  return languages.value.find((l) => {
-    return l.code == locale.value
-  })?.name
+  return (
+    languages.value.find((l) => {
+      return l.code == locale.value
+    })?.name ?? locale.value
+  )
 })
 
 const isLanguageMenuOpen = ref(false)
