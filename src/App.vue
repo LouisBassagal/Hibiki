@@ -9,9 +9,11 @@ import { onMounted, onUnmounted, useTemplateRef } from 'vue'
 import 'vue-sonner/style.css'
 import { Toaster } from 'vue-sonner'
 
+import { useAnilistUser } from './stores/useAnilistUser'
 import { usePlayerStore } from './stores/usePlayerState'
 
 const toastLayerRef = useTemplateRef('layer')
+const { init } = useAnilistUser()
 
 let listener: PluginListener
 
@@ -24,6 +26,7 @@ onMounted(async () => {
   })
 
   toastLayerRef.value?.showPopover()
+  await init()
 })
 
 onUnmounted(() => {
