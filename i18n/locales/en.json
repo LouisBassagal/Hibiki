@@ -28,6 +28,13 @@
     "noThemeTitle": "No themes were found.",
     "noThemeSubtitle": "Maybe you should try searching for a different anime."
   },
+  "profile": {
+    "notLoggedTitle": "Not logged in yet",
+    "notLoggedSubtitle": "Log in to your AniList account to view your profile and stats here.",
+    "login": "Log In",
+    "logout": "Log Out",
+    "seeAnilist": "View profile on Anilist"
+  },
   "menu": {
     "home": "home",
     "search": "search",

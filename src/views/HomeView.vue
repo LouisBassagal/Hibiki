@@ -59,7 +59,7 @@ onMounted(async () => {
       :media="randomAnime"
       @click="router.push({ name: 'anime', params: { id: randomAnime?.id } })"
     />
-    <section id="buttons" class="flex flex-col gap-2.5">
+    <section id="buttons" class="flex flex-col gap-2.5 md:flex-row">
       <HugeButton @click="router.push({ name: 'search' })">
         <template #icon>
           <PhMagnifyingGlass :size="70" class="-scale-x-100" />

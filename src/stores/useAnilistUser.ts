@@ -7,7 +7,7 @@ import { computed, ref } from 'vue'
 export const useAnilistUser = defineStore('user', () => {
   const token = ref<string | undefined>(undefined)
   const isListening = ref(false)
-  const isLoggedIn = computed(() => !token)
+  const isLoggedIn = computed(() => !!token.value)
 
   const handleRedirect = async (urls: string[] | null) => {
     if (!urls) return
@@ -29,6 +29,9 @@ export const useAnilistUser = defineStore('user', () => {
   const init = async () => {
     token.value = await loadToken()
 
+    console.log('HIIHII')
+    console.log(token.value)
+    console.log(isLoggedIn.value)
     if (!isListening.value) {
       isListening.value = true
       await onOpenUrl(handleRedirect)
@@ -36,9 +39,9 @@ export const useAnilistUser = defineStore('user', () => {
     await handleRedirect(await getCurrent())
   }
 
-  const logout = () => {
+  const logout = async () => {
     token.value = undefined
-    clearToken()
+    await clearToken()
   }
 
   return { login, logout, token, isLoggedIn, init }

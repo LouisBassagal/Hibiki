@@ -28,6 +28,13 @@
     "noThemeTitle": "Aucun thème n'a été trouvé.",
     "noThemeSubtitle": "Peux-être vaudrait-il mieux chercher un autre anime."
   },
+  "profile": {
+    "notLoggedTitle": "Pas encore connecté",
+    "notLoggedSubtitle": "Connecte ton compte AniList pour retrouver ton profil et tes statistiques ici.",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "seeAnilist": "Voir le profil sur Anilist"
+  },
   "menu": {
     "home": "accueil",
     "search": "rechercher",
