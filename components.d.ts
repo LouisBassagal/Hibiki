@@ -34,6 +34,7 @@ declare module 'vue' {
     RandomAnimeHero: typeof import('./src/components/RandomAnimeHero.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SimpleButton: typeof import('./src/components/SimpleButton.vue')['default']
     StandardChip: typeof import('./src/components/StandardChip.vue')['default']
     ThemeEntriesModal: typeof import('./src/components/ThemeEntriesModal.vue')['default']
     VideoContainer: typeof import('./src/components/VideoContainer.vue')['default']
