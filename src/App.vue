@@ -20,7 +20,6 @@ let listener: PluginListener
 onMounted(async () => {
   listener = await onBackButtonPress((payload) => {
     if (usePlayerStore().mode === 'full') return usePlayerStore().minimize()
-    console.log(payload.canGoBack)
     if (payload.canGoBack) return window.history.back()
     else invoke('quit')
   })

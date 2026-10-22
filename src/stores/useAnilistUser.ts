@@ -28,10 +28,6 @@ export const useAnilistUser = defineStore('user', () => {
 
   const init = async () => {
     token.value = await loadToken()
-
-    console.log('HIIHII')
-    console.log(token.value)
-    console.log(isLoggedIn.value)
     if (!isListening.value) {
       isListening.value = true
       await onOpenUrl(handleRedirect)

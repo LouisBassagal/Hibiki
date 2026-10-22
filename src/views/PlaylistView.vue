@@ -58,7 +58,6 @@ const onImageChange = async (e: Event) => {
       notify.error(t('toast.genericError'))
     })
   input.value = ''
-  console.log(playlist)
 }
 
 const onNameChange = async () => {
