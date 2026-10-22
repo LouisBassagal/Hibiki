@@ -153,6 +153,34 @@ export interface Media {
 }
 
 // ==========================================
+// VIEWER (UTILISATEUR ANILIST)
+// ==========================================
+
+export interface ViewerAvatar {
+  large?: string | null
+  medium?: string | null
+}
+
+export interface ViewerAnimeStatistics {
+  count?: number | null
+  episodesWatched?: number | null
+  minutesWatched?: number | null
+  meanScore?: number | null
+}
+
+export interface ViewerStatistics {
+  anime?: ViewerAnimeStatistics | null
+}
+
+export interface Viewer {
+  id: number
+  name: string
+  avatar?: ViewerAvatar | null
+  bannerImage?: string | null
+  statistics?: ViewerStatistics | null
+}
+
+// ==========================================
 // PAGINATION & REPONSES GRAPHQL
 // ==========================================
 

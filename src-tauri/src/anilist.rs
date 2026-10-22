@@ -39,6 +39,102 @@ pub struct AnimeMedia {
     pub description: Option<String>,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ViewerAvatar {
+    pub large: Option<String>,
+    pub medium: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ViewerAnimeStatistics {
+    pub count: Option<i32>,
+    pub episodes_watched: Option<i32>,
+    pub minutes_watched: Option<i32>,
+    pub mean_score: Option<f32>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ViewerStatistics {
+    pub anime: Option<ViewerAnimeStatistics>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct Viewer {
+    pub id: i32,
+    pub name: String,
+    pub avatar: Option<ViewerAvatar>,
+    pub banner_image: Option<String>,
+    pub statistics: Option<ViewerStatistics>,
+}
+
+#[tauri::command]
+pub async fn fetch_viewer(token: &str) -> Result<Viewer, String> {
+    let client = Client::builder()
+        .timeout(Duration::from_secs(10))
+        .build()
+        .map_err(|error| error.to_string())?;
+
+    let query = r#"
+        query {
+            Viewer {
+                id
+                name
+                avatar {
+                    large
+                    medium
+                }
+                bannerImage
+                statistics {
+                    anime {
+                        count
+                        episodesWatched
+                        minutesWatched
+                        meanScore
+                    }
+                }
+            }
+        }
+    "#;
+
+    let body = json!({ "query": query });
+
+    let response = client
+        .post("https://graphql.anilist.co")
+        .header("Content-Type", "application/json")
+        .header("Accept", "application/json")
+        .bearer_auth(token)
+        .json(&body)
+        .send()
+        .await
+        .map_err(|error| error.to_string())?;
+
+    let status = response.status();
+    let response_text = response
+        .text()
+        .await
+        .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
+
+    if !status.is_success() {
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
+    }
+
+    let response_json: serde_json::Value = serde_json::from_str(&response_text)
+        .map_err(|error| format!("JSON invalide: {error}; réponse: {response_text}"))?;
+
+    if let Some(errors) = response_json.get("errors") {
+        return Err(errors.to_string());
+    }
+
+    serde_json::from_value(response_json["data"]["Viewer"].clone())
+        .map_err(|error| error.to_string())
+}
+
 fn current_season() -> (&'static str, i32) {
     let now = Utc::now();
     let season = match now.month() {

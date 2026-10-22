@@ -33,6 +33,7 @@ pub fn run() {
             anilist::fetch_random_known_anime,
             anilist::fetch_anime_by_name,
             anilist::fetch_anime_by_id,
+            anilist::fetch_viewer,
             animethemes::fetch_themes_by_anilist_id,
             utils::lock_orientation,
             utils::set_fullscreen,
