@@ -70,6 +70,12 @@
     "emptyTitle": "This playlist is empty",
     "emptySubtitle": "Maybe you should add a few songs to it?"
   },
+  "settings": {
+    "settings": "Settings",
+    "general": "General",
+    "languageTitle": "Languages",
+    "languageSubtitle": "Interface Language"
+  },
   "modal": {
     "title": "Select a version",
     "confirm": {

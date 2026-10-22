@@ -28,18 +28,20 @@ const isLanguageMenuOpen = ref(false)
 
 <template>
   <section class="flex flex-col grow px-10 text-text font-text font-semibold">
-    <h1 class="font-bold text-2xl mb-2.5">Réglages</h1>
+    <h1 class="font-bold text-2xl mb-2.5">{{ $t('settings.settings') }}</h1>
 
     <div class="flex shrink-0 grow w-full">
       <div class="md:grid md:grid-cols-2 flex flex-col w-full gap-2.5">
         <div class="w-full">
-          <span class="text-text/75"> Général </span>
+          <span class="text-text/75">{{ $t('settings.general') }}</span>
           <div
             class="flex flex-row bg-surface rounded-sm w-full px-5 py-2.5 mt-2.5 justify-between items-center"
           >
             <div>
-              <div>Langue</div>
-              <div class="text-text/75 text-sm">Langue de l'interface</div>
+              <div>{{ $t('settings.languageTitle') }}</div>
+              <div class="text-text/75 text-sm">
+                {{ $t('settings.languageSubtitle') }}
+              </div>
             </div>
 
             <CustomSelect

@@ -70,6 +70,12 @@
     "emptyTitle": "Cette playlist est vide",
     "emptySubtitle": "Peut-être qu'il faudrait la remplir un peu ?"
   },
+  "settings": {
+    "settings": "Paramètres",
+    "general": "Général",
+    "languageTitle": "Langues",
+    "languageSubtitle": "Langue de l'interface"
+  },
   "modal": {
     "title": "Sélectionnez une version",
     "confirm": {
