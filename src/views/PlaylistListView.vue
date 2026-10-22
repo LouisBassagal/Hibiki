@@ -211,6 +211,8 @@ const onPlaylistClick = (playlist: Playlist) => {
 
     <!-- Confirm Modal -->
     <ConfirmModal
+      :title="$t('modal.confirm.deleteTitle')"
+      :subtitle="$t('modal.confirm.deleteSubtitle')"
       v-model:is-open="isConfirmModalOpen"
       @accept="onDeletePlaylist"
       @cancel="isConfirmModalOpen = false"

@@ -75,7 +75,6 @@ const closeControls = () => {
 }
 
 const onPlay = () => {
-  console.log(source)
   playing.value = true
 }
 

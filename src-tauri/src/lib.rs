@@ -15,6 +15,7 @@ pub fn run() {
     }];
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_deep_link::init())
         .plugin(tauri_plugin_http::init())
         .plugin(
             tauri_plugin_sql::Builder::default()
@@ -32,6 +33,7 @@ pub fn run() {
             anilist::fetch_random_known_anime,
             anilist::fetch_anime_by_name,
             anilist::fetch_anime_by_id,
+            anilist::fetch_viewer,
             animethemes::fetch_themes_by_anilist_id,
             utils::lock_orientation,
             utils::set_fullscreen,

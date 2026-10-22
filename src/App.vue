@@ -9,21 +9,23 @@ import { onMounted, onUnmounted, useTemplateRef } from 'vue'
 import 'vue-sonner/style.css'
 import { Toaster } from 'vue-sonner'
 
+import { useAnilistUser } from './stores/useAnilistUser'
 import { usePlayerStore } from './stores/usePlayerState'
 
 const toastLayerRef = useTemplateRef('layer')
+const { init } = useAnilistUser()
 
 let listener: PluginListener
 
 onMounted(async () => {
   listener = await onBackButtonPress((payload) => {
     if (usePlayerStore().mode === 'full') return usePlayerStore().minimize()
-    console.log(payload.canGoBack)
     if (payload.canGoBack) return window.history.back()
     else invoke('quit')
   })
 
   toastLayerRef.value?.showPopover()
+  await init()
 })
 
 onUnmounted(() => {

@@ -73,10 +73,8 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           </span>
         </RouterLink>
 
-        <div />
-
-        <!-- <RouterLink
-          to="/account"
+        <RouterLink
+          to="/profile"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
         >
@@ -84,7 +82,7 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.account') }}
           </span>
-        </RouterLink> -->
+        </RouterLink>
 
         <div />
 
