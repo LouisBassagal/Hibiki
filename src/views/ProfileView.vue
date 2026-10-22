@@ -79,9 +79,11 @@ watch(
         </section>
 
         <section
-          class="flex flex-col mx-10 grow text-text font-text font-semibold"
+          class="flex flex-col mx-10 grow text-text font-text font-semibold gap-2.5"
         >
-          <div v-if="isLoggedIn"></div>
+          <div v-if="isLoggedIn">
+            <AnimeStatistics :statistics="profile?.statistics?.anime" />
+          </div>
 
           <div v-else class="mb-5">
             <div class="text-3xl">

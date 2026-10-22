@@ -33,7 +33,11 @@
     "notLoggedSubtitle": "Log in to your AniList account to view your profile and stats here.",
     "login": "Log In",
     "logout": "Log Out",
-    "seeAnilist": "View profile on Anilist"
+    "seeAnilist": "View profile on Anilist",
+    "viewedAnime": "Anime Watched",
+    "viewedEpisode": "Episodes Watched",
+    "averageScore": "Average Score",
+    "viewedMinutes": "Minutes Watched"
   },
   "menu": {
     "home": "home",

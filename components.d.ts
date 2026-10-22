@@ -15,6 +15,7 @@ declare module 'vue' {
     AnimeCover: typeof import('./src/components/AnimeCover.vue')['default']
     AnimeCoverList: typeof import('./src/components/AnimeCoverList.vue')['default']
     AnimeCoverSkeleton: typeof import('./src/components/loading/AnimeCoverSkeleton.vue')['default']
+    AnimeStatistics: typeof import('./src/components/profile/AnimeStatistics.vue')['default']
     AnimeThemeButton: typeof import('./src/components/AnimeThemeButton.vue')['default']
     ConfirmModal: typeof import('./src/components/modals/ConfirmModal.vue')['default']
     ContextMenuContainer: typeof import('./src/components/ContextMenuContainer.vue')['default']
