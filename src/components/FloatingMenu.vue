@@ -86,8 +86,6 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
 
         <div />
 
-        <div />
-
         <!-- <RouterLink
           to="/search"
           class="flex flex-col justify-center items-center touchable"
@@ -98,8 +96,6 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
             {{ $t('menu.list') }}
           </span>
         </RouterLink> -->
-
-        <div />
 
         <!-- <RouterLink
           to="/search"
@@ -113,8 +109,9 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
         </RouterLink> -->
 
         <div />
-        <!-- <RouterLink
-          to="/search"
+
+        <RouterLink
+          to="/settings"
           class="flex flex-col justify-center items-center touchable"
           active-class="text-primary"
         >
@@ -122,11 +119,8 @@ onClickOutside(menuDiv, () => (isOpen.value = false))
           <span>
             {{ $t('menu.settings') }}
           </span>
-        </RouterLink> -->
+        </RouterLink>
 
-        <div />
-
-        <div />
         <div />
 
         <button
