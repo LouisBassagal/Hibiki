@@ -8,13 +8,15 @@ defineProps<{
 
 <template>
   <div
-    class="grid grid-cols-2 md:grid-cols-4 rounded-sm bg-surface divide-background divide-x-2"
+    class="grid grid-cols-2 md:grid-cols-4 rounded-sm bg-surface divide-background divide-x-2 divide-y-2 md:divide-y-0"
   >
     <div class="px-5 py-5">
       <p class="font-title text-3xl font-bold">
         {{ statistics?.count }}
       </p>
-      <span class="text-text font-text font-semibold"> Animes visionnés </span>
+      <span class="text-text font-text font-semibold">
+        {{ $t('profile.viewedAnime') }}
+      </span>
     </div>
 
     <div class="px-5 py-5">
@@ -22,7 +24,7 @@ defineProps<{
         {{ statistics?.episodesWatched }}
       </p>
       <span class="text-text font-text font-semibold">
-        Episodes visionnés
+        {{ $t('profile.viewedEpisode') }}
       </span>
     </div>
 
@@ -30,7 +32,9 @@ defineProps<{
       <p class="font-title text-3xl font-bold">
         {{ statistics?.meanScore }}
       </p>
-      <span class="text-text font-text font-semibold"> Score moyen </span>
+      <span class="text-text font-text font-semibold">
+        {{ $t('profile.averageScore') }}
+      </span>
     </div>
 
     <div class="px-5 py-5">
@@ -38,7 +42,7 @@ defineProps<{
         {{ statistics?.minutesWatched }}
       </p>
       <span class="text-text font-text font-semibold">
-        Minutes visionnées
+        {{ $t('profile.viewedMinutes') }}
       </span>
     </div>
   </div>
