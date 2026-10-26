@@ -23,6 +23,14 @@ export type MediaStatus =
   | 'CANCELLED'
   | 'HIATUS'
 
+export type MediaListStatus =
+  | 'CURRENT'
+  | 'PLANNING'
+  | 'COMPLETED'
+  | 'DROPPED'
+  | 'PAUSED'
+  | 'REPEATING'
+
 export type MediaSeason = 'WINTER' | 'SPRING' | 'SUMMER' | 'FALL'
 
 export type CharacterRole = 'MAIN' | 'SUPPORTING' | 'BACKGROUND'
@@ -150,6 +158,15 @@ export interface Media {
   characters?: CharacterConnection | null
   isAdult?: boolean | null
   siteUrl?: string | null
+  mediaListEntry?: MediaListEntry | null
+}
+
+export interface MediaListEntry {
+  status?: MediaListStatus | null
+  score?: number | null
+  progress?: number | null
+  startedAt?: FuzzyDate | null
+  completedAt?: FuzzyDate | null
 }
 
 // ==========================================

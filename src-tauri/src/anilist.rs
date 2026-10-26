@@ -37,6 +37,26 @@ pub struct AnimeMedia {
     #[serde(rename = "bannerImage")]
     pub banner_image: Option<String>,
     pub description: Option<String>,
+    #[serde(rename = "mediaListEntry")]
+    pub media_list_entry: Option<AnimeMediaListEntry>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimeMediaListEntry {
+    pub status: Option<String>,
+    pub score: Option<f32>,
+    pub progress: Option<i32>,
+    pub started_at: Option<AnimeFuzzyDate>,
+    pub completed_at: Option<AnimeFuzzyDate>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct AnimeFuzzyDate {
+    pub year: Option<i32>,
+    pub month: Option<i32>,
+    pub day: Option<i32>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -654,7 +674,7 @@ pub async fn fetch_anime_by_name(
 }
 
 #[tauri::command]
-pub async fn fetch_anime_by_id(id: i32) -> Result<AnimeMedia, String> {
+pub async fn fetch_anime_by_id(id: i32, token: Option<String>) -> Result<AnimeMedia, String> {
     let client = Client::builder()
         .timeout(Duration::from_secs(10))
         .build()
@@ -679,6 +699,21 @@ pub async fn fetch_anime_by_id(id: i32) -> Result<AnimeMedia, String> {
                 }
                 bannerImage
                 description
+                mediaListEntry {
+                    status
+                    score
+                    progress
+                    startedAt {
+                        year
+                        month
+                        day
+                    }
+                    completedAt {
+                        year
+                        month
+                        day
+                    }
+                }
             }
         }
     "#;
@@ -690,10 +725,16 @@ pub async fn fetch_anime_by_id(id: i32) -> Result<AnimeMedia, String> {
         }
     });
 
-    let response = client
+    let mut request = client
         .post("https://graphql.anilist.co")
         .header("Content-Type", "application/json")
-        .header("Accept", "application/json")
+        .header("Accept", "application/json");
+
+    if let Some(token) = token.as_deref() {
+        request = request.bearer_auth(token);
+    }
+
+    let response = request
         .json(&body)
         .send()
         .await
