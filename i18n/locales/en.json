@@ -120,7 +120,9 @@
     "favouriteAnime": "The anime has been set as favourite.",
     "favouriteAnimeError": "An error occured while setting this anime as favourite. Please try again.",
     "unfavouriteAnime": "The anime has been remove from your favourite.",
-    "unfavouriteAnimeError": "An error occured while removing this anime as favourite. Please try again."
+    "unfavouriteAnimeError": "An error occured while removing this anime as favourite. Please try again.",
+    "updateEntry": "Your entry has been successfully saved.",
+    "updateEntryError": "An error occurred while saving your entry. Please try again."
   },
   "theme": {
     "menu": {

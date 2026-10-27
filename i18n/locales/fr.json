@@ -121,7 +121,9 @@
     "favouriteAnime": "L'anime a été ajouté à vos favoris.",
     "favouriteAnimeError": "Une erreur s'est produite lors de l'ajout de cet anime à vos favoris. Veuillez réessayer.",
     "unfavouriteAnime": "L'anime a été retiré de vos favoris.",
-    "unfavouriteAnimeError": "Une erreur s'est produite lors du retrait de cet anime de vos favoris. Veuillez réessayer."
+    "unfavouriteAnimeError": "Une erreur s'est produite lors du retrait de cet anime de vos favoris. Veuillez réessayer.",
+    "updateEntry": "Votre entrée a bien été enregistré.",
+    "updateEntryError": "Une erreur s'est produite lors de l'enregistrement de votre entrée. Veuillez réessayer."
   },
   "theme": {
     "menu": {
