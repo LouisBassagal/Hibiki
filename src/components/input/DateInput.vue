@@ -28,7 +28,7 @@ watch(rawInput, (newValue) => {
     <label for="" v-if="label">{{ label }}</label>
 
     <div
-      class="bg-surface ring-1 ring-terciary/50 rounded-sm h-10 flex flex-row items-center px-2.5"
+      class="bg-surface ring-1 ring-terciary/50 rounded-sm py-2.5 flex flex-row items-center px-2.5"
     >
       <button
         type="button"

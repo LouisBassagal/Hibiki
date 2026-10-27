@@ -11,11 +11,6 @@ const props = defineProps<{
 const model = defineModel<T>()
 const isOpen = ref(false)
 const containerRef = useTemplateRef<HTMLElement>('container')
-const buttonRef = useTemplateRef('button')
-const menuWidth = computed(() => {
-  if (buttonRef.value?.offsetWidth) return buttonRef.value.offsetWidth - 20
-  return undefined
-})
 
 const selectedLabel = computed(
   () =>
@@ -27,7 +22,6 @@ const selectedLabel = computed(
 const choose = (value: T) => {
   model.value = value
   isOpen.value = false
-  console.log(buttonRef.value?.offsetWidth)
 }
 </script>
 
@@ -37,8 +31,7 @@ const choose = (value: T) => {
     <div ref="container" class="relative min-w-36">
       <button
         type="button"
-        ref="button"
-        class="flex w-full h-10 items-center justify-between gap-2.5 rounded-sm bg-surface px-2.5 py-1 text-left ring-1 ring-terciary/50"
+        class="flex w-full items-center justify-between gap-2.5 rounded-sm bg-surface px-2.5 py-2.5 text-left ring-1 ring-terciary/50"
         aria-haspopup="listbox"
         :aria-expanded="isOpen"
         @click="isOpen = true"
@@ -55,13 +48,10 @@ const choose = (value: T) => {
       <ContextMenuContainer
         v-model:is-open="isOpen"
         :teleport="false"
+        :placement="'right'"
         :reference="containerRef ?? undefined"
       >
-        <div
-          role="listbox"
-          class="flex flex-col"
-          :style="{ minWidth: menuWidth + 'px' }"
-        >
+        <div role="listbox" class="flex flex-col">
           <button
             v-for="option in options"
             :key="option.value"

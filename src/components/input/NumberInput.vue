@@ -19,12 +19,12 @@ const input = defineModel<number>('input')
 
 <template>
   <div
-    class="text-text h-fit w-full flex flex-col font-text font-semibold gap-1"
+    class="relative text-text h-fit w-full flex flex-col font-text font-semibold gap-1"
   >
     <label for="" v-if="label">{{ label }}</label>
 
     <div
-      class="bg-surface ring-1 ring-terciary/50 rounded-sm h-10 flex flex-row items-center pl-2.5"
+      class="bg-surface ring-1 ring-terciary/50 rounded-sm py-2.5 flex flex-row items-center pl-2.5"
     >
       <input
         name=""
@@ -35,17 +35,17 @@ const input = defineModel<number>('input')
         v-model="input"
       />
 
-      <div class="flex flex-col">
+      <div class="flex flex-col px-2.5 absolute right-1">
         <button
           type="button"
-          class="w-full flex justify-center px-2.5"
+          class="w-full flex justify-center"
           @click="input != undefined ? (input += 1) : null"
         >
           <PhCaretUp />
         </button>
         <button
           type="button"
-          class="w-full flex justify-center px-2.5"
+          class="w-full flex justify-center"
           @click="input != undefined ? (input -= 1) : null"
         >
           <PhCaretDown />
