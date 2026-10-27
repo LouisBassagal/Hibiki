@@ -163,11 +163,12 @@ export interface Media {
 }
 
 export interface MediaListEntry {
-  status?: MediaListStatus | null
-  score?: number | null
-  progress?: number | null
-  startedAt?: FuzzyDate | null
-  completedAt?: FuzzyDate | null
+  status?: MediaListStatus | undefined
+  score?: number | undefined
+  progress?: number | undefined
+  startedAt?: FuzzyDate | undefined
+  completedAt?: FuzzyDate | undefined
+  repeat?: number | undefined
 }
 
 // ==========================================

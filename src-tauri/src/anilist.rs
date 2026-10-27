@@ -51,6 +51,7 @@ pub struct AnimeMediaListEntry {
     pub progress: Option<i32>,
     pub started_at: Option<AnimeFuzzyDate>,
     pub completed_at: Option<AnimeFuzzyDate>,
+    pub repeat: Option<i32>
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -716,6 +717,7 @@ pub async fn fetch_anime_by_id(id: i32, token: Option<String>) -> Result<AnimeMe
                         month
                         day
                     }
+                    repeat
                 }
             }
         }
