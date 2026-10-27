@@ -5,7 +5,17 @@
   "general": {
     "yes": "Oui",
     "no": "Non",
-    "themes": "{n} thème | {n} thèmes"
+    "themes": "{n} thème | {n} thèmes",
+    "completed": "Terminé",
+    "current": "En cours",
+    "planning": "Prévu",
+    "dropped": "Abandonné",
+    "paused": "En pause",
+    "repeating": "Revisionnage",
+    "AddToList": "Ajouter à votre liste",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "date": "{day}-{month}-{year}"
   },
   "home": {
     "title": "Accueil",
@@ -59,6 +69,7 @@
       "subtitle": "Donnez-lui un nom pour pouvoir y ajouter des thèmes plus tard!",
       "label": "Nom de la playlist",
       "create": "Créer",
+      "save": "Sauvegarder",
       "cancel": "Annuler"
     },
     "menu": {
@@ -87,6 +98,14 @@
     "playlist": {
       "title": "Ajout à une playlist",
       "subtitle": "Où voulez-vous ajouter {name} ?"
+    },
+    "entry": {
+      "status": "Statut",
+      "score": "Note",
+      "progress": "Progression",
+      "startDate": "Date de début",
+      "finishDate": "Date de fin",
+      "rewatch": "Revisionnages"
     }
   },
   "toast": {
@@ -98,7 +117,11 @@
     "emptyPlaylist": "La playlist est vide et ne peut pas être jouer.",
     "changePlaylistName": "Le nom de la playlist a été mis à jour.",
     "changePlaylistImage": "L'image de la playlist a bien été mise à jour",
-    "removeThemeFromPlaylist": "Le theme a bien été retiré de la playlist."
+    "removeThemeFromPlaylist": "Le theme a bien été retiré de la playlist.",
+    "favouriteAnime": "L'anime a été ajouté à vos favoris.",
+    "favouriteAnimeError": "Une erreur s'est produite lors de l'ajout de cet anime à vos favoris. Veuillez réessayer.",
+    "unfavouriteAnime": "L'anime a été retiré de vos favoris.",
+    "unfavouriteAnimeError": "Une erreur s'est produite lors du retrait de cet anime de vos favoris. Veuillez réessayer."
   },
   "theme": {
     "menu": {

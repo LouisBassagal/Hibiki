@@ -5,7 +5,17 @@
   "general": {
     "yes": "Yes",
     "no": "No",
-    "themes": "{n} theme | {n} themes"
+    "themes": "{n} theme | {n} themes",
+    "completed": "Completed",
+    "current": "Current",
+    "planning": "Planning",
+    "dropped": "Dropped",
+    "paused": "Paused",
+    "repeating": "Repeating",
+    "AddToList": "Add to list",
+    "save": "Save",
+    "cancel": "Cancel",
+    "date": "{year}-{month}-{day}"
   },
   "home": {
     "title": "Home",
@@ -87,6 +97,14 @@
     "playlist": {
       "title": "Add to playlist",
       "subtitle": "Where would you like to add {name}?"
+    },
+    "entry": {
+      "status": "Status",
+      "score": "Score",
+      "progress": "Progress",
+      "startDate": "Start date",
+      "finishDate": "Finish date",
+      "rewatch": "Rewatches"
     }
   },
   "toast": {
@@ -98,7 +116,11 @@
     "emptyPlaylist": "The playlist is empty and cannot be played.",
     "changePlaylistName": "The playlist name has been updated.",
     "changePlaylistImage": "The playlist image has been successfully updated.",
-    "removeThemeFromPlaylist": "The theme has been successfully removed from the playlist."
+    "removeThemeFromPlaylist": "The theme has been successfully removed from the playlist.",
+    "favouriteAnime": "The anime has been set as favourite.",
+    "favouriteAnimeError": "An error occured while setting this anime as favourite. Please try again.",
+    "unfavouriteAnime": "The anime has been remove from your favourite.",
+    "unfavouriteAnimeError": "An error occured while removing this anime as favourite. Please try again."
   },
   "theme": {
     "menu": {
