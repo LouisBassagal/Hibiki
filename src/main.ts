@@ -7,23 +7,40 @@ import en from '~/i18n/locales/en.json'
 import fr from '~/i18n/locales/fr.json'
 
 import App from './App.vue'
+import { useSettings } from './composables/useSettings.ts'
 import { router } from './plugins/router.ts'
 
-const pinia = createPinia()
-const app = createApp(App)
+const init = async () => {
+  const pinia = createPinia()
+  const app = createApp(App)
+  const { loadSetting } = useSettings()
 
-const i18n = createI18n({
-  legacy: false,
-  locale: 'fr',
-  fallbackLocale: 'en',
-  messages: {
-    en,
-    fr,
-  },
-})
+  const savedLanguage = await loadSetting('language')
 
-app.use(pinia)
-app.use(PhosphorIcons)
-app.use(router)
-app.use(i18n)
-app.mount('#app')
+  const i18n = createI18n({
+    legacy: false,
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages: {
+      en,
+      fr,
+    },
+  })
+
+  app.use(pinia)
+  app.use(PhosphorIcons)
+  app.use(router)
+  app.use(i18n)
+
+  if (
+    savedLanguage &&
+    i18n.global.availableLocales.includes(
+      savedLanguage as (typeof i18n.global.availableLocales)[number]
+    )
+  )
+    i18n.global.locale.value =
+      savedLanguage as (typeof i18n.global.availableLocales)[number]
+  app.mount('#app')
+}
+
+init()

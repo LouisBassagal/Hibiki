@@ -4,6 +4,7 @@ import PlaylistListView from '@/views/PlaylistListView.vue'
 import PlaylistView from '@/views/PlaylistView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import SearchView from '@/views/SearchView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 import { createWebHistory, createRouter } from 'vue-router'
 
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
     path: '/profile',
     component: ProfileView,
     name: 'profile',
+  },
+  {
+    path: '/settings',
+    component: SettingsView,
+    name: 'settings',
   },
 ]
 
