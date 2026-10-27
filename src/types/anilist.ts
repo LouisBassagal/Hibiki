@@ -152,6 +152,7 @@ export interface Media {
   meanScore?: number | null
   popularity?: number | null
   isLocked?: boolean | null
+  isFavourite?: boolean | null
   trending?: number | null
   favorites?: number | null
   tags?: MediaTag[] | null

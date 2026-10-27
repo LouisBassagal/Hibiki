@@ -37,6 +37,8 @@ pub struct AnimeMedia {
     #[serde(rename = "bannerImage")]
     pub banner_image: Option<String>,
     pub description: Option<String>,
+    #[serde(rename = "isFavourite")]
+    pub is_favourite: Option<bool>,
     #[serde(rename = "mediaListEntry")]
     pub media_list_entry: Option<AnimeMediaListEntry>,
 }
@@ -699,6 +701,7 @@ pub async fn fetch_anime_by_id(id: i32, token: Option<String>) -> Result<AnimeMe
                 }
                 bannerImage
                 description
+                isFavourite
                 mediaListEntry {
                     status
                     score
