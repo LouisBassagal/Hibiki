@@ -51,7 +51,7 @@ pub struct AnimeMediaListEntry {
     pub progress: Option<i32>,
     pub started_at: Option<AnimeFuzzyDate>,
     pub completed_at: Option<AnimeFuzzyDate>,
-    pub repeat: Option<i32>
+    pub repeat: Option<i32>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -785,7 +785,7 @@ pub async fn toggle_favourite(id: i32, token: Option<String>) -> Result<(), Stri
                 }
             }
         }"#;
-        
+
     let body = json!({
         "query": query,
         "variables": {
@@ -807,7 +807,6 @@ pub async fn toggle_favourite(id: i32, token: Option<String>) -> Result<(), Stri
         .send()
         .await
         .map_err(|error| error.to_string())?;
-    
 
     let status = response.status();
     let response_text = response
@@ -831,8 +830,15 @@ pub async fn toggle_favourite(id: i32, token: Option<String>) -> Result<(), Stri
 }
 
 #[tauri::command]
-pub async fn update_entry(id: i32, entry: AnimeMediaListEntry, token: Option<String>) -> Result<(),  String> {
-    let client = Client::builder().timeout(Duration::from_secs(10)).build().map_err(|error| error.to_string())?;
+pub async fn update_entry(
+    id: i32,
+    entry: AnimeMediaListEntry,
+    token: Option<String>,
+) -> Result<(), String> {
+    let client = Client::builder()
+        .timeout(Duration::from_secs(10))
+        .build()
+        .map_err(|error| error.to_string())?;
 
     let query = r#"
         mutation SaveMediaListEntry($mediaId: Int, $status: MediaListStatus, $score: Float, $progress: Int, $repeat: Int, $startedAt: FuzzyDateInput, $completedAt: FuzzyDateInput) {
@@ -840,7 +846,7 @@ pub async fn update_entry(id: i32, entry: AnimeMediaListEntry, token: Option<Str
                 mediaId
             }
         }"#;
-    
+
     let body = json!({
         "query": query,
         "variables": {
@@ -868,7 +874,6 @@ pub async fn update_entry(id: i32, entry: AnimeMediaListEntry, token: Option<Str
         .send()
         .await
         .map_err(|error| error.to_string())?;
-    
 
     let status = response.status();
     let response_text = response
