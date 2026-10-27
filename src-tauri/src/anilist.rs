@@ -765,3 +765,65 @@ pub async fn fetch_anime_by_id(id: i32, token: Option<String>) -> Result<AnimeMe
     serde_json::from_value(response_json["data"]["Media"].clone())
         .map_err(|error| error.to_string())
 }
+
+#[tauri::command]
+pub async fn toggle_favourite(id: i32, token: Option<String>) -> Result<(), String> {
+    let client = Client::builder()
+        .timeout(Duration::from_secs(10))
+        .build()
+        .map_err(|error| error.to_string())?;
+
+    let query = r#"
+        mutation ToggleFavourite($animeId: Int) {
+            ToggleFavourite(animeId: $animeId) {
+                anime {
+                    nodes {
+                        id
+                    }
+                }
+            }
+        }"#;
+        
+    let body = json!({
+        "query": query,
+        "variables": {
+            "animeId": id
+        }
+    });
+
+    let mut request = client
+        .post("https://graphql.anilist.co")
+        .header("Content-Type", "application/json")
+        .header("Accept", "application/json");
+
+    if let Some(token) = token.as_deref() {
+        request = request.bearer_auth(token);
+    }
+
+    let response = request
+        .json(&body)
+        .send()
+        .await
+        .map_err(|error| error.to_string())?;
+    
+
+    let status = response.status();
+    let response_text = response
+        .text()
+        .await
+        .map_err(|error| format!("Erreur lecture réponse: {error}"))?;
+
+    if !status.is_success() {
+        let msg = format!("AniList HTTP {status}: {response_text}");
+        eprintln!("{msg}");
+        return Err(msg);
+    }
+
+    let response_json: serde_json::Value = serde_json::from_str(&response_text)
+        .map_err(|error| format!("JSON invalide: {error}; réponse: {response_text}"))?;
+
+    if let Some(errors) = response_json.get("errors") {
+        return Err(errors.to_string());
+    }
+    return Ok(());
+}
