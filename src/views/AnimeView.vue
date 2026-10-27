@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { useAnilistUser } from '@/stores/useAnilistUser'
 import type { Media } from '@/types/anilist'
 import type { AnimeThemesAnime, AnimeTheme } from '@/types/animethemes'
+import { notify } from '@/utils/notify'
 import { Markdown } from '@comark/vue'
-import { PhCircleNotch, PhEmpty } from '@phosphor-icons/vue'
+import {
+  PhBookmarkSimple,
+  PhCircleNotch,
+  PhEmpty,
+  PhStar,
+} from '@phosphor-icons/vue'
 import { invoke } from '@tauri-apps/api/core'
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const media = ref<Media | undefined>(undefined)
@@ -12,9 +20,12 @@ const currentTab = ref<'overview' | 'themes'>('overview')
 const themes = ref<AnimeTheme[]>([])
 const selectedTheme = ref<AnimeTheme | null>(null)
 const isModalOpen = ref<boolean>(false)
+const isEntryModalOpen = ref<boolean>(false)
 const router = useRouter()
 const isAnimeLoading = ref<boolean>(true)
 const isThemesLoading = ref<boolean>(true)
+const { token, isLoggedIn } = useAnilistUser()
+const { t } = useI18n()
 
 const isTabOpen = (name: 'overview' | 'themes') => {
   if (name !== currentTab.value) return ''
@@ -26,6 +37,39 @@ const onSelectTheme = (theme: AnimeTheme) => {
   isModalOpen.value = true
 }
 
+const onSetFavourite = () => {
+  invoke('toggle_favourite', { id: media?.value?.id, token: token })
+    .then(() => {
+      if (media.value) {
+        media.value.isFavourite = !media?.value?.isFavourite
+        notify.success(
+          media?.value?.isFavourite === true
+            ? t('toast.favouriteAnime')
+            : t('toast.unfavouriteAnime')
+        )
+      }
+    })
+    .catch(() => {
+      notify.error(
+        media?.value?.isFavourite === true
+          ? t('toast.unfavouriteAnimeError')
+          : t('toast.favouriteAnimeError')
+      )
+    })
+    .finally(() => {})
+}
+
+const onSave = async () => {
+  const animeId = Number(router.currentRoute.value.params.id)
+
+  await invoke<Media>('fetch_anime_by_id', {
+    id: animeId,
+    token: token,
+  }).then((result) => {
+    media.value = result
+  })
+}
+
 onMounted(async () => {
   const animeId = Number(router.currentRoute.value.params.id)
 
@@ -33,6 +77,7 @@ onMounted(async () => {
 
   await invoke<Media>('fetch_anime_by_id', {
     id: animeId,
+    token: token,
   })
     .then((result) => {
       media.value = result
@@ -68,9 +113,38 @@ onMounted(async () => {
           class="absolute inset-0 bg-linear-to-t from-transparent to-background"
         />
         <div
-          class="absolute bottom-0 font-title px-5 font-bold text-2xl -mt-10 z-50"
+          class="absolute bottom-0 -mt-10 z-50 flex flex-col md:flex-row w-full px-5 md:justify-between md:items-center"
         >
-          {{ media?.title?.romaji }}
+          <div class="font-title font-bold text-2xl">
+            {{ media?.title?.romaji }}
+          </div>
+
+          <div v-if="isLoggedIn" class="flex flex-row gap-2.5">
+            <button
+              @click="isEntryModalOpen = true"
+              class="bg-primary px-2.5 py-1 rounded-sm h-fit w-fit shrink-0 touchable font-text font-semibold flex flex-row justify-center items-center self-center md:self-auto mt-2.5 md:mt-0"
+            >
+              <PhBookmarkSimple :size="20" class="mr-1 shrink-0" />
+              {{
+                media?.mediaListEntry?.status
+                  ? $t(
+                      'general.' +
+                        media?.mediaListEntry?.status.toLocaleLowerCase()
+                    )
+                  : $t('general.AddToList')
+              }}
+            </button>
+
+            <button
+              @click="onSetFavourite"
+              class="bg-primary p-1 rounded-sm h-fit w-fit shrink-0 touchable font-text font-semibold flex flex-row justify-center items-center self-center md:self-auto mt-2.5 md:mt-0"
+            >
+              <PhStar
+                :weight="media?.isFavourite === true ? 'fill' : 'regular'"
+                :size="24"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -150,6 +224,13 @@ onMounted(async () => {
     </Transition>
 
     <Teleport to="body">
+      <EntryModal
+        :media="media"
+        @save="onSave"
+        @close="isEntryModalOpen = false"
+        v-model:is-open="isEntryModalOpen"
+      >
+      </EntryModal>
       <ThemeEntriesModal
         v-model:is-open="isModalOpen"
         :theme="selectedTheme"

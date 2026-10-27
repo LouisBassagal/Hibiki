@@ -15,7 +15,7 @@ watch(isOpen, (newValue) => {
 <template>
   <dialog
     ref="dialog"
-    class="relative m-auto overflow-visible rounded-2xl bg-background p-5 ring ring-terciary/50 backdrop:backdrop-blur-sm backdrop:bg-background/25 h-fit w-fit backdrop:pointer-events-none"
+    class="relative m-auto rounded-2xl overflow-hidden bg-background p-5 ring ring-terciary/50 backdrop:backdrop-blur-sm backdrop:bg-background/25 h-fit w-fit backdrop:pointer-events-none"
   >
     <button
       type="button"
